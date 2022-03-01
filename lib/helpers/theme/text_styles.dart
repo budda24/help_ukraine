@@ -16,6 +16,7 @@ TextStyle lightButtonTextStyle =
 
 //online-tribes
 TextStyle headingBlackStyle = TextStyle(
+  
   fontFamily: 'Built Relationship',
   fontSize: 25.0.sp,
   fontWeight: FontWeight.bold
