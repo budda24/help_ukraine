@@ -19,7 +19,9 @@ class AppColors {
 
   // Global Colors
 
-  static Color primaryColor = const Color(0xffF5BD3F);
+  static Color primaryColor = const Color(0xff85F4FF);
+  static Color primaryColorShade = Color(0xffEFFFFD);
+  /* static Color primaryColorShade = Color.fromARGB(255, 243, 223, 177); */
   static Color textFieldFill = const Color(0xffCBFAE2);
   static Color primaryColorWithOpacity40 = const Color(0xffD2FEE4);
   static Color googleColor = const Color(0xffDF4A32);

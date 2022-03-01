@@ -1,30 +1,27 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 // Project imports:
 import 'app_colors.dart';
 import 'text_styles.dart';
 
-InputDecorationTheme? outlineInputTextFormFieldStyle = InputDecorationTheme(
-  labelStyle: outlineInputTextFormFieldLabelStyle,
-  hintStyle: outlineInputTextFormFieldHintStyle,
-  floatingLabelBehavior: FloatingLabelBehavior.always,
-  focusedBorder: UnderlineInputBorder(
-    borderSide: BorderSide(color: AppColors.greyColor), // Need To Change
-    borderRadius: BorderRadius.circular(4),
-  ),
-  enabledBorder: UnderlineInputBorder(
-    borderSide: BorderSide(
-      color: AppColors.greyColor.withOpacity(0.8),
+InputDecoration? outlineInputTextFormFieldStyle = InputDecoration(
+    /*  label: Text(
+                          'Miasto',
+                          style: textfieldLableStyle,
+                        ), */
+    enabledBorder: OutlineInputBorder(
+      borderSide: BorderSide(width: 1, color: AppColors.primaryColor),
+      borderRadius: BorderRadius.circular(40.r),
     ),
-    borderRadius: BorderRadius.circular(4),
-  ),
-  disabledBorder: UnderlineInputBorder(
-    borderSide: BorderSide(
-      color: AppColors.greyColor.withOpacity(0.8),
+    border: OutlineInputBorder(
+      borderSide: BorderSide(width: 1, color: AppColors.primaryColor),
+      borderRadius: BorderRadius.circular(40.r),
     ),
-    borderRadius: BorderRadius.circular(4),
-  ),
-  border: InputBorder.none,
-  focusColor: AppColors.greyColor,
-);
+    focusedBorder: OutlineInputBorder(
+      borderSide: BorderSide(width: 1, color: AppColors.primaryColor),
+      borderRadius: BorderRadius.circular(40.r),
+    ),
+    filled: true,
+    fillColor: Colors.white70);
