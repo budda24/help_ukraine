@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "983912924402",
+    "project_id": "help-ukraine-5bef6",
+    "storage_bucket": "help-ukraine-5bef6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:983912924402:android:db1c31abdd47afbaa6fc6b",
+        "android_client_info": {
+          "package_name": "com.example.pomoc_ukrainie"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "983912924402-jhdlpb39679pdllarfgvkkr6a7msr7jr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBO8mTeCM5imRZvf8AZHY6JqhtsYIyoIrA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "983912924402-jhdlpb39679pdllarfgvkkr6a7msr7jr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
