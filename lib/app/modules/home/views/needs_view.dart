@@ -87,7 +87,7 @@ class NeedsView extends GetView<HomeController> {
                         size: 26,
                       ),
                       title: Text(
-                        need.needTitle,
+                        'need.needTitle',
                         style: headingBlackStyle,
                       ),
                     ),

@@ -13,7 +13,7 @@ Future<http.Response> createAlbum(Need need) {
     body: jsonEncode(<String, dynamic>{
       'needTitle':need.needTitle,
       'needDescription':need.needDescription,
-      'contact':need.contact,
+      'contact':need.contact.toString(),
       'city':need.city,
       'email':need.email,
     }),

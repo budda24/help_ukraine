@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "983912924402-sjsljvoniv7vha510uc0abp493t5ldbu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.pomoc_ukrainie",
+            "certificate_hash": "bd94261c4139e8fbf296949b63f1a98086d8b60b"
+          }
+        },
+        {
           "client_id": "983912924402-jhdlpb39679pdllarfgvkkr6a7msr7jr.apps.googleusercontent.com",
           "client_type": 3
         }
