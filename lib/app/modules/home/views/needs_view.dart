@@ -43,7 +43,7 @@ class NeedsView extends GetView<HomeController> {
                       controller: controller.cityController,
                       decoration: outlineInputTextFormFieldStyle!.copyWith(
                           label: Text(
-                        'місто',
+                        'Miasto',
                         style: textfieldLableStyle,
                       )),
                     ),
