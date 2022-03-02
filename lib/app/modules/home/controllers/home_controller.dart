@@ -61,7 +61,7 @@ class HomeController extends GetxController {
     return formKey.currentState!.validate();
   }
 
-  void postNeed() async {
+  Future<void>postNeed() async {
     if (validateForm()) {
       var need = Need(
           needTitle: needTitleController.text,
@@ -70,7 +70,7 @@ class HomeController extends GetxController {
           city: cityController.text,
           email: 'test@test.com');
       try {
-        await DbPosgress().createAlbum(need);
+        await DbPosgress().createAlbum(need).then((value) => print(value.body));
       } catch (e) {
         Get.showSnackbar(
             customSnackbar('надіслати потребу не вдалося, тому що: $e'));

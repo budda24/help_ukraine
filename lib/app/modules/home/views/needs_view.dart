@@ -16,12 +16,11 @@ import '../models/city.dart';
 class NeedsView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
-    var need = Need(
-        id: 'id',
+    /* var need = Need(
         needTitle: 'need food',
         contact: 3332245,
         city: 'Warszawa',
-        email: 'Test@test.com');
+        email: 'Test@test.com'); */
     return Scaffold(
       body: Form(
         child: Column(
@@ -87,7 +86,7 @@ class NeedsView extends GetView<HomeController> {
                         size: 26,
                       ),
                       title: Text(
-                        need.needTitle,
+                        'need.needTitle',
                         style: headingBlackStyle,
                       ),
                     ),

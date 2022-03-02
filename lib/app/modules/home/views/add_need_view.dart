@@ -34,10 +34,9 @@ class HomeView extends GetView<HomeController> {
           iconSize: 80,
           alignment: Alignment.center,
           icon: Icon(Icons.add_alert),
-          onPressed: ()  {
-            controller.postNeed();
-            Get.to(NeedsView());
-
+          onPressed: () async {
+           await controller.postNeed();
+            /* Get.to(NeedsView()); */
             //add need
           },
         ),
