@@ -9,14 +9,11 @@ Future<http.Response> createAlbum() {
       'Content-Type': 'application/json; charset=UTF-8',
     },
     body: jsonEncode(<String, String>{
-      /* 'id':'testId',
       'needTitle': 'title',
       'needDescription':'test need decription',
       'contact':'123432234',
       'city':'Warszawa',
       'email':'test@test.com',
-      'createdAt':DateTime.now().toString(),
-      'updatedAt':DateTime.now().toString(), */
 
     }),
   );
