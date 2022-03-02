@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
 import 'package:pomoc_ukrainie/app/globals/global_controler.dart';
+import 'package:pomoc_ukrainie/app/modules/home/views/choice_screen.dart';
 import 'package:pomoc_ukrainie/helpers/main_constants.dart';
 import 'package:pomoc_ukrainie/helpers/theme/app_bars.dart';
 import 'package:pomoc_ukrainie/helpers/theme/app_colors.dart';
@@ -18,7 +19,7 @@ class AuthView extends GetView<AuthController> {
   var globalController = Get.put(GlobalController());
   @override
   Widget build(BuildContext context) {
-   ScreenUtil.init(
+    ScreenUtil.init(
         BoxConstraints(
             maxWidth: MediaQuery.of(context).size.width,
             maxHeight: MediaQuery.of(context).size.height),
@@ -29,109 +30,49 @@ class AuthView extends GetView<AuthController> {
     return GestureDetector(
       onTap: globalController.unFocuseNode,
       child: Scaffold(
-          appBar: AppBar(
-            backgroundColor: Color(0xffF5BD3F),
-            title: Text('Pomóżmy'),
-            centerTitle: true,
-          ),
-          body: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Stack(
-                  children: [
-                    /* GreenWaves1(screeanheight: 735.h), */
-                    Center(
-                      child: Container(
-                        height: 350.h,
-                        width: double.infinity,
-                        /*padding: EdgeInsets.all(screeanheight*01),
+        backgroundColor: Colors.blue.shade100,
+        body: Center(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              verticalSpaceExtraLarge,
+
+              /* GreenWaves1(screeanheight: 735.h), */
+              Container(
+                height: 380.h,
+                width: double.infinity,
+                /*padding: EdgeInsets.all(screeanheight*01),
                     margin: EdgeInsets.only(top: screeanheight * 0.025),*/
-                        child: Center(
-                          child: Image.asset('assets/helping-01.png',fit: BoxFit.fill,),),
-                    ),
-                      ),
-                  ]  ),
-                  verticalSpaceMedium,
-                Form(
-                  /* key: controller.formKey, */
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 41.w),
-                        child: Column(
-                          children: [
-                            TextFormField(
-                              controller: controller.emailController,
-                              maxLength: 320,
-                              autofillHints: [AutofillHints.email],
-                              keyboardType: TextInputType.emailAddress,
-                              enableSuggestions: true,
-                              style: outlineInputTextFormFieldHintStyle,
-                              decoration: InputDecoration(
-                                hintText: 'Email',
-                              ),
-                            ),
-                            horizontalSpaceTiny,
-                            TextFormField(
-                              controller: controller.passwordController,
-                              maxLength: 120,
-                              keyboardType: TextInputType.text,
-                              obscuringCharacter: '*',
-                              obscureText: true,
-                              enableSuggestions: false,
-                              autocorrect: false,
-                              style: outlineInputTextFormFieldHintStyle,
-                              decoration: InputDecoration(
-                                hintText: 'Hasło',
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Container(
-                              margin: EdgeInsets.only(right: 30.w),
-                              child: TextButton(
-                                child: Text('Zapomniałem Hasła?',
-                                    style: kTextCheckBox),
-                                onPressed: () {
-                                  Get.to(RestPasswordView());
-                                },
-                              ))
-                        ],
-                      ),
-                      Center(
-                        child: SlimRoundedButton(
-                          onPress: (){
-                            //perform sign in
-                          },
-                          title: 'Zaloguj',
-                          backgroundColour: AppColors.primaryColor,
-                          textColor: kColorWhite,
-                        ),
-                      ),
-                      LoginServicesIcons(
-                        onTapFaccebook: () {},
-                        onTapGoogle: () {},
-                      ),
-                      TextButton(
-                        onPressed: () async {
-                          //go to registration
-                        },
-                        child: Text('Zarejstruj', style: headingBlackStyle,),
-                      ),
-                    ],
+                child: Center(
+                  child: Image.asset(
+                    'assets/helping-01.png',
+                    fit: BoxFit.fill,
                   ),
                 ),
-              ],
-            ),
+              ),
+              verticalSpaceMedium,
+              Text(
+                'Увійти за допомогою',
+                style: headingBlackStyle,
+                textAlign: TextAlign.center,
+              ),
+              Text(
+                'Zaloguj się przez',
+                style: headingBlackStyle,
+                textAlign: TextAlign.center,
+              ),
+              LoginServicesIcons(
+                onTapFaccebook: () {},
+                onTapGoogle: () {
+                  Get.to(ChoiceScreen());
+                },
+              ),
+            ],
           ),
         ),
-    )/* ,
-    ) */;
+      ),
+    ) /* ,
+    ) */
+        ;
   }
 }

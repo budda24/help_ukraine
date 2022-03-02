@@ -34,9 +34,10 @@ class HomeView extends GetView<HomeController> {
           iconSize: 80,
           alignment: Alignment.center,
           icon: Icon(Icons.add_alert),
-          onPressed: () async {
-           await controller.postNeed();
-            /* Get.to(NeedsView()); */
+          onPressed: () {
+            controller.postNeed();
+            Get.to(NeedsView());
+
             //add need
           },
         ),
@@ -46,14 +47,15 @@ class HomeView extends GetView<HomeController> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                verticalSpaceExtraLarge,
-                Container(
-                  child: Image.asset(
-                    'assets/3-clipboard.png',
-                  ),
+                verticalSpaceMedium,
+                Image.asset(
+                  'assets/3-clipboard.png',
                 ),
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: 40, vertical: 20),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 40,
+                    vertical: 10,
+                  ),
                   child: TypeAheadFormField(
                       validator: (text) {
                         if (controller.getSuggestions(text ?? '').isEmpty) {
@@ -87,6 +89,7 @@ class HomeView extends GetView<HomeController> {
                         return controller.getSuggestions(pattern);
                       }),
                 ),
+                verticalSpaceSmall,
                 OneLineTextField(
                     keybordhType: TextInputType.name,
                     validator: (text) {
@@ -95,6 +98,7 @@ class HomeView extends GetView<HomeController> {
                     //imię i nazwisko/
                     lable: "Ім'я та прізвище",
                     controller: controller.nameController),
+                    verticalSpaceSmall,
                 OneLineTextField(
                     validator: (text) {
                       return controller.validateTextField(text ?? '');
@@ -102,6 +106,7 @@ class HomeView extends GetView<HomeController> {
                     //potrzeba tytuł/
                     lable: "потрібен титул",
                     controller: controller.needTitleController),
+                    verticalSpaceSmall,
                 OneLineTextField(
                     keybordhType: TextInputType.number,
                     validator: (text) {
@@ -110,7 +115,9 @@ class HomeView extends GetView<HomeController> {
                     //nr.telefonu/
                     lable: "телефонний номер",
                     controller: controller.contactNumberController),
+                  verticalSpaceSmall,
                 Container(
+
                   padding: EdgeInsets.symmetric(horizontal: 40),
                   child: CustomTextField(
                     validate: (text) => controller.validateTextField(text),

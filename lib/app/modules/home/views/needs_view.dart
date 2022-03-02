@@ -16,11 +16,12 @@ import '../models/city.dart';
 class NeedsView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
-    /* var need = Need(
+    var need = Need(
         needTitle: 'need food',
         contact: 3332245,
         city: 'Warszawa',
-        email: 'Test@test.com'); */
+        email: 'Test@test.com',
+        needDescription: '');
     return Scaffold(
       body: Form(
         child: Column(
@@ -42,7 +43,7 @@ class NeedsView extends GetView<HomeController> {
                       controller: controller.cityController,
                       decoration: outlineInputTextFormFieldStyle!.copyWith(
                           label: Text(
-                        'Miasto',
+                        'місто',
                         style: textfieldLableStyle,
                       )),
                     ),
