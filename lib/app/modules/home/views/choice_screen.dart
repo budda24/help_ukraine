@@ -14,7 +14,7 @@ class ChoiceScreen extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue.shade100,
+
 
       body: SingleChildScrollView(
         child: Center(
@@ -22,13 +22,14 @@ class ChoiceScreen extends GetView<HomeController> {
             children: [
               verticalSpaceExtraLarge,
               Container(
+                 padding: EdgeInsets.all(20),
                 height: 300.h,
                 width: 300.w,
                 decoration: BoxDecoration(
                   color: AppColors.whiteColor,
                   border: Border.all(
-                    color: Colors.black54,
-                    width: 1.0.w,
+                    color: AppColors.primaryColor,
+                    width: 3.0.w,
                   ),
                   borderRadius: BorderRadius.circular(15.0.r),
                   boxShadow: [
@@ -47,7 +48,7 @@ class ChoiceScreen extends GetView<HomeController> {
 
                     child: Image.asset(
 
-                      'assets/heart.png',
+                      'assets/support.png',
                       // fit: BoxFit.cover,
 
                       cacheHeight: 200.h.toInt(),
@@ -70,13 +71,14 @@ class ChoiceScreen extends GetView<HomeController> {
               InkWell(
                 onTap: () => Get.to(HomeView()),
                 child: Container(
+                  padding: EdgeInsets.all(20),
                   height: 300.h,
                   width: 300.w,
                   decoration: BoxDecoration(
                     color: AppColors.whiteColor,
                     border: Border.all(
-                      color: Colors.black54,
-                      width: 1.0.w,
+                      color: AppColors.primaryColor,
+                      width: 3.0.w,
                     ),
                     borderRadius: BorderRadius.circular(15.0),
                     boxShadow: [
@@ -94,7 +96,7 @@ class ChoiceScreen extends GetView<HomeController> {
                     child: GridTile(
 
                       child: Image.asset(
-                        'assets/hand.png',
+                        'assets/help.png',
 
                         cacheHeight: 200.h.toInt(),
                         cacheWidth: 200.h.toInt(),

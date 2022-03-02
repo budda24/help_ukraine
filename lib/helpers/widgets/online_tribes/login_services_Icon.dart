@@ -35,6 +35,12 @@ class LoginServicesIcons extends StatelessWidget {
             child: LoginIcons.socialButtonCircle(
                 AppColors.googleColor, FontAwesomeIcons.googlePlusG,
                 iconColor: Colors.white, onTap: onTapGoogle),
+          ),verticalSpaceMedium,
+          Container(
+            margin: EdgeInsets.only(/*right: screeanwidth * 0.04*/),
+            child: LoginIcons.socialButtonCircle(
+                AppColors.googleColor, FontAwesomeIcons.googlePlusG,
+                iconColor: Colors.white, onTap: onTapGoogle),
           ),
         ],
       ),

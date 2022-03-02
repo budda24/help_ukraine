@@ -13,7 +13,7 @@ import 'package:pomoc_ukrainie/helpers/widgets/online_tribes/login_services_Icon
 import 'package:pomoc_ukrainie/helpers/widgets/online_tribes/main_button.dart';
 
 import '../controllers/auth_controller.dart';
-import 'rest_password_view.dart';
+
 
 class AuthView extends GetView<AuthController> {
   var globalController = Get.put(GlobalController());
@@ -56,6 +56,7 @@ class AuthView extends GetView<AuthController> {
                 style: headingBlackStyle,
                 textAlign: TextAlign.center,
               ),
+              verticalSpaceTiny,
               Text(
                 'Zaloguj się przez',
                 style: headingBlackStyle,

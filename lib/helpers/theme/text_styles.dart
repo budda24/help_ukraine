@@ -16,8 +16,8 @@ TextStyle lightButtonTextStyle =
 
 //online-tribes
 TextStyle headingBlackStyle = TextStyle(
-  
-  fontFamily: 'Built Relationship',
+
+  fontFamily: 'Comfortaa',
   fontSize: 25.0.sp,
   fontWeight: FontWeight.bold
 );
