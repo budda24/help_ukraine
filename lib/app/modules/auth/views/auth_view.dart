@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
+
 import 'package:pomoc_ukrainie/app/globals/global_controler.dart';
+import 'package:pomoc_ukrainie/app/infrastructure/fb_services/auth/auth.dart';
 import 'package:pomoc_ukrainie/app/modules/home/views/choice_screen.dart';
 import 'package:pomoc_ukrainie/helpers/main_constants.dart';
 import 'package:pomoc_ukrainie/helpers/theme/app_bars.dart';
@@ -13,7 +15,6 @@ import 'package:pomoc_ukrainie/helpers/widgets/online_tribes/login_services_Icon
 import 'package:pomoc_ukrainie/helpers/widgets/online_tribes/main_button.dart';
 
 import '../controllers/auth_controller.dart';
-import 'rest_password_view.dart';
 
 class AuthView extends GetView<AuthController> {
   var globalController = Get.put(GlobalController());
@@ -30,22 +31,17 @@ class AuthView extends GetView<AuthController> {
     return GestureDetector(
       onTap: globalController.unFocuseNode,
       child: Scaffold(
-        backgroundColor: Colors.blue.shade100,
         body: Center(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               verticalSpaceExtraLarge,
-
-              /* GreenWaves1(screeanheight: 735.h), */
               Container(
                 height: 380.h,
                 width: double.infinity,
-                /*padding: EdgeInsets.all(screeanheight*01),
-                    margin: EdgeInsets.only(top: screeanheight * 0.025),*/
                 child: Center(
                   child: Image.asset(
-                    'assets/helping-01.png',
+                    'assets/07-Lighthouse.png',
                     fit: BoxFit.fill,
                   ),
                 ),
@@ -63,8 +59,11 @@ class AuthView extends GetView<AuthController> {
               ),
               LoginServicesIcons(
                 onTapFaccebook: () {},
-                onTapGoogle: () {
-                  Get.to(ChoiceScreen());
+                onTapGoogle: () async {
+                  await Auth.signInWithGoogle().then((value) {
+                    print(value!.email);
+                    Get.to(ChoiceScreen());
+                  });
                 },
               ),
             ],
