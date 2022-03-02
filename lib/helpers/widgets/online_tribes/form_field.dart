@@ -13,11 +13,13 @@ class CustomTextField extends StatelessWidget {
     required this.minLine,
     required this.height,
     required this.width,
+    required this.validate,
     this.hintText,
     this.onSave,
     this.controller,
     this.color,
     this.lableText,
+
   }) : super(key: key);
 
   final int minLine;
@@ -29,10 +31,12 @@ class CustomTextField extends StatelessWidget {
   Function? onSave;
   TextEditingController? controller;
   Color? color;
+  final Function validate;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      validator:(text) => validate(text),
       controller: controller,
       style: kTextfieldStyle,
       keyboardType: TextInputType.multiline,
