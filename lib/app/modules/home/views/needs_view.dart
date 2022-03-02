@@ -23,79 +23,82 @@ class NeedsView extends GetView<HomeController> {
         email: 'Test@test.com',
         needDescription: '');
     return Scaffold(
-      body: Form(
-        child: Column(
-          children: [
-            verticalSpaceMedium,
-            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-              horizontalSpaceExtraTiny,
-              IconButton(
-                  onPressed: () {},
-                  icon: Icon(
-                    Icons.search_off_rounded,
-                    size: 40,
-                  )),
-              Container(
-                width: 0.85.sw,
-                padding: EdgeInsets.symmetric(horizontal: 40, vertical: 20),
-                child: TypeAheadFormField(
-                    textFieldConfiguration: TextFieldConfiguration(
-                      controller: controller.cityController,
-                      decoration: outlineInputTextFormFieldStyle!.copyWith(
-                          label: Text(
-                        'місто',
-                        style: textfieldLableStyle,
-                      )),
-                    ),
-                    onSuggestionSelected: (City city) {
-                      controller.cityController.text = city.name;
-                    },
-                    itemBuilder: (_, City city) {
-                      return Text(
-                        city.name,
-                        style: headingBlackStyle,
-                      );
-                    },
-                    suggestionsCallback: (pattern) {
-                      return controller.getSuggestions(pattern);
-                    }),
-              ),
-            ]),
-            RoundedContainer(
-              screanHeight: 1.sh,
-              screanWidth: 1.sw,
-              height: 0.84.sh,
-              width: 1.sw,
-              /* bcColor: AppColors.primaryColorShade, */
-              child: ListView.builder(
-                itemCount: 23,
-                itemBuilder: (context, item) {
-                  return Center(
-                      child: Card(
-                    shape: RoundedRectangleBorder(
-                      side: BorderSide(
-                        color: AppColors.primaryColor,
+      body: SingleChildScrollView(
+        child: Form(
+          child: Column(
+            children: [
+              verticalSpaceMedium,
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                horizontalSpaceExtraTiny,
+                IconButton(
+                    onPressed: () {},
+                    icon: Icon(
+                      Icons.search_off_rounded,
+                      size: 40,
+                    )),
+                Container(
+                  width: 0.85.sw,
+                  padding: EdgeInsets.symmetric(horizontal: 40, vertical: 20),
+                  child: TypeAheadFormField(
+                      textFieldConfiguration: TextFieldConfiguration(
+                        controller: controller.cityController,
+                        decoration: outlineInputTextFormFieldStyle!.copyWith(
+                            label: Text(
+                          'місто',
+                          style: textfieldLableStyle,
+                        )),
                       ),
-                      borderRadius: BorderRadius.circular(15.0),
-                    ),
-                    child: ListTile(
-                      /* selectedTileColor: Colors.grey[300], */
+                      onSuggestionSelected: (City city) {
+                        controller.cityController.text = city.name;
+                      },
+                      itemBuilder: (_, City city) {
+                        return Text(
+                          city.name,
+                          style: headingBlackStyle,
+                        );
+                      },
+                      suggestionsCallback: (pattern) {
+                        return controller.getSuggestions(pattern);
+                      }),
+                ),
+              ]),
+              RoundedContainer(
+                screanHeight: 1.sh,
+                screanWidth: 1.sw,
+                height: 0.84.sh,
+                width: 1.sw,
+                /* bcColor: AppColors.primaryColorShade, */
+                child: ListView.builder(
+                  itemCount: 23,
+                  itemBuilder: (context, item) {
+                    return Center(
+
+                        child: Card(
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0)),
-                      leading: Icon(
-                        Icons.add_alert_sharp,
-                        size: 26,
+                        side: BorderSide(
+                          color: AppColors.primaryColor,
+                        ),
+                        borderRadius: BorderRadius.circular(15.0),
                       ),
-                      title: Text(
-                        'need.needTitle',
-                        style: headingBlackStyle,
+                      child: ListTile(
+                        selectedTileColor: Colors.grey[300],
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20.0)),
+                        leading: Icon(
+                          Icons.add_alert_sharp,
+                          size: 26,
+                        ),
+                        title: Text(
+                          'need.needTitle',
+                          style: headingBlackStyle,
+                        ),
                       ),
-                    ),
-                  ));
-                },
-              ),
-            )
-          ],
+                    ));
+                  },
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

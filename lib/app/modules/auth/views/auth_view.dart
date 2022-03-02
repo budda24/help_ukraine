@@ -12,7 +12,7 @@ import 'package:pomoc_ukrainie/helpers/theme/app_colors.dart';
 import 'package:pomoc_ukrainie/helpers/theme/text_styles.dart';
 import 'package:pomoc_ukrainie/helpers/theme/ui_helpers.dart';
 import 'package:pomoc_ukrainie/helpers/widgets/online_tribes/login_services_Icon.dart';
-import 'package:pomoc_ukrainie/helpers/widgets/online_tribes/main_button.dart';
+import 'package:pomoc_ukrainie/helpers/widgets/online_tribes/main_button.dart'; 
 
 import '../controllers/auth_controller.dart';
 
@@ -35,7 +35,6 @@ class AuthView extends GetView<AuthController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-             
               Container(
                 height: 380.h,
                 width: double.infinity,
@@ -46,7 +45,7 @@ class AuthView extends GetView<AuthController> {
                   ),
                 ),
               ),
-              verticalSpaceMedium,
+              verticalSpaceTiny,
               Text(
                 'Увійти за допомогою',
                 style: headingBlackStyle,
@@ -65,9 +64,9 @@ class AuthView extends GetView<AuthController> {
                 onTapGoogle: () async {
                   await Auth.signInWithGoogle().then((value) {
                     print(value!.email);
-
                   });
                 },
+                onTapApple: () {},
               ),
             ],
           ),
