@@ -17,11 +17,11 @@ class NeedsView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     var need = Need(
-        id: 'id',
         needTitle: 'need food',
         contact: 3332245,
         city: 'Warszawa',
-        email: 'Test@test.com');
+        email: 'Test@test.com',
+        needDescription: '');
     return Scaffold(
       body: Form(
         child: Column(
@@ -43,7 +43,7 @@ class NeedsView extends GetView<HomeController> {
                       controller: controller.cityController,
                       decoration: outlineInputTextFormFieldStyle!.copyWith(
                           label: Text(
-                        'Miasto',
+                        'місто',
                         style: textfieldLableStyle,
                       )),
                     ),

@@ -23,7 +23,7 @@ class OneLineTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 30.h),
+      /* margin: EdgeInsets.only(top: 30.h), */
       height: 70.h,
       width: 320.w,
       child: TextFormField(
