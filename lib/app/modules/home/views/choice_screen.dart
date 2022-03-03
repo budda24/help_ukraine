@@ -8,7 +8,10 @@ import 'package:pomoc_ukrainie/helpers/theme/app_colors.dart';
 import 'package:pomoc_ukrainie/helpers/theme/text_styles.dart';
 import 'package:pomoc_ukrainie/helpers/theme/ui_helpers.dart';
 
+import '../../../infrastructure/fb_services/auth/auth.dart';
+
 class ChoiceScreen extends GetView<HomeController> {
+
   const ChoiceScreen({Key? key}) : super(key: key);
 
   @override
@@ -68,7 +71,7 @@ class ChoiceScreen extends GetView<HomeController> {
               ),
              verticalSpaceExtraLarge,
               InkWell(
-                onTap: () => Get.to(HomeView()),
+                onTap: () => Auth.signOut(),
                 child: Container(
                   height: 300.h,
                   width: 300.w,

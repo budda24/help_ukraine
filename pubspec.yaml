@@ -15,6 +15,7 @@ dependencies:
   firebase_auth:
   cloud_firestore:
   google_sign_in: ^5.2.4
+  flutter_facebook_auth: ^4.1.1
   flutter_typeahead: ^3.2.4
   flutter:
     sdk: flutter

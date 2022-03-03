@@ -3,12 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 
 import 'package:get/get.dart';
+
 import 'package:pomoc_ukrainie/app/globals/global_controler.dart';
+import 'package:pomoc_ukrainie/app/routes/app_pages.dart';
 import 'package:pomoc_ukrainie/helpers/theme/alert_styles.dart';
 
+import 'third_party_status.dart';
+
 final auth = FirebaseAuth.instance;
+User? user;
 
 class Auth {
   final globalController = Get.find<GlobalController>();
@@ -23,7 +29,7 @@ class Auth {
 
   static Future<User?> signInWithGoogle(
       /* {required BuildContext context} */) async {
-    User? user;
+    /* User? user; */
 
     final GoogleSignIn googleSignIn = GoogleSignIn();
 
@@ -42,40 +48,70 @@ class Auth {
       try {
         final UserCredential userCredential =
             await auth.signInWithCredential(credential);
-
+            
         user = userCredential.user;
+        Get.offNamed(Routes.HOME);
       } on FirebaseAuthException catch (e) {
         if (e.code == 'account-exists-with-different-credential') {
-          // handle the error here
+          await googleSignIn.signOut();
+          Get.showSnackbar(customSnackbar(
+              'This account exists with different sign in provider'));
+          Get.offAllNamed(Routes.AUTH);
+          /* .then((value) => Get.showSnackbar(customSnackbar('You signing out.'))) */;
         } else if (e.code == 'invalid-credential') {
-          // handle the error here
+          Get.showSnackbar(customSnackbar('Unknown error has occured'));
         }
       } catch (e) {
         // handle the error here
-      }
-    }
+      } /* finally {
 
-    return user;
+      } */
+    }
   }
 
-  static Future<void> signOut({required BuildContext context}) async {
+  static Future<void> signOut() async {
     final GoogleSignIn googleSignIn = GoogleSignIn();
 
     try {
       if (!GetPlatform.isWeb) {
-        await googleSignIn.signOut();
+        await googleSignIn.signOut().then(
+            (value) => Get.showSnackbar(customSnackbar('You signing out.')));
       }
       //for webb
       /* await FirebaseAuth.instance.signOut(); */
     } catch (e) {
       Get.showSnackbar(customSnackbar('Error signing out. Try again.'));
-
-      /* ScaffoldMessenger.of(context).showSnackBar(
-        Authentication.customSnackBar(
-          content: 'Error signing out. Try again.',
-        ),
-      ); */
     }
+  }
+
+  static Future<void> signInWithFacebook() async {
+    try {
+      final LoginResult result = await FacebookAuth.instance.login();
+
+      final AuthCredential facebookCredential =
+          FacebookAuthProvider.credential(result.accessToken!.token);
+
+      final userCredential =
+          await auth.signInWithCredential(facebookCredential);
+
+      user = userCredential.user;
+
+      Get.offNamed(Routes.HOME);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'account-exists-with-different-credential') {
+        await FacebookAuth.instance.logOut();
+        Get.showSnackbar(customSnackbar(
+            'This account exists with different sign in provider'));
+        await Future.delayed(Duration(seconds: 1));
+        Get.offAllNamed(Routes.AUTH);
+      } else if (e.code == 'invalid-credential') {
+        Get.showSnackbar(customSnackbar('Unknown error has occured'));
+      }
+    } catch (e) {
+      print(e);
+    } /* finally {
+
+    } */
   }
 }
 

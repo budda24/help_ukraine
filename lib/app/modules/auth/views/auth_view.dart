@@ -58,12 +58,12 @@ class AuthView extends GetView<AuthController> {
                 textAlign: TextAlign.center,
               ),
               LoginServicesIcons(
-                onTapFaccebook: () {},
+                onTapFaccebook: () async {
+                 await Auth.signInWithFacebook();
+                 
+                },
                 onTapGoogle: () async {
-                  await Auth.signInWithGoogle().then((value) {
-                    print(value!.email);
-                    Get.to(ChoiceScreen());
-                  });
+                  await Auth.signInWithGoogle();
                 },
               ),
             ],
