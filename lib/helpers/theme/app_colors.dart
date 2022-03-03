@@ -33,6 +33,7 @@ class AppColors {
   static Color darkGreyColor = Color(0xff808080);
   static Color darkOrangeColor = Color(0xffE5A238);
   static Color errorRedColor = Color(0xffCD5D7D);
+  static Color transparentBlackColor = Colors.black54;
 
   /*  static Color? accentColor = const Color(0xFF312951);
   static Color? buttonColor = const Color(0xFF592AAE);

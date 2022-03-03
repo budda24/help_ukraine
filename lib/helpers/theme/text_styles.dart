@@ -32,9 +32,10 @@ TextStyle headlineOneStyle = TextStyle(
   fontFamily: regular,
 );
 TextStyle headingBoldStyle = TextStyle(
-  fontFamily: montserrat,
+  fontFamily: poppins,
   fontSize: 20.0.sp,
-  fontWeight: FontWeight.bold
+  height: 1.2,
+  // fontWeight: FontWeight.bold
 );
 
 TextStyle tribalNameStyle = TextStyle(

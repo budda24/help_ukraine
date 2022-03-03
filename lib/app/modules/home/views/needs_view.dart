@@ -4,6 +4,7 @@ import 'package:flutter_typeahead/flutter_typeahead.dart';
 
 import 'package:get/get.dart';
 import 'package:pomoc_ukrainie/app/modules/home/models/need.dart';
+import 'package:pomoc_ukrainie/app/modules/home/views/needs_details_screen.dart';
 import 'package:pomoc_ukrainie/helpers/theme/app_colors.dart';
 import 'package:pomoc_ukrainie/helpers/theme/ui_helpers.dart';
 
@@ -44,7 +45,7 @@ class NeedsView extends GetView<HomeController> {
                         controller: controller.cityController,
                         decoration: outlineInputTextFormFieldStyle!.copyWith(
                             label: Text(
-                          'місто',
+                          'Miasto',
                           style: textfieldLableStyle,
                         )),
                       ),
@@ -52,9 +53,12 @@ class NeedsView extends GetView<HomeController> {
                         controller.cityController.text = city.name;
                       },
                       itemBuilder: (_, City city) {
-                        return Text(
-                          city.name,
-                          style: headingBlackStyle,
+                        return ListTile(
+                          leading: Icon(Icons.location_city),
+                          title: Text(
+                            city.name,
+                            style: headingBlackStyle,
+                          ),
                         );
                       },
                       suggestionsCallback: (pattern) {
@@ -63,8 +67,7 @@ class NeedsView extends GetView<HomeController> {
                 ),
               ]),
               RoundedContainer(
-                screanHeight: 1.sh,
-                screanWidth: 1.sw,
+                borderCoplor: AppColors.primaryColor,
                 height: 0.84.sh,
                 width: 1.sw,
                 /* bcColor: AppColors.primaryColorShade, */
@@ -72,15 +75,18 @@ class NeedsView extends GetView<HomeController> {
                   itemCount: 23,
                   itemBuilder: (context, item) {
                     return Center(
-
                         child: Card(
                       shape: RoundedRectangleBorder(
                         side: BorderSide(
                           color: AppColors.primaryColor,
                         ),
-                        borderRadius: BorderRadius.circular(15.0),
+                        borderRadius: BorderRadius.circular(15.0.r),
                       ),
                       child: ListTile(
+                        contentPadding: EdgeInsets.all(10),
+                        onTap: () {
+                          Get.to(NeedsDetailsScreen());
+                        },
                         selectedTileColor: Colors.grey[300],
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20.0)),

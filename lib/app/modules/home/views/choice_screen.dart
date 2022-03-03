@@ -14,60 +14,61 @@ class ChoiceScreen extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
-
       body: SingleChildScrollView(
         child: Center(
           child: Column(
             children: [
               verticalSpaceExtraLarge,
-              Container(
-                 padding: EdgeInsets.all(20),
-                height: 300.h,
-                width: 300.w,
-                decoration: BoxDecoration(
-                  color: AppColors.whiteColor,
-                  border: Border.all(
-                    color: AppColors.primaryColor,
-                    width: 3.0.w,
+              InkWell(
+                onTap: () {
+                  Get.to(NeedsView());
+                },
+                child: Container(
+                  padding: EdgeInsets.all(20),
+                  height: 300.h,
+                  width: 300.w,
+                  decoration: BoxDecoration(
+                    color: AppColors.whiteColor,
+                    border: Border.all(
+                      color: AppColors.primaryColor,
+                      width: 3.0.w,
+                    ),
+                    borderRadius: BorderRadius.circular(15.0.r),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black54,
+                        blurRadius: 4,
+                        offset: Offset(2.w, 6.h), // Shadow position
+                      ),
+                    ],
+                    // gradient:
+                    //     LinearGradient(colors: [Colors.indigo, Colors.blueAccent]),
                   ),
-                  borderRadius: BorderRadius.circular(15.0.r),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black54,
-                      blurRadius: 4,
-                      offset: Offset(2.w, 6.h), // Shadow position
-                    ),
-                  ],
-                  // gradient:
-                  //     LinearGradient(colors: [Colors.indigo, Colors.blueAccent]),
-                ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(15),
-                  child: GridTile(
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(15),
+                    child: GridTile(
+                      child: Image.asset(
+                        'assets/support.png',
+                        // fit: BoxFit.cover,
 
-                    child: Image.asset(
-
-                      'assets/support.png',
-                      // fit: BoxFit.cover,
-
-                      cacheHeight: 200.h.toInt(),
-                      cacheWidth: 200.h.toInt(),
-                    ),
-                    header: Text(
-                      'Я хочу допомогти',
-                      textAlign: TextAlign.center,
-                      style: headingBlackStyle,
-                    ),
-                    footer: Text(
-                      'Chcę pomóc ',
-                      textAlign: TextAlign.center,
-                      style: headingBlackStyle,
+                        cacheHeight: 200.h.toInt(),
+                        cacheWidth: 200.h.toInt(),
+                      ),
+                      header: Text(
+                        'Я хочу допомогти',
+                        textAlign: TextAlign.center,
+                        style: headingBlackStyle,
+                      ),
+                      footer: Text(
+                        'Chcę pomóc ',
+                        textAlign: TextAlign.center,
+                        style: headingBlackStyle,
+                      ),
                     ),
                   ),
                 ),
               ),
-             verticalSpaceExtraLarge,
+              verticalSpaceExtraLarge,
               InkWell(
                 onTap: () => Get.to(HomeView()),
                 child: Container(
@@ -94,10 +95,8 @@ class ChoiceScreen extends GetView<HomeController> {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(15),
                     child: GridTile(
-
                       child: Image.asset(
                         'assets/help.png',
-
                         cacheHeight: 200.h.toInt(),
                         cacheWidth: 200.h.toInt(),
                       ),
@@ -115,8 +114,6 @@ class ChoiceScreen extends GetView<HomeController> {
                   ),
                 ),
               ),
-
-
             ],
           ),
         ),
