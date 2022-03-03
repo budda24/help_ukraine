@@ -17,69 +17,72 @@ class ChoiceScreen extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue.shade100,
-
       body: SingleChildScrollView(
         child: Center(
           child: Column(
             children: [
               verticalSpaceExtraLarge,
-              Container(
-                height: 300.h,
-                width: 300.w,
-                decoration: BoxDecoration(
-                  color: AppColors.whiteColor,
-                  border: Border.all(
-                    color: Colors.black54,
-                    width: 1.0.w,
-                  ),
-                  borderRadius: BorderRadius.circular(15.0.r),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black54,
-                      blurRadius: 4,
-                      offset: Offset(2.w, 6.h), // Shadow position
-                    ),
-                  ],
-                  // gradient:
-                  //     LinearGradient(colors: [Colors.indigo, Colors.blueAccent]),
-                ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(15),
-                  child: GridTile(
-
-                    child: Image.asset(
-
-                      'assets/heart.png',
-                      // fit: BoxFit.cover,
-
-                      cacheHeight: 200.h.toInt(),
-                      cacheWidth: 200.h.toInt(),
-                    ),
-                    header: Text(
-                      'Я хочу допомогти',
-                      textAlign: TextAlign.center,
-                      style: headingBlackStyle,
-                    ),
-                    footer: Text(
-                      'Chcę pomóc ',
-                      textAlign: TextAlign.center,
-                      style: headingBlackStyle,
-                    ),
-                  ),
-                ),
-              ),
-             verticalSpaceExtraLarge,
               InkWell(
-                onTap: () => Auth.signOut(),
+                onTap: () {
+                  Get.to(NeedsView());
+                },
                 child: Container(
+                  padding: EdgeInsets.all(20),
                   height: 300.h,
                   width: 300.w,
                   decoration: BoxDecoration(
                     color: AppColors.whiteColor,
                     border: Border.all(
-                      color: Colors.black54,
-                      width: 1.0.w,
+                      color: AppColors.primaryColor,
+                      width: 3.0.w,
+                    ),
+                    borderRadius: BorderRadius.circular(15.0.r),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black54,
+                        blurRadius: 4,
+                        offset: Offset(2.w, 6.h), // Shadow position
+                      ),
+                    ],
+                    // gradient:
+                    //     LinearGradient(colors: [Colors.indigo, Colors.blueAccent]),
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(15),
+                    child: GridTile(
+                      child: Image.asset(
+                        'assets/support.png',
+                        // fit: BoxFit.cover,
+
+                        cacheHeight: 200.h.toInt(),
+                        cacheWidth: 200.h.toInt(),
+                      ),
+                      header: Text(
+                        'Я хочу допомогти',
+                        textAlign: TextAlign.center,
+                        style: headingBlackStyle,
+                      ),
+                      footer: Text(
+                        'Chcę pomóc ',
+                        textAlign: TextAlign.center,
+                        style: headingBlackStyle,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              verticalSpaceExtraLarge,
+              InkWell(
+                onTap: () => Auth.signOut(),
+                child: Container(
+                  padding: EdgeInsets.all(20),
+                  height: 300.h,
+                  width: 300.w,
+                  decoration: BoxDecoration(
+                    color: AppColors.whiteColor,
+                    border: Border.all(
+                      color: AppColors.primaryColor,
+                      width: 3.0.w,
                     ),
                     borderRadius: BorderRadius.circular(15.0),
                     boxShadow: [
@@ -95,10 +98,8 @@ class ChoiceScreen extends GetView<HomeController> {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(15),
                     child: GridTile(
-
                       child: Image.asset(
-                        'assets/hand.png',
-
+                        'assets/help.png',
                         cacheHeight: 200.h.toInt(),
                         cacheWidth: 200.h.toInt(),
                       ),
@@ -116,8 +117,6 @@ class ChoiceScreen extends GetView<HomeController> {
                   ),
                 ),
               ),
-
-
             ],
           ),
         ),

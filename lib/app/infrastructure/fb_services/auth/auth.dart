@@ -11,7 +11,6 @@ import 'package:pomoc_ukrainie/app/globals/global_controler.dart';
 import 'package:pomoc_ukrainie/app/routes/app_pages.dart';
 import 'package:pomoc_ukrainie/helpers/theme/alert_styles.dart';
 
-import 'third_party_status.dart';
 
 final auth = FirebaseAuth.instance;
 User? user;
@@ -48,7 +47,7 @@ class Auth {
       try {
         final UserCredential userCredential =
             await auth.signInWithCredential(credential);
-            
+
         user = userCredential.user;
         Get.offNamed(Routes.HOME);
       } on FirebaseAuthException catch (e) {
