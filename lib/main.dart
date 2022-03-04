@@ -27,7 +27,8 @@ class MyApp extends StatelessWidget {
               builder: () => GetMaterialApp(
                 title: "Application",
                 getPages: AppPages.routes,
-                home: ChoiceScreen(),
+                initialRoute: Routes.AUTH,
+                /* home: ChoiceScreen(), */
                 defaultTransition: Transition.fadeIn,
                 debugShowCheckedModeBanner: false,
               ),
