@@ -18,19 +18,10 @@ class HomeView extends GetView<HomeController> {
   var controller = Get.put(HomeController());
   @override
   Widget build(BuildContext context) {
-    /* ScreenUtil.init(
-        BoxConstraints(
-            maxWidth: MediaQuery.of(context).size.width,
-            maxHeight: MediaQuery.of(context).size.height),
-        designSize: Size(411, 809),
-        context: context,
-        minTextAdapt: true,
-        orientation: Orientation.portrait); */
     return SafeArea(
       child: GestureDetector(
         onTap: controller.unFocuseNode,
         child: Scaffold(
-          /* backgroundColor: AppColors.primaryColorShade, */
           floatingActionButton: IconButton(
             iconSize: 80,
             alignment: Alignment.center,
