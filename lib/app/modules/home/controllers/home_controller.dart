@@ -2,6 +2,9 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:geocode/geocode.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:pomoc_ukrainie/app/data/polish_city.dart';
 import 'package:pomoc_ukrainie/app/infrastructure/fb_services/db_services/db_postgresem.dart';
@@ -17,6 +20,7 @@ class HomeController extends GetxController {
   TextEditingController cityController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   TextEditingController needTitleController = TextEditingController();
+  TextEditingController needAdressController = TextEditingController();
 
   final formKey = GlobalKey<FormState>();
 
@@ -61,7 +65,7 @@ class HomeController extends GetxController {
     return formKey.currentState!.validate();
   }
 
-  Future<void>postNeed() async {
+  Future<void> postNeed() async {
     if (validateForm()) {
       var need = Need(
           needTitle: needTitleController.text,
@@ -75,6 +79,49 @@ class HomeController extends GetxController {
         Get.showSnackbar(
             customSnackbar('надіслати потребу не вдалося, тому що: $e'));
       }
+    }
+  }
+
+  Future<Position> _getGeoLocationPosition() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      await Geolocator.openLocationSettings();
+      return Future.error('Location services are disabled.');
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return Future.error('Location permissions are denied');
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      return Future.error(
+          'Location permissions are permanently denied, we cannot request permissions.');
+    }
+
+    return await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+  }
+
+  Future<void> GetAddressFromLatLong() async {
+    var position = await _getGeoLocationPosition();
+    if (position.latitude != null || position.altitude != null) {
+      List<Placemark> placemarks =
+          await placemarkFromCoordinates(position.latitude, position.longitude);
+      /* print(placemarks); */
+      Placemark place = placemarks[0];
+      needAdressController.text = place.street! + place.locality!;
+
+      /* print(
+        /* Mazowieckie, Warszawa, 20, 02-421, Księdza Juliana Chrościckiego 20 20  Księdza Juliana Chrościckiego */
+          '${place.administrativeArea}, ${place.locality}, ${place.name}, ${place.postalCode}, ${place.street} ${place.subThoroughfare}  ${place.thoroughfare}');
+    } */
     }
   }
 

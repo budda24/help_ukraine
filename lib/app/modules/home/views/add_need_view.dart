@@ -18,14 +18,14 @@ class HomeView extends GetView<HomeController> {
   var controller = Get.put(HomeController());
   @override
   Widget build(BuildContext context) {
-    ScreenUtil.init(
+    /* ScreenUtil.init(
         BoxConstraints(
             maxWidth: MediaQuery.of(context).size.width,
             maxHeight: MediaQuery.of(context).size.height),
         designSize: Size(411, 809),
         context: context,
         minTextAdapt: true,
-        orientation: Orientation.portrait);
+        orientation: Orientation.portrait); */
     return SafeArea(
       child: GestureDetector(
         onTap: controller.unFocuseNode,
@@ -35,10 +35,10 @@ class HomeView extends GetView<HomeController> {
             iconSize: 80,
             alignment: Alignment.center,
             icon: Icon(Icons.add_alert),
-            onPressed: () {
-              controller.postNeed();
-              Get.to(NeedsView());
-
+            onPressed: () async {
+             await controller.GetAddressFromLatLong();
+              /* controller.postNeed(); */
+              /* Get.to(NeedsView()); */
               //add need
             },
           ),
@@ -52,7 +52,7 @@ class HomeView extends GetView<HomeController> {
                   Image.asset(
                     'assets/data.png',
                   ),
-                  Container(
+                   Container(
                     padding: EdgeInsets.symmetric(
                       horizontal: 40,
                       vertical: 10,
@@ -91,6 +91,23 @@ class HomeView extends GetView<HomeController> {
                         }),
                   ),
                   verticalSpaceSmall,
+                   GetBuilder<HomeController>(
+                     initState: (state) => controller.GetAddressFromLatLong(),
+                     builder:(HomeController controller) => Container(
+                      padding: EdgeInsets.symmetric(horizontal: 40),
+                      child: CustomTextField(
+                        validate: (text) => controller.validateTextField(text),
+                        maxline: 10,
+                        minLine: 5,
+                        height: 120.h,
+                        width: 0.8.sw,
+                        controller: controller.needAdressController,
+                        color: AppColors.primaryColorShade,
+                        lableText: 'adress',
+                      ),
+                                     ),
+                   ),
+                  verticalSpaceSmall,
                   OneLineTextField(
                       keybordhType: TextInputType.name,
                       validator: (text) {
@@ -99,7 +116,7 @@ class HomeView extends GetView<HomeController> {
                       //imię i nazwisko/
                       lable: "Ім'я та прізвище",
                       controller: controller.nameController),
-                      verticalSpaceSmall,
+                  verticalSpaceSmall,
                   OneLineTextField(
                       validator: (text) {
                         return controller.validateTextField(text ?? '');
@@ -107,7 +124,7 @@ class HomeView extends GetView<HomeController> {
                       //potrzeba tytuł/
                       lable: "потрібен титул",
                       controller: controller.needTitleController),
-                      verticalSpaceSmall,
+                  verticalSpaceSmall,
                   OneLineTextField(
                       keybordhType: TextInputType.number,
                       validator: (text) {
@@ -116,14 +133,13 @@ class HomeView extends GetView<HomeController> {
                       //nr.telefonu/
                       lable: "телефонний номер",
                       controller: controller.contactNumberController),
-                    verticalSpaceSmall,
+                  verticalSpaceSmall,
                   Container(
-
                     padding: EdgeInsets.symmetric(horizontal: 40),
                     child: CustomTextField(
                       validate: (text) => controller.validateTextField(text),
                       maxline: 10,
-                      minLine: 5,
+                      minLine: 2,
                       height: 120.h,
                       width: 0.8.sw,
                       controller: controller.descriptionController,
@@ -140,3 +156,41 @@ class HomeView extends GetView<HomeController> {
     );
   }
 }
+/* Container(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 40,
+                      vertical: 10,
+                    ),
+                    child: TypeAheadFormField(
+                        validator: (text) {
+                          if (controller.getSuggestions(text ?? '').isEmpty) {
+                            //there is no such available city
+                            return 'такого доступного міста немає';
+                          }
+                          return controller.validateTextField(text ?? '');
+                        },
+                        textFieldConfiguration: TextFieldConfiguration(
+                          controller: controller.cityController,
+                          decoration: outlineInputTextFormFieldStyle!.copyWith(
+                              label: Text(
+                            //city
+                            'місто',
+                            style: textfieldLableStyle,
+                          )),
+                        ),
+                        onSuggestionSelected: (City city) {
+                          controller.cityController.text = city.name;
+                        },
+                        itemBuilder: (_, City city) {
+                          return ListTile(
+                            leading: Icon(Icons.location_city),
+                            title: Text(
+                              city.name,
+                              style: headingBlackStyle,
+                            ),
+                          );
+                        },
+                        suggestionsCallback: (pattern) {
+                          return controller.getSuggestions(pattern);
+                        }),
+                  ), */

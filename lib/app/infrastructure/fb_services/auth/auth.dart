@@ -49,6 +49,11 @@ class Auth {
             await auth.signInWithCredential(credential);
 
         user = userCredential.user;
+
+        // once you signin, you can pass email, userId to the api (Depends upon what parameters API developer is asking)
+        // After that, in response you are going to get an API Token (Most probably JWT Token), store that token into GetStorage (Local Storage)
+        // When you logout, clear that token
+        // If token is null or empty, user is not logged in, and vice versa
         Get.offNamed(Routes.HOME);
       } on FirebaseAuthException catch (e) {
         if (e.code == 'account-exists-with-different-credential') {

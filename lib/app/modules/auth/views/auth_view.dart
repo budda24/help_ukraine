@@ -21,14 +21,14 @@ class AuthView extends GetView<AuthController> {
   var globalController = Get.put(GlobalController());
   @override
   Widget build(BuildContext context) {
-    ScreenUtil.init(
+    /* ScreenUtil.init(
         BoxConstraints(
             maxWidth: MediaQuery.of(context).size.width,
             maxHeight: MediaQuery.of(context).size.height),
         designSize: Size(411, 809),
         context: context,
         minTextAdapt: true,
-        orientation: Orientation.portrait);
+        orientation: Orientation.portrait); */
     return GestureDetector(
       onTap: globalController.unFocuseNode,
       child: Scaffold(
