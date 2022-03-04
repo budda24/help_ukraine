@@ -10,7 +10,11 @@ import 'package:pomoc_ukrainie/helpers/theme/app_colors.dart';
 import 'package:pomoc_ukrainie/helpers/theme/text_styles.dart';
 import 'package:pomoc_ukrainie/helpers/theme/ui_helpers.dart';
 
-class ChoiceScreen extends StatelessWidget {
+import '../../../infrastructure/fb_services/auth/auth.dart';
+import '../../home/controllers/home_controller.dart';
+
+class ChoiceScreen extends GetView<HomeController> {
+
   const ChoiceScreen({Key? key}) : super(key: key);
 
 
@@ -81,7 +85,7 @@ class ChoiceScreen extends StatelessWidget {
               ),
               verticalSpaceExtraLarge,
               InkWell(
-                onTap: () =>Get.toNamed(Routes.AUTH),
+                onTap: () => Auth.signOut(),
                 child: Container(
                   padding: EdgeInsets.all(20),
                   height: 300.h,

@@ -17,12 +17,6 @@ import '../models/city.dart';
 class NeedsView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
-    var need = Need(
-        needTitle: 'need food',
-        contact: 3332245,
-        city: 'Warszawa',
-        email: 'Test@test.com',
-        needDescription: '');
     return Scaffold(
       body: SingleChildScrollView(
         child: Form(
@@ -51,6 +45,7 @@ class NeedsView extends GetView<HomeController> {
                       ),
                       onSuggestionSelected: (City city) {
                         controller.cityController.text = city.name;
+                        //featch the needs fo currant city
                       },
                       itemBuilder: (_, City city) {
                         return ListTile(
