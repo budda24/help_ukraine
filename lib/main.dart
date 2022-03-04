@@ -5,7 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:pomoc_ukrainie/helpers/theme/screen_sizes.dart';
 
-import 'app/modules/home/views/choice_screen.dart';
+import 'app/modules/auth/views/choice_screen.dart';
 import 'app/routes/app_pages.dart';
 
 void main() async {
