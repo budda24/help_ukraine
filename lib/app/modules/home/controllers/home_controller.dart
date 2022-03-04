@@ -116,7 +116,7 @@ class HomeController extends GetxController {
           await placemarkFromCoordinates(position.latitude, position.longitude);
       /* print(placemarks); */
       Placemark place = placemarks[0];
-      needAdressController.text = place.street! + place.locality!;
+      needAdressController.text = '${place.street!} \n ${place.postalCode!}';
 
       /* print(
         /* Mazowieckie, Warszawa, 20, 02-421, Księdza Juliana Chrościckiego 20 20  Księdza Juliana Chrościckiego */
