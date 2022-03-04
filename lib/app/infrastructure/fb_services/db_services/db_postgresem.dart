@@ -11,8 +11,8 @@ Future<http.Response> createAlbum(Need need) {
       'Content-Type': 'application/json; charset=UTF-8',
     },
     body: jsonEncode(<String, dynamic>{
-      'needTitle':need.needTitle,
-      'needDescription':need.needDescription,
+      'needTitle':need.title,
+      'needDescription':need.description,
       'contact':need.contact.toString(),
       'city':need.city,
       'email':need.email,

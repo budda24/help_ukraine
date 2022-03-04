@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -10,7 +12,6 @@ import 'package:get/get.dart';
 import 'package:pomoc_ukrainie/app/globals/global_controler.dart';
 import 'package:pomoc_ukrainie/app/routes/app_pages.dart';
 import 'package:pomoc_ukrainie/helpers/theme/alert_styles.dart';
-
 
 final auth = FirebaseAuth.instance;
 User? user;
@@ -26,9 +27,8 @@ class Auth {
     return firebaseApp;
   }
 
-  static Future<User?> signInWithGoogle(
-      /* {required BuildContext context} */) async {
-    /* User? user; */
+  static Future<User?> signInWithGoogle() async {
+    sleep(Duration(seconds: 5));
 
     final GoogleSignIn googleSignIn = GoogleSignIn();
 

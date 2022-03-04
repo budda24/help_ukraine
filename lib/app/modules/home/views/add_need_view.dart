@@ -3,42 +3,50 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_translator/google_translator.dart';
+import 'package:pomoc_ukrainie/app/globals/global_controler.dart';
 import 'package:pomoc_ukrainie/helpers/theme/ui_helpers.dart';
 
 import '../../../../helpers/theme/app_colors.dart';
 import '../../../../helpers/theme/form_field_styles.dart';
 import '../../../../helpers/widgets/online_tribes/form_field.dart';
 import '../../../../helpers/widgets/online_tribes/one_line_textField.dart';
+import '../../../infrastructure/translate_sevices/google_cloud_trans.dart';
 import '../controllers/home_controller.dart';
 import 'package:pomoc_ukrainie/helpers/theme/text_styles.dart';
 import '../models/city.dart';
+import '../models/need.dart';
 import 'needs_view.dart';
 
 class HomeView extends GetView<HomeController> {
-  var controller = Get.put(HomeController());
+  var globalController = Get.put(GlobalController());
+  Need need = Need(
+      title: 'piasek',
+      description: 'ma swoj kraj pochodzenia',
+      contact: 434,
+      city: 'Warszawa',
+      email: 'email@wp.pl');
+
   @override
   Widget build(BuildContext context) {
-    /* ScreenUtil.init(
-        BoxConstraints(
-            maxWidth: MediaQuery.of(context).size.width,
-            maxHeight: MediaQuery.of(context).size.height),
-        designSize: Size(411, 809),
-        context: context,
-        minTextAdapt: true,
-        orientation: Orientation.portrait); */
     return SafeArea(
       child: GestureDetector(
-        onTap: controller.unFocuseNode,
+        onTap: globalController.unFocuseNode,
         child: Scaffold(
-          /* backgroundColor: AppColors.primaryColorShade, */
           floatingActionButton: IconButton(
             iconSize: 80,
             alignment: Alignment.center,
             icon: Icon(Icons.add_alert),
             onPressed: () async {
-             await controller.GetAddressFromLatLong();
+               await need.translateUkrainian();
+              print('${need.description}/*  */');
+              var response = await TranslationServices.translate(
+                  text: 'Potrzebuje ziemniakow', language: 'uk');
+              /* print(response) */
+              /* await controller.GetAddressFromLatLong(); */
               /* controller.postNeed(); */
               /* Get.to(NeedsView()); */
+
               //add need
             },
           ),
@@ -52,7 +60,7 @@ class HomeView extends GetView<HomeController> {
                   Image.asset(
                     'assets/data.png',
                   ),
-                   Container(
+                  Container(
                     padding: EdgeInsets.symmetric(
                       horizontal: 40,
                       vertical: 10,
@@ -91,22 +99,22 @@ class HomeView extends GetView<HomeController> {
                         }),
                   ),
                   verticalSpaceSmall,
-                   GetBuilder<HomeController>(
-                     initState: (state) => controller.GetAddressFromLatLong(),
-                     builder:(HomeController controller) => Container(
+                  GetBuilder<HomeController>(
+                    initState: (state) => controller.GetAddressFromLatLong(),
+                    builder: (HomeController controller) => Container(
                       padding: EdgeInsets.symmetric(horizontal: 40),
                       child: CustomTextField(
                         validate: (text) => controller.validateTextField(text),
-                        maxline: 10,
-                        minLine: 5,
+                        maxline: 6,
+                        minLine: 4,
                         height: 120.h,
                         width: 0.8.sw,
                         controller: controller.needAdressController,
                         color: AppColors.primaryColorShade,
                         lableText: 'adress',
                       ),
-                                     ),
-                   ),
+                    ),
+                  ),
                   verticalSpaceSmall,
                   OneLineTextField(
                       keybordhType: TextInputType.name,
@@ -139,7 +147,7 @@ class HomeView extends GetView<HomeController> {
                     child: CustomTextField(
                       validate: (text) => controller.validateTextField(text),
                       maxline: 10,
-                      minLine: 2,
+                      minLine: 5,
                       height: 120.h,
                       width: 0.8.sw,
                       controller: controller.descriptionController,

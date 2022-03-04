@@ -1,37 +1,46 @@
 import 'dart:convert';
 
-Need cityFromJson(String str) => Need.fromJson(json.decode(str));
+import 'package:pomoc_ukrainie/app/infrastructure/translate_sevices/google_cloud_trans.dart';
 
-String cityToJson(Need data) => json.encode(data.toJson());
+Need needFromJson(String str) => Need.fromJson(json.decode(str));
+
+String needToJson(Need data) => json.encode(data.toJson());
 
 class Need {
   Need({
-    required this.needTitle,
-    required this.needDescription,
+    required this.title,
+    required this.description,
     required this.contact,
     required this.city,
     required this.email,
   });
 
-  String needTitle;
-  String needDescription;
+  String title;
+  String description;
   int contact;
   String city;
   String email;
 
   factory Need.fromJson(Map<String, dynamic> json) => Need(
-        needTitle: json["needTitle"],
-        needDescription: json["needDescription"],
+        title: json["needTitle"],
+        description: json["needDescription"],
         contact: json["contact"],
         city: json["city"],
         email: json["email"],
       );
 
   Map<String, dynamic> toJson() => {
-        "needTitle": needTitle,
-        "needDescription": needDescription,
+        "needTitle": title,
+        "needDescription": description,
         "contact": contact,
         "city": city,
         "email": email,
       };
+
+  translateUkrainian() async{
+    this.city = await TranslationServices.translate(text: this.city, language: 'uk');
+    this.email = await TranslationServices.translate(text: this.email, language: 'uk');
+    this.description = await TranslationServices.translate(text: this.description, language: 'uk');
+    this.title = await TranslationServices.translate(text: this.title, language: 'uk');
+}
 }

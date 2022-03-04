@@ -68,13 +68,13 @@ class HomeController extends GetxController {
   Future<void> postNeed() async {
     if (validateForm()) {
       var need = Need(
-          needTitle: needTitleController.text,
-          needDescription: descriptionController.text,
+          title: needTitleController.text,
+          description: descriptionController.text,
           contact: int.parse(contactNumberController.text),
           city: cityController.text,
           email: 'test@test.com');
       try {
-        await DbPosgress().createAlbum(need).then((value) => print(value.body));
+        /* await DbPosgress().createAlbum(need).then((value) => print(value.body)); */
       } catch (e) {
         Get.showSnackbar(
             customSnackbar('надіслати потребу не вдалося, тому що: $e'));
@@ -111,23 +111,18 @@ class HomeController extends GetxController {
 
   Future<void> GetAddressFromLatLong() async {
     var position = await _getGeoLocationPosition();
+
     if (position.latitude != null || position.altitude != null) {
       List<Placemark> placemarks =
           await placemarkFromCoordinates(position.latitude, position.longitude);
-      /* print(placemarks); */
       Placemark place = placemarks[0];
-      needAdressController.text = place.street! + place.locality!;
 
-      /* print(
-        /* Mazowieckie, Warszawa, 20, 02-421, Księdza Juliana Chrościckiego 20 20  Księdza Juliana Chrościckiego */
-          '${place.administrativeArea}, ${place.locality}, ${place.name}, ${place.postalCode}, ${place.street} ${place.subThoroughfare}  ${place.thoroughfare}');
-    } */
+      /* to write in the form field */
+      needAdressController.text = '${place.street!} \n ${place.postalCode!}';
     }
   }
 
-  void unFocuseNode() {
-    Get.focusScope!.unfocus();
-  }
+
 
   final count = 0.obs;
   @override
