@@ -44,6 +44,7 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+/android/app/src/main/res/values/strings.xml
 
-#project files 
+#project files
 project_files/
