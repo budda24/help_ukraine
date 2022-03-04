@@ -1,18 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:pomoc_ukrainie/app/modules/home/controllers/home_controller.dart';
+/* import 'package:pomoc_ukrainie/app/modules/auth/controllers/auth_controller.dart';
+import 'package:pomoc_ukrainie/app/modules/home/controllers/home_controller.dart'; */
 import 'package:pomoc_ukrainie/app/modules/home/views/add_need_view.dart';
 import 'package:pomoc_ukrainie/app/modules/home/views/needs_view.dart';
+import 'package:pomoc_ukrainie/app/routes/app_pages.dart';
 import 'package:pomoc_ukrainie/helpers/theme/app_colors.dart';
 import 'package:pomoc_ukrainie/helpers/theme/text_styles.dart';
 import 'package:pomoc_ukrainie/helpers/theme/ui_helpers.dart';
 
-class ChoiceScreen extends GetView<HomeController> {
+class ChoiceScreen extends StatelessWidget {
   const ChoiceScreen({Key? key}) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.init(
+        BoxConstraints(
+            maxWidth: MediaQuery.of(context).size.width,
+            maxHeight: MediaQuery.of(context).size.height),
+        designSize: Size(411, 809),
+        context: context,
+        minTextAdapt: true,
+        orientation: Orientation.portrait);
     return Scaffold(
       body: SingleChildScrollView(
         child: Center(
@@ -21,7 +32,7 @@ class ChoiceScreen extends GetView<HomeController> {
               verticalSpaceExtraLarge,
               InkWell(
                 onTap: () {
-                  Get.to(NeedsView());
+                  Get.toNamed(Routes.NEEDS);
                 },
                 child: Container(
                   padding: EdgeInsets.all(20),
@@ -70,7 +81,7 @@ class ChoiceScreen extends GetView<HomeController> {
               ),
               verticalSpaceExtraLarge,
               InkWell(
-                onTap: () => Get.to(HomeView()),
+                onTap: () =>Get.toNamed(Routes.AUTH),
                 child: Container(
                   padding: EdgeInsets.all(20),
                   height: 300.h,
