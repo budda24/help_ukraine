@@ -17,7 +17,6 @@ class ChoiceScreen extends GetView<HomeController> {
 
   const ChoiceScreen({Key? key}) : super(key: key);
 
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -80,7 +79,7 @@ class ChoiceScreen extends GetView<HomeController> {
                   ),
                   verticalSpaceExtraLarge,
                   InkWell(
-                    onTap: () => Auth.signOut(),
+                    onTap: () => Get.toNamed(Routes.AUTH),
                     child: Container(
                       padding: EdgeInsets.all(20),
                       height: 300.h,
