@@ -8,6 +8,12 @@ class AuthController extends GetxController {
   var globalController = Get.put(GlobalController());
 
   var auth = Auth();
+  bool isLoading = false;
+
+  void toogleIsLoading() {
+    isLoading = !isLoading;
+    update();
+  }
 
   final count = 0.obs;
   @override

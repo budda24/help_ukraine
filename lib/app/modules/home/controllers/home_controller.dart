@@ -68,8 +68,8 @@ class HomeController extends GetxController {
   Future<void> postNeed() async {
     if (validateForm()) {
       var need = Need(
-          needTitle: needTitleController.text,
-          needDescription: descriptionController.text,
+          title: needTitleController.text,
+          description: descriptionController.text,
           contact: int.parse(contactNumberController.text),
           city: cityController.text,
           email: 'test@test.com');

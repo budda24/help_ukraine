@@ -19,54 +19,58 @@ import '../controllers/auth_controller.dart';
 import 'choice_screen.dart';
 
 class AuthView extends GetView<AuthController> {
+  /* var controller = Get.find<AuthController>(); */
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       child: Scaffold(
-        body: Center(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Container(
-                height: 380.h,
-                width: double.infinity,
-                child: Center(
-                  child: Image.asset(
-                    'assets/07-Lighthouse.png',
-                    fit: BoxFit.fill,
+        body: GetBuilder<AuthController>(
+          builder: (controller) => Center(
+            child: controller.isLoading
+                ? LinearProgressIndicator()
+                : Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Container(
+                        height: 380.h,
+                        width: double.infinity,
+                        child: Center(
+                          child: Image.asset(
+                            'assets/07-Lighthouse.png',
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                      ),
+                      verticalSpaceTiny,
+                      Text(
+                        'Увійти за допомогою',
+                        style: headingBlackStyle,
+                        textAlign: TextAlign.center,
+                      ),
+                      verticalSpaceTiny,
+                      Text(
+                        'Zaloguj się przez',
+                        style: headingBlackStyle,
+                        textAlign: TextAlign.center,
+                      ),
+                      LoginServicesIcons(
+                        onTapFaccebook: () async {
+                          await Auth.signInWithFacebook();
+                        },
+                        onTapGoogle: () async {
+                          controller.toogleIsLoading();
+                          print(controller.isLoading);
+                          await Auth.signInWithGoogle();
+                        },
+                        onTapApple: () {
+                          Get.to(UserProfile());
+                        },
+                      ),
+                    ],
                   ),
-                ),
-              ),
-              verticalSpaceTiny,
-              Text(
-                'Увійти за допомогою',
-                style: headingBlackStyle,
-                textAlign: TextAlign.center,
-              ),
-              verticalSpaceTiny,
-              Text(
-                'Zaloguj się przez',
-                style: headingBlackStyle,
-                textAlign: TextAlign.center,
-              ),
-              LoginServicesIcons(
-                onTapFaccebook: () async {
-                 await Auth.signInWithFacebook();
-
-                },
-                onTapGoogle: () async {
-                  await Auth.signInWithGoogle();
-                },
-                onTapApple: () {
-                  Get.to(UserProfile());
-                },
-              ),
-            ],
           ),
         ),
       ),
-    ) /* ,
-    ) */
-        ;
+    );
   }
 }

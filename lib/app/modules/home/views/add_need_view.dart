@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_translator/google_translator.dart';
 import 'package:pomoc_ukrainie/app/globals/global_controler.dart';
 import 'package:pomoc_ukrainie/helpers/theme/ui_helpers.dart';
 
@@ -10,13 +11,21 @@ import '../../../../helpers/theme/app_colors.dart';
 import '../../../../helpers/theme/form_field_styles.dart';
 import '../../../../helpers/widgets/online_tribes/form_field.dart';
 import '../../../../helpers/widgets/online_tribes/one_line_textField.dart';
+import '../../../infrastructure/translate_sevices/google_cloud_trans.dart';
 import '../controllers/home_controller.dart';
 import 'package:pomoc_ukrainie/helpers/theme/text_styles.dart';
 import '../models/city.dart';
+import '../models/need.dart';
 import 'needs_view.dart';
 
 class HomeView extends GetView<HomeController> {
   var globalController = Get.put(GlobalController());
+  Need need = Need(
+      title: 'piasek',
+      description: 'ma swoj kraj pochodzenia',
+      contact: 434,
+      city: 'Warszawa',
+      email: 'email@wp.pl');
 
   @override
   Widget build(BuildContext context) {
@@ -29,9 +38,15 @@ class HomeView extends GetView<HomeController> {
             alignment: Alignment.center,
             icon: Icon(Icons.add_alert),
             onPressed: () async {
-              await controller.GetAddressFromLatLong();
+               await need.translateUkrainian();
+              print('${need.description}/*  */');
+              var response = await TranslationServices.translate(
+                  text: 'Potrzebuje ziemniakow', language: 'uk');
+              /* print(response) */
+              /* await controller.GetAddressFromLatLong(); */
               /* controller.postNeed(); */
               /* Get.to(NeedsView()); */
+
               //add need
             },
           ),
