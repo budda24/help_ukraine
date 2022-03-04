@@ -25,9 +25,7 @@ class MyApp extends StatelessWidget {
               designSize: ScreenSizes(constraints: constraints).getScreenSize(),
               minTextAdapt: true,
               builder: () => GetMaterialApp(
-                /*  theme: themeStyle, */
                 title: "Application",
-                initialRoute: AppPages.INITIAL,
                 getPages: AppPages.routes,
                 home: ChoiceScreen(),
                 defaultTransition: Transition.fadeIn,

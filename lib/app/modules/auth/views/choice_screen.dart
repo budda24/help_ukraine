@@ -1,27 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-/* import 'package:pomoc_ukrainie/app/modules/auth/controllers/auth_controller.dart';
-import 'package:pomoc_ukrainie/app/modules/home/controllers/home_controller.dart'; */
+import 'package:pomoc_ukrainie/app/modules/auth/controllers/auth_controller.dart';
+import 'package:pomoc_ukrainie/app/modules/home/controllers/home_controller.dart';
 import 'package:pomoc_ukrainie/app/modules/home/views/add_need_view.dart';
 import 'package:pomoc_ukrainie/app/modules/home/views/needs_view.dart';
-import 'package:pomoc_ukrainie/app/routes/app_pages.dart';
 import 'package:pomoc_ukrainie/helpers/theme/app_colors.dart';
 import 'package:pomoc_ukrainie/helpers/theme/text_styles.dart';
 import 'package:pomoc_ukrainie/helpers/theme/ui_helpers.dart';
 
-import '../../../infrastructure/fb_services/auth/auth.dart';
-import '../../home/controllers/home_controller.dart';
+import '../../../routes/app_pages.dart';
 
-class ChoiceScreen extends GetView<HomeController> {
-
+class ChoiceScreen extends GetView<AuthController> {
   const ChoiceScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: WillPopScope(
-        onWillPop: () async =>false,
+        onWillPop: () async => false,
         child: Scaffold(
           body: SingleChildScrollView(
             child: Center(
@@ -50,8 +47,6 @@ class ChoiceScreen extends GetView<HomeController> {
                             offset: Offset(2.w, 6.h), // Shadow position
                           ),
                         ],
-                        // gradient:
-                        //     LinearGradient(colors: [Colors.indigo, Colors.blueAccent]),
                       ),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(15),
@@ -102,7 +97,6 @@ class ChoiceScreen extends GetView<HomeController> {
                         //     LinearGradient(colors: [Colors.indigo, Colors.blueAccent]),
                       ),
                       child: ClipRRect(
-                        borderRadius: BorderRadius.circular(15),
                         child: GridTile(
                           child: Image.asset(
                             'assets/help.png',
