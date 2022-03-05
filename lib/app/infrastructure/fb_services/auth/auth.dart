@@ -32,10 +32,7 @@ class Auth {
   }
 
   Future<User?> signInWithGoogle() async {
-<<<<<<< HEAD
-=======
     globalController.toogleIsLoading();//switch to true
->>>>>>> 498a71840edd267c9bc914c013a039ce5e917b87
     final GoogleSignIn googleSignIn = GoogleSignIn();
 
     final GoogleSignInAccount? googleSignInAccount =
