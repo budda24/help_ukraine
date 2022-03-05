@@ -8,10 +8,12 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:pomoc_ukrainie/app/data/polish_city.dart';
 import 'package:pomoc_ukrainie/app/infrastructure/fb_services/db_services/db_postgresem.dart';
-import 'package:pomoc_ukrainie/app/modules/home/models/need.dart';
+
 
 import '../../../../helpers/theme/alert_styles.dart';
-import '../models/city.dart';
+import '../../models/city.dart';
+import '../../models/need.dart';
+
 
 class HomeController extends GetxController {
   //TODO: Implement HomeController

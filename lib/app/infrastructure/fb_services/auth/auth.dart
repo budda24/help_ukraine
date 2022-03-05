@@ -10,8 +10,11 @@ import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get/get.dart';
 
 import 'package:pomoc_ukrainie/app/globals/global_controler.dart';
+import 'package:pomoc_ukrainie/app/infrastructure/fb_services/db_services/db_postgresem.dart';
 import 'package:pomoc_ukrainie/app/routes/app_pages.dart';
 import 'package:pomoc_ukrainie/helpers/theme/alert_styles.dart';
+
+import '../../../modules/models/user.dart';
 
 final auth = FirebaseAuth.instance;
 User? user;
@@ -27,8 +30,7 @@ class Auth {
     return firebaseApp;
   }
 
-  static Future<User?> signInWithGoogle() async {
-
+  Future<User?> signInWithGoogle() async {
     final GoogleSignIn googleSignIn = GoogleSignIn();
 
     final GoogleSignInAccount? googleSignInAccount =
@@ -46,8 +48,10 @@ class Auth {
       try {
         final UserCredential userCredential =
             await auth.signInWithCredential(credential);
-
         user = userCredential.user;
+        
+        /* globalController.box.write(response from db); */
+        DbPosgress().postUser(user!);
 
         // once you signin, you can pass email, userId to the api (Depends upon what parameters API developer is asking)
         // After that, in response you are going to get an API Token (Most probably JWT Token), store that token into GetStorage (Local Storage)

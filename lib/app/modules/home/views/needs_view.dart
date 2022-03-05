@@ -3,16 +3,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 
 import 'package:get/get.dart';
-import 'package:pomoc_ukrainie/app/modules/home/models/need.dart';
 import 'package:pomoc_ukrainie/app/modules/home/views/needs_details_screen.dart';
 import 'package:pomoc_ukrainie/helpers/theme/app_colors.dart';
 import 'package:pomoc_ukrainie/helpers/theme/ui_helpers.dart';
-
 import '../../../../helpers/theme/form_field_styles.dart';
 import '../../../../helpers/theme/text_styles.dart';
 import '../../../../helpers/widgets/online_tribes/rounded_container.dart';
+import '../../models/city.dart';
 import '../controllers/home_controller.dart';
-import '../models/city.dart';
 
 class NeedsView extends GetView<HomeController> {
   @override

@@ -12,10 +12,9 @@ import '../../../../helpers/theme/form_field_styles.dart';
 import '../../../../helpers/widgets/online_tribes/form_field.dart';
 import '../../../../helpers/widgets/online_tribes/one_line_textField.dart';
 import '../../../infrastructure/translate_sevices/google_cloud_trans.dart';
+import '../../models/city.dart';
 import '../controllers/home_controller.dart';
 import 'package:pomoc_ukrainie/helpers/theme/text_styles.dart';
-import '../models/city.dart';
-import '../models/need.dart';
 import 'needs_view.dart';
 import 'user_profile.dart';
 
@@ -68,7 +67,7 @@ class HomeView extends GetView<HomeController> {
                       horizontal: 40,
                       vertical: 10,
                     ),
-                    child: TypeAheadFormField(
+                    child: TypeAheadFormField<City>(
                         validator: (text) {
                           if (controller.getSuggestions(text ?? '').isEmpty) {
                             //there is no such available city

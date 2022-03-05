@@ -60,7 +60,7 @@ class AuthView extends GetView<AuthController> {
                         onTapGoogle: () async {
                           controller.toogleIsLoading();
                           print(controller.isLoading);
-                          await Auth.signInWithGoogle();
+                          await Auth().signInWithGoogle();
                         },
                         onTapApple: () {
                           Get.to(UserProfile());
