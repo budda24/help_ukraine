@@ -2,6 +2,10 @@
 //
 //     final need = needFromJson(jsonString);
 
+// To parse this JSON data, do
+//
+//     final need = needFromJson(jsonString);
+
 import 'dart:convert';
 
 import '../../../infrastructure/translate_sevices/google_cloud_trans.dart';
@@ -10,21 +14,27 @@ Need needFromJson(String str) => Need.fromJson(json.decode(str));
 
 String needToJson(Need data) => json.encode(data.toJson());
 
+enum Urgency {
+  new_request,
+  under_help,
+  completed,
+}
+
 class Need {
   Need({
     this.id,
-  required  this.title,
-  required  this.description,
+    required this.title,
+    required this.description,
     this.createdAt,
-  required  this.email,
-   required this.status,
-   required this.lat,
-   required this.long,
+    this.email,
+    required this.contact,
+    this.lat,
+    this.long,
     this.postedBy,
     this.updatedBy,
-   required this.address,
-   required this.urgency,
-   required this.city,
+    required this.address,
+    required this.urgency,
+    required this.city,
   });
 
   String? id;
@@ -32,13 +42,14 @@ class Need {
   String description;
   String? createdAt;
   String? email;
-  String status;
-  double lat;
-  double long;
+  int contact;
+
+  double? lat;
+  double? long;
   String? postedBy;
   String? updatedBy;
   String address;
-  String urgency;
+  Urgency urgency;
   String city;
 
   factory Need.fromJson(Map<String, dynamic> json) => Need(
@@ -47,7 +58,7 @@ class Need {
         description: json["description"],
         createdAt: json["createdAt"],
         email: json["email"],
-        status: json["status"],
+        contact: json["contact"],
         lat: json["lat"].toDouble(),
         long: json["long"].toDouble(),
         postedBy: json["postedBy"],
@@ -63,21 +74,21 @@ class Need {
         "description": description,
         "createdAt": createdAt,
         "email": email,
-        "status": status,
+        "contact": contact,
         "lat": lat,
         "long": long,
         "postedBy": postedBy,
         "updatedBy": updatedBy,
         "address": address,
-        "urgency": urgency,
+        "urgency": Urgency,
         "city": city,
       };
 
   translateToUkrainian() async {
     this.city =
         await TranslationServices.translate(text: this.city, language: 'uk');
-    this.email =
-        await TranslationServices.translate(text: this.email, language: 'uk');
+    /* this.email =
+        await TranslationServices.translate(text: this.email, language: 'uk'); */
     this.description = await TranslationServices.translate(
         text: this.description, language: 'uk');
     this.title =

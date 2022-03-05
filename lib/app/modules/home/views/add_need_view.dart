@@ -21,12 +21,12 @@ import 'user_profile.dart';
 
 class HomeView extends GetView<HomeController> {
   var globalController = Get.put(GlobalController());
-  Need need = Need(
+ /*  Need need = Need(
       title: 'piasek',
       description: 'ma swoj kraj pochodzenia',
       contact: 434,
       city: 'Warszawa',
-      email: 'email@wp.pl');
+      email: 'email@wp.pl'); */
 
   @override
   Widget build(BuildContext context) {
