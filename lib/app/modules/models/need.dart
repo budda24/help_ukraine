@@ -24,12 +24,12 @@ enum Urgency {
 
 class Need {
   Need({
+    this.contact,
     this.id,
     required this.title,
     required this.description,
     this.createdAt,
     this.email,
-    required this.contact,
     this.lat,
     this.long,
     this.postedBy,
@@ -44,8 +44,7 @@ class Need {
   String description;
   String? createdAt;
   String? email;
-  int contact;
-
+  String? status;
   double? lat;
   double? long;
   String? postedBy;
@@ -53,14 +52,15 @@ class Need {
   String address;
   Urgency urgency;
   String city;
+  int? contact;
 
   factory Need.fromJson(Map<String, dynamic> json) => Need(
         id: json["id"],
+        contact: json["contact"],
         title: json["title"],
         description: json["description"],
         createdAt: json["createdAt"],
         email: json["email"],
-        contact: json["contact"],
         lat: json["lat"].toDouble(),
         long: json["long"].toDouble(),
         postedBy: json["postedBy"],
@@ -89,11 +89,13 @@ class Need {
   translateToUkrainian() async {
     this.city =
         await TranslationServices.translate(text: this.city, language: 'uk');
-    /* this.email =
-        await TranslationServices.translate(text: this.email, language: 'uk'); */
+    this.email =
+        await TranslationServices.translate(text: this.email!, language: 'uk');
     this.description = await TranslationServices.translate(
         text: this.description, language: 'uk');
     this.title =
         await TranslationServices.translate(text: this.title, language: 'uk');
+    this.address =
+        await TranslationServices.translate(text: this.address!, language: 'uk');
   }
 }

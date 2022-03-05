@@ -20,7 +20,8 @@ final auth = FirebaseAuth.instance;
 User? user;
 
 class Auth {
-  final globalController = Get.find<GlobalController>();
+  final globalController = Get.put(GlobalController());
+
 
   static Future<FirebaseApp> initializeFirebase() async {
     FirebaseApp firebaseApp = await Firebase.initializeApp();
@@ -31,6 +32,10 @@ class Auth {
   }
 
   Future<User?> signInWithGoogle() async {
+<<<<<<< HEAD
+=======
+    globalController.toogleIsLoading();//switch to true
+>>>>>>> 498a71840edd267c9bc914c013a039ce5e917b87
     final GoogleSignIn googleSignIn = GoogleSignIn();
 
     final GoogleSignInAccount? googleSignInAccount =
@@ -49,7 +54,7 @@ class Auth {
         final UserCredential userCredential =
             await auth.signInWithCredential(credential);
         user = userCredential.user;
-        
+
         /* globalController.box.write(response from db); */
         DbPosgress().postUser(user!);
 
@@ -57,22 +62,25 @@ class Auth {
         // After that, in response you are going to get an API Token (Most probably JWT Token), store that token into GetStorage (Local Storage)
         // When you logout, clear that token
         // If token is null or empty, user is not logged in, and vice versa
+
+        globalController.toogleIsLoading();//switch to false
         Get.offNamed(Routes.HOME);
       } on FirebaseAuthException catch (e) {
         if (e.code == 'account-exists-with-different-credential') {
           await googleSignIn.signOut();
           Get.showSnackbar(customSnackbar(
               'This account exists with different sign in provider'));
+          globalController.toogleIsLoading(); //switch to false
           Get.offAllNamed(Routes.AUTH);
           /* .then((value) => Get.showSnackbar(customSnackbar('You signing out.'))) */;
         } else if (e.code == 'invalid-credential') {
           Get.showSnackbar(customSnackbar('Unknown error has occured'));
+          globalController.toogleIsLoading(); //switch to false
+          Get.offAllNamed(Routes.AUTH);
         }
       } catch (e) {
         // handle the error here
-      } /* finally {
-
-      } */
+      }
     }
   }
 

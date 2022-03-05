@@ -8,7 +8,11 @@ class GlobalController extends GetxController {
     Get.focusScope!.unfocus();
   }
 
-  final _obj = ''.obs;
-  set obj(value) => this._obj.value = value;
-  get obj => this._obj.value;
+  bool isLoading = false;
+  void toogleIsLoading() {
+    isLoading = !isLoading;
+    update();
+  }
+
+
 }

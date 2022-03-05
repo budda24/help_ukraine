@@ -38,14 +38,8 @@ class HomeView extends GetView<HomeController> {
             alignment: Alignment.center,
             icon: Icon(Icons.add_alert),
             onPressed: () async {
-              /* await need.translateToUkrainian();
-              print(
-                  '${need.description} ${need.city} ${need.email} ${need.title}');
-              var response = await TranslationServices.translate(
-                  text: 'Potrzebuje ziemniakow', language: 'uk'); */
-              Get.to(UserProfile());
-              /* print(response) */
-              /* await controller.GetAddressFromLatLong(); */
+ /*               await need.translateToUkrainian();
+              print('${need.email}${need.city} ${need.title} ${need.description}  '); */
               /* controller.postNeed(); */
               /* Get.to(NeedsView()); */
 
