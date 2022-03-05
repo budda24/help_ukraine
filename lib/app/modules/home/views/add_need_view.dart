@@ -21,8 +21,8 @@ import 'needs_view.dart';
 class HomeView extends GetView<HomeController> {
   var globalController = Get.put(GlobalController());
   Need need = Need(
-      title: 'piasek',
-      description: 'ma swoj kraj pochodzenia',
+      title: 'Polak',
+      description: 'Ja mam 31 lat , lubię jeść kalafior',
       contact: 434,
       city: 'Warszawa',
       email: 'email@wp.pl');
@@ -39,9 +39,9 @@ class HomeView extends GetView<HomeController> {
             icon: Icon(Icons.add_alert),
             onPressed: () async {
                await need.translateUkrainian();
-              print('${need.description}/*  */');
-              var response = await TranslationServices.translate(
-                  text: 'Potrzebuje ziemniakow', language: 'uk');
+              print('${need.email}${need.city} ${need.title} ${need.description}  ');
+              // var response = await TranslationServices.translate(
+              //     text: 'Potrzebuje ziemniakow', language: 'uk');
               /* print(response) */
               /* await controller.GetAddressFromLatLong(); */
               /* controller.postNeed(); */

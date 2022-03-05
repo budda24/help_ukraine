@@ -19,14 +19,15 @@ import '../controllers/auth_controller.dart';
 import 'choice_screen.dart';
 
 class AuthView extends GetView<AuthController> {
-  /* var controller = Get.find<AuthController>(); */
+  var globalController = Get.put(GlobalController());
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      onTap: (){},
       child: Scaffold(
-        body: GetBuilder<AuthController>(
+        body: GetBuilder<GlobalController>(
           builder: (controller) => Center(
-            child: controller.isLoading
+            child: globalController.isLoading
                 ? LinearProgressIndicator()
                 : Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -58,9 +59,8 @@ class AuthView extends GetView<AuthController> {
                           await Auth.signInWithFacebook();
                         },
                         onTapGoogle: () async {
-                          controller.toogleIsLoading();
-                          print(controller.isLoading);
-                          await Auth.signInWithGoogle();
+
+                          await Auth().signInWithGoogle();
                         },
                         onTapApple: () {
                           Get.to(UserProfile());

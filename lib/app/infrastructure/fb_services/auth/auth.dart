@@ -10,6 +10,7 @@ import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get/get.dart';
 
 import 'package:pomoc_ukrainie/app/globals/global_controler.dart';
+import 'package:pomoc_ukrainie/app/modules/auth/controllers/auth_controller.dart';
 import 'package:pomoc_ukrainie/app/routes/app_pages.dart';
 import 'package:pomoc_ukrainie/helpers/theme/alert_styles.dart';
 
@@ -17,7 +18,8 @@ final auth = FirebaseAuth.instance;
 User? user;
 
 class Auth {
-  final globalController = Get.find<GlobalController>();
+  final globalController = Get.put(GlobalController());
+
 
   static Future<FirebaseApp> initializeFirebase() async {
     FirebaseApp firebaseApp = await Firebase.initializeApp();
@@ -27,9 +29,8 @@ class Auth {
     return firebaseApp;
   }
 
-  static Future<User?> signInWithGoogle() async {
-    sleep(Duration(seconds: 5));
-
+  Future<User?> signInWithGoogle() async {
+    globalController.toogleIsLoading();//switch to true
     final GoogleSignIn googleSignIn = GoogleSignIn();
 
     final GoogleSignInAccount? googleSignInAccount =
@@ -54,22 +55,25 @@ class Auth {
         // After that, in response you are going to get an API Token (Most probably JWT Token), store that token into GetStorage (Local Storage)
         // When you logout, clear that token
         // If token is null or empty, user is not logged in, and vice versa
+
+        globalController.toogleIsLoading();//switch to false
         Get.offNamed(Routes.HOME);
       } on FirebaseAuthException catch (e) {
         if (e.code == 'account-exists-with-different-credential') {
           await googleSignIn.signOut();
           Get.showSnackbar(customSnackbar(
               'This account exists with different sign in provider'));
+          globalController.toogleIsLoading(); //switch to false
           Get.offAllNamed(Routes.AUTH);
           /* .then((value) => Get.showSnackbar(customSnackbar('You signing out.'))) */;
         } else if (e.code == 'invalid-credential') {
           Get.showSnackbar(customSnackbar('Unknown error has occured'));
+          globalController.toogleIsLoading(); //switch to false
+          Get.offAllNamed(Routes.AUTH);
         }
       } catch (e) {
         // handle the error here
-      } /* finally {
-
-      } */
+      }
     }
   }
 
