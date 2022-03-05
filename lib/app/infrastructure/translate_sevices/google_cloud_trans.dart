@@ -8,11 +8,11 @@ class TranslationServices {
       {required String text, required String language}) async {
     var uri = Uri.parse(
         'https://translation.googleapis.com/language/translate/v2?target=${language}&key=${google_translator_api}&q=${text}');
+
     var response = await http.post(uri);
     final Map<String, dynamic> decodedData = jsonDecode(response.body);
-    print(decodedData);
+    /* print(decodedData); */
 
     return decodedData['data']['translations'][0]['translatedText'];
   }
-  
 }

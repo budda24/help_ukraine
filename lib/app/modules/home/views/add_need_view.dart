@@ -17,6 +17,7 @@ import 'package:pomoc_ukrainie/helpers/theme/text_styles.dart';
 import '../models/city.dart';
 import '../models/need.dart';
 import 'needs_view.dart';
+import 'user_profile.dart';
 
 class HomeView extends GetView<HomeController> {
   var globalController = Get.put(GlobalController());
@@ -38,10 +39,12 @@ class HomeView extends GetView<HomeController> {
             alignment: Alignment.center,
             icon: Icon(Icons.add_alert),
             onPressed: () async {
-               await need.translateUkrainian();
-              print('${need.description}/*  */');
+              /* await need.translateToUkrainian();
+              print(
+                  '${need.description} ${need.city} ${need.email} ${need.title}');
               var response = await TranslationServices.translate(
-                  text: 'Potrzebuje ziemniakow', language: 'uk');
+                  text: 'Potrzebuje ziemniakow', language: 'uk'); */
+              Get.to(UserProfile());
               /* print(response) */
               /* await controller.GetAddressFromLatLong(); */
               /* controller.postNeed(); */

@@ -28,7 +28,6 @@ class Auth {
   }
 
   static Future<User?> signInWithGoogle() async {
-    sleep(Duration(seconds: 5));
 
     final GoogleSignIn googleSignIn = GoogleSignIn();
 
