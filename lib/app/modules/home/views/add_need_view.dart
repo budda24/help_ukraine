@@ -17,13 +17,18 @@ import 'package:pomoc_ukrainie/helpers/theme/text_styles.dart';
 import '../models/city.dart';
 import '../models/need.dart';
 import 'needs_view.dart';
+import 'user_profile.dart';
 
 class HomeView extends GetView<HomeController> {
   var globalController = Get.put(GlobalController());
   Need need = Need(
+    urgency: '',
+    status: '',
+    lat: 12.33234,
+    long: 34.56556,
       title: 'Polak',
       description: 'Ja mam 31 lat , lubię jeść kalafior',
-      contact: 434,
+      address: 'chrościckiego 20',
       city: 'Warszawa',
       email: 'email@wp.pl');
 
@@ -38,7 +43,7 @@ class HomeView extends GetView<HomeController> {
             alignment: Alignment.center,
             icon: Icon(Icons.add_alert),
             onPressed: () async {
-               await need.translateUkrainian();
+               await need.translateToUkrainian();
               print('${need.email}${need.city} ${need.title} ${need.description}  ');
               // var response = await TranslationServices.translate(
               //     text: 'Potrzebuje ziemniakow', language: 'uk');
