@@ -21,16 +21,12 @@ import 'user_profile.dart';
 
 class HomeView extends GetView<HomeController> {
   var globalController = Get.put(GlobalController());
-  Need need = Need(
-    urgency: '',
-    status: '',
-    lat: 12.33234,
-    long: 34.56556,
-      title: 'Polak',
-      description: 'Ja mam 31 lat , lubię jeść kalafior',
-      address: 'chrościckiego 20',
+ /*  Need need = Need(
+      title: 'piasek',
+      description: 'ma swoj kraj pochodzenia',
+      contact: 434,
       city: 'Warszawa',
-      email: 'email@wp.pl');
+      email: 'email@wp.pl'); */
 
   @override
   Widget build(BuildContext context) {
@@ -43,12 +39,8 @@ class HomeView extends GetView<HomeController> {
             alignment: Alignment.center,
             icon: Icon(Icons.add_alert),
             onPressed: () async {
-               await need.translateToUkrainian();
-              print('${need.email}${need.city} ${need.title} ${need.description}  ');
-              // var response = await TranslationServices.translate(
-              //     text: 'Potrzebuje ziemniakow', language: 'uk');
-              /* print(response) */
-              /* await controller.GetAddressFromLatLong(); */
+ /*               await need.translateToUkrainian();
+              print('${need.email}${need.city} ${need.title} ${need.description}  '); */
               /* controller.postNeed(); */
               /* Get.to(NeedsView()); */
 

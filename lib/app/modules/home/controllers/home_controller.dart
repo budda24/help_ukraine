@@ -68,6 +68,8 @@ class HomeController extends GetxController {
   Future<void> postNeed() async {
     if (validateForm()) {
       var need = Need(
+          address: 'ks. juliana chroscikiego 20',
+          urgency: Urgency.new_request,
           title: needTitleController.text,
           description: descriptionController.text,
           contact: int.parse(contactNumberController.text),
@@ -121,8 +123,6 @@ class HomeController extends GetxController {
       needAdressController.text = '${place.street!} \n ${place.postalCode!}';
     }
   }
-
-
 
   final count = 0.obs;
   @override

@@ -2,6 +2,10 @@
 //
 //     final need = needFromJson(jsonString);
 
+// To parse this JSON data, do
+//
+//     final need = needFromJson(jsonString);
+
 import 'dart:convert';
 
 import '../../../infrastructure/translate_sevices/google_cloud_trans.dart';
@@ -10,6 +14,12 @@ Need needFromJson(String str) => Need.fromJson(json.decode(str));
 
 String needToJson(Need data) => json.encode(data.toJson());
 
+enum Urgency {
+  new_request,
+  under_help,
+  completed,
+}
+
 class Need {
   Need({
     this.contact,
@@ -17,14 +27,13 @@ class Need {
     required this.title,
     required this.description,
     this.createdAt,
-    required this.email,
-     this.status,
-     this.lat,
-     this.long,
+    this.email,
+    this.lat,
+    this.long,
     this.postedBy,
     this.updatedBy,
-     this.address,
-     this.urgency,
+    required this.address,
+    required this.urgency,
     required this.city,
   });
 
@@ -38,8 +47,8 @@ class Need {
   double? long;
   String? postedBy;
   String? updatedBy;
-  String? address;
-  String? urgency;
+  String address;
+  Urgency urgency;
   String city;
   int? contact;
 
@@ -50,7 +59,6 @@ class Need {
         description: json["description"],
         createdAt: json["createdAt"],
         email: json["email"],
-        status: json["status"],
         lat: json["lat"].toDouble(),
         long: json["long"].toDouble(),
         postedBy: json["postedBy"],
@@ -72,7 +80,7 @@ class Need {
         "postedBy": postedBy,
         "updatedBy": updatedBy,
         "address": address,
-        "urgency": urgency,
+        "urgency": Urgency,
         "city": city,
       };
 
