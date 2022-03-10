@@ -27,8 +27,7 @@ class HomeController extends GetxController {
   TextEditingController titleController = TextEditingController();
   TextEditingController adressController = TextEditingController();
 
-  TextEditingController needAdressController = TextEditingController();
-
+  /* TextEditingController needAdressController = TextEditingController(); */
 
   final formKey = GlobalKey<FormState>();
 
@@ -55,7 +54,7 @@ class HomeController extends GetxController {
 
     RegExp regExpUaWords = RegExp(
       //only numbers and characters grek & ukrainians
-      r"^[a-zA-Zа-яА-Яє-їЄ-Ї0-9\s]*$",
+      r"[a-zA-Zа-яА-Яє-їЄ-Ї0-9\s]*$",
       caseSensitive: false,
       multiLine: false,
     );
@@ -87,8 +86,7 @@ class HomeController extends GetxController {
           long: position.longitude,
           postedBy: user!.uid);
       try {
-        /* await DbPosgress().createAlbum(need).then((value) => print(value.body)); */
-        await DbFirebase().createNeed(need,user);
+        await DbFirebase().createNeed(need, user);
       } catch (e) {
         Get.showSnackbar(
             customSnackbar('надіслати потребу не вдалося, тому що: $e'));
@@ -135,6 +133,7 @@ class HomeController extends GetxController {
       Placemark place = placemarks[0];
       /* to write in the form field */
       adressController.text = '${place.street!} \n ${place.postalCode!}';
+      update();
     }
     return position;
   }
@@ -143,7 +142,7 @@ class HomeController extends GetxController {
   @override
   void onInit() async {
     getCityToModel();
-    needAdressController.text = 'adress is loading...';
+    adressController.text = 'adress is loading...';
     await GetAddressFromLatLong();
     /* globalController.toogleIsLoading();
     print('on ${globalController.isLoading}'); */
