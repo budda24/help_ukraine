@@ -16,7 +16,7 @@ class AppPages {
   static final routes = [
     GetPage(
       name: _Paths.HOME,
-      page: () => HomeView(),
+      page: () => AddNeedView(),
       binding: HomeBinding(),
     ),
     GetPage(

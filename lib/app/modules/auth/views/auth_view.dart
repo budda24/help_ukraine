@@ -56,7 +56,7 @@ class AuthView extends GetView<AuthController> {
                       ),
                       LoginServicesIcons(
                         onTapFaccebook: () async {
-                          await Auth.signInWithFacebook();
+                          await Auth().signInWithFacebook();
                         },
                         onTapGoogle: () async {
 

@@ -19,14 +19,8 @@ import '../models/need.dart';
 import 'needs_view.dart';
 import 'user_profile.dart';
 
-class HomeView extends GetView<HomeController> {
+class AddNeedView extends GetView<HomeController> {
   var globalController = Get.put(GlobalController());
- /*  Need need = Need(
-      title: 'piasek',
-      description: 'ma swoj kraj pochodzenia',
-      contact: 434,
-      city: 'Warszawa',
-      email: 'email@wp.pl'); */
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +33,7 @@ class HomeView extends GetView<HomeController> {
             alignment: Alignment.center,
             icon: Icon(Icons.add_alert),
             onPressed: () async {
- /*               await need.translateToUkrainian();
+              /*               await need.translateToUkrainian();
               print('${need.email}${need.city} ${need.title} ${need.description}  '); */
               /* controller.postNeed(); */
               /* Get.to(NeedsView()); */
@@ -96,20 +90,26 @@ class HomeView extends GetView<HomeController> {
                         }),
                   ),
                   verticalSpaceSmall,
-                  GetBuilder<HomeController>(
-                    initState: (state) => controller.GetAddressFromLatLong(),
-                    builder: (HomeController controller) => Container(
-                      padding: EdgeInsets.symmetric(horizontal: 40),
-                      child: CustomTextField(
-                        validate: (text) => controller.validateTextField(text),
-                        maxline: 6,
-                        minLine: 4,
-                        height: 120.h,
-                        width: 0.8.sw,
-                        controller: controller.needAdressController,
-                        color: AppColors.primaryColorShade,
-                        lableText: 'adress',
-                      ),
+                  /* GetBuilder<GlobalController>(
+                      init: GlobalController(),
+                      builder: (GlobalController globalController) {
+                        print('rebuild getbuilder');
+                        return Container(
+                            padding: EdgeInsets.symmetric(horizontal: 40),
+                            child: globalController.isLoading */
+                  /* ? CircularProgressIndicator()
+                                :*/
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 40),
+                    child: CustomTextField(
+                      validate: (text) => controller.validateTextField(text),
+                      maxline: 4,
+                      minLine: 2,
+                      height: 80.h,
+                      width: 0.8.sw,
+                      controller: controller.needAdressController,
+                      color: AppColors.primaryColorShade,
+                      lableText: 'adress',
                     ),
                   ),
                   verticalSpaceSmall,

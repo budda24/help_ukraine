@@ -94,6 +94,6 @@ class Need {
     this.title =
         await TranslationServices.translate(text: this.title, language: 'uk');
     this.address =
-        await TranslationServices.translate(text: this.address!, language: 'uk');
+        await TranslationServices.translate(text: this.address, language: 'uk');
   }
 }

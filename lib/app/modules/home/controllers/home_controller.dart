@@ -11,9 +11,12 @@ import 'package:pomoc_ukrainie/app/infrastructure/fb_services/db_services/db_pos
 import 'package:pomoc_ukrainie/app/modules/home/models/need.dart';
 
 import '../../../../helpers/theme/alert_styles.dart';
+import '../../../globals/global_controler.dart';
 import '../models/city.dart';
 
 class HomeController extends GetxController {
+  final globalController = Get.put(GlobalController());
+
   //TODO: Implement HomeController
   TextEditingController nameController = TextEditingController();
   TextEditingController contactNumberController = TextEditingController();
@@ -108,31 +111,41 @@ class HomeController extends GetxController {
     }
 
     return await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
+        desiredAccuracy: LocationAccuracy.best);
   }
 
-  Future<void> GetAddressFromLatLong() async {
+  Future<Position> GetAddressFromLatLong() async {
     var position = await _getGeoLocationPosition();
 
     if (position.latitude != null || position.altitude != null) {
       List<Placemark> placemarks =
-          await placemarkFromCoordinates(position.latitude, position.longitude);
+          await placemarkFromCoordinates(position.latitude, position.longitude)
+              .then((value) {
+        return value;
+      });
       Placemark place = placemarks[0];
-
       /* to write in the form field */
       needAdressController.text = '${place.street!} \n ${place.postalCode!}';
     }
+    return position;
   }
 
   final count = 0.obs;
   @override
   void onInit() async {
     getCityToModel();
+    needAdressController.text = 'adress is loading...';
+    await GetAddressFromLatLong();
+    /* globalController.toogleIsLoading();
+    print('on ${globalController.isLoading}'); */
+
     super.onInit();
   }
 
   @override
-  void onReady() {
+  void onReady() async {
+    /*  globalController.toogleIsLoading();
+    print('off ${globalController.isLoading}'); */
     super.onReady();
   }
 
