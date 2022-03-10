@@ -20,15 +20,8 @@ import 'package:pomoc_ukrainie/helpers/theme/text_styles.dart';
 import 'needs_view.dart';
 import 'user_profile.dart';
 
-class HomeView extends GetView<HomeController> {
+class AddNeedView extends GetView<HomeController> {
   var globalController = Get.put(GlobalController());
-  /* Need need = Need(
-    city: 'warszawa',
-      address: 'ks. Juliana Chroscickiego 20/6',
-      title: 'piasek',
-      description: 'ma swoj kraj pochodzenia',
-      contact: 434,
-      email: 'email@wp.pl'); */
 
   @override
   Widget build(BuildContext context) {
@@ -96,20 +89,26 @@ class HomeView extends GetView<HomeController> {
                         }),
                   ),
                   verticalSpaceSmall,
-                  GetBuilder<HomeController>(
-                    initState: (state) => controller.GetAddressFromLatLong(),
-                    builder: (HomeController controller) => Container(
-                      padding: EdgeInsets.symmetric(horizontal: 40),
-                      child: CustomTextField(
-                        validate: (text) => controller.validateTextField(text),
-                        maxline: 6,
-                        minLine: 4,
-                        height: 120.h,
-                        width: 0.8.sw,
-                        controller: controller.adressController,
-                        color: AppColors.primaryColorShade,
-                        lableText: 'adress',
-                      ),
+                  /* GetBuilder<GlobalController>(
+                      init: GlobalController(),
+                      builder: (GlobalController globalController) {
+                        print('rebuild getbuilder');
+                        return Container(
+                            padding: EdgeInsets.symmetric(horizontal: 40),
+                            child: globalController.isLoading */
+                  /* ? CircularProgressIndicator()
+                                :*/
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 40),
+                    child: CustomTextField(
+                      validate: (text) => controller.validateTextField(text),
+                      maxline: 4,
+                      minLine: 2,
+                      height: 80.h,
+                      width: 0.8.sw,
+                      controller: controller.needAdressController,
+                      color: AppColors.primaryColorShade,
+                      lableText: 'adress',
                     ),
                   ),
                   verticalSpaceSmall,

@@ -79,6 +79,7 @@ class Auth {
           Get.offAllNamed(Routes.AUTH);
           /* .then((value) => Get.showSnackbar(customSnackbar('You signing out.'))) */;
         } else if (e.code == 'invalid-credential') {
+
           Get.showSnackbar(customSnackbar('Unknown error has occured'));
           globalController.toogleIsLoading(); //switch to false
           Get.offAllNamed(Routes.AUTH);
@@ -104,7 +105,8 @@ class Auth {
     }
   }
 
-  static Future<void> signInWithFacebook() async {
+   Future<void> signInWithFacebook() async {
+    globalController.toogleIsLoading();//switch to true
     try {
       final LoginResult result = await FacebookAuth.instance.login();
 
@@ -123,9 +125,11 @@ class Auth {
         Get.showSnackbar(customSnackbar(
             'This account exists with different sign in provider'));
         await Future.delayed(Duration(seconds: 1));
+        globalController.toogleIsLoading();//switch to false
         Get.offAllNamed(Routes.AUTH);
       } else if (e.code == 'invalid-credential') {
-        Get.showSnackbar(customSnackbar('Unknown error has occured'));
+        Get.showSnackbar(customSnackbar('Unknown error has occured '));
+        globalController.toogleIsLoading();//switch to false
       }
     } catch (e) {
       print(e);
