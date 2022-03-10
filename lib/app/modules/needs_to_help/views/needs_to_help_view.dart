@@ -69,6 +69,7 @@ class NeedsToHelpView extends GetView<NeedsToHelpController> {
               ]),
               Obx(
                 () => RoundedContainer(
+                  margin: EdgeInsets.zero,
                   borderCoplor: AppColors.primaryColor,
                   height: 0.84.sh,
                   width: 1.sw,

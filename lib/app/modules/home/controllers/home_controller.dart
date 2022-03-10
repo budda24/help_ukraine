@@ -87,11 +87,28 @@ class HomeController extends GetxController {
           postedBy: user!.uid);
       try {
         await DbFirebase().createNeed(need, user);
+        await getNeedsUser();
       } catch (e) {
-        Get.showSnackbar(
-            customSnackbar('надіслати потребу не вдалося, тому що: $e'));
+        Get.showSnackbar(customSnackbar(
+            'надіслати потребу не вдалося, тому що: $e', Icons.error));
       }
     }
+  }
+
+  RxList<Need> needs = <Need>[].obs;
+  Future<void> getNeedsUser() async {
+    needs.value = await DbFirebase().feachNeedsInUser(user!.uid);
+  }
+
+  Future<void> deleteNeed(String id) async {
+    await DbFirebase().deleteNeedUser(user!.uid, id).then((value) {
+      needs.removeWhere((element) => element.id == id);
+      Get.showSnackbar(
+          customSnackbar('deleted succede', Icons.file_download_done));
+    }).catchError((e) {
+      Get.showSnackbar(
+          customSnackbar('deleted NOT succede becouse : $e', Icons.error));
+    });
   }
 
   Future<Position> _getGeoLocationPosition() async {
@@ -141,6 +158,7 @@ class HomeController extends GetxController {
   final count = 0.obs;
   @override
   void onInit() async {
+    await DbFirebase().feachNeedsInUser(user!.uid);
     getCityToModel();
     adressController.text = 'adress is loading...';
     await GetAddressFromLatLong();

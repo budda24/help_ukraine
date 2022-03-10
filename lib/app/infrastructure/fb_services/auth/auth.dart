@@ -74,13 +74,13 @@ class Auth {
         if (e.code == 'account-exists-with-different-credential') {
           await googleSignIn.signOut();
           Get.showSnackbar(customSnackbar(
-              'This account exists with different sign in provider'));
+              'This account exists with different sign in provider', Icons.error));
           globalController.toogleIsLoading(); //switch to false
           Get.offAllNamed(Routes.AUTH);
           /* .then((value) => Get.showSnackbar(customSnackbar('You signing out.'))) */;
         } else if (e.code == 'invalid-credential') {
 
-          Get.showSnackbar(customSnackbar('Unknown error has occured'));
+          Get.showSnackbar(customSnackbar('Unknown error has occured', Icons.error));
           globalController.toogleIsLoading(); //switch to false
           Get.offAllNamed(Routes.AUTH);
         }
@@ -96,12 +96,12 @@ class Auth {
     try {
       if (!GetPlatform.isWeb) {
         await googleSignIn.signOut().then(
-            (value) => Get.showSnackbar(customSnackbar('You signing out.')));
+            (value) => Get.showSnackbar(customSnackbar('You signing out.', Icons.error)));
       }
       //for webb
       /* await FirebaseAuth.instance.signOut(); */
     } catch (e) {
-      Get.showSnackbar(customSnackbar('Error signing out. Try again.'));
+      Get.showSnackbar(customSnackbar('Error signing out. Try again.', Icons.error));
     }
   }
 
@@ -123,12 +123,12 @@ class Auth {
       if (e.code == 'account-exists-with-different-credential') {
         await FacebookAuth.instance.logOut();
         Get.showSnackbar(customSnackbar(
-            'This account exists with different sign in provider'));
+            'This account exists with different sign in provider', Icons.error));
         await Future.delayed(Duration(seconds: 1));
         globalController.toogleIsLoading();//switch to false
         Get.offAllNamed(Routes.AUTH);
       } else if (e.code == 'invalid-credential') {
-        Get.showSnackbar(customSnackbar('Unknown error has occured '));
+        Get.showSnackbar(customSnackbar('Unknown error has occured ', Icons.error));
         globalController.toogleIsLoading();//switch to false
       }
     } catch (e) {

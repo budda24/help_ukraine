@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_translator/google_translator.dart';
 import 'package:pomoc_ukrainie/app/globals/global_controler.dart';
 import 'package:pomoc_ukrainie/app/infrastructure/fb_services/db_services/firebase.dart';
+import 'package:pomoc_ukrainie/helpers/theme/alert_styles.dart';
 import 'package:pomoc_ukrainie/helpers/theme/ui_helpers.dart';
 
 import '../../../../helpers/theme/app_colors.dart';
@@ -34,10 +35,9 @@ class AddNeedView extends GetView<HomeController> {
             alignment: Alignment.center,
             icon: Icon(Icons.add_alert),
             onPressed: () async {
-             await controller.postNeed();
-              /* Get.to(NeedsView()); */
+             await controller.postNeed().then((value) => Get.showSnackbar(customSnackbar('потреба була опублікована', Icons.file_download_done),));
 
-              //add need
+              Get.to(UserProfile());
             },
           ),
           body: Form(

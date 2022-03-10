@@ -57,6 +57,7 @@ class NeedsDetailsScreen extends StatelessWidget {
                 ),
                 verticalSpaceMedium,
                 RoundedContainer(
+                  margin: EdgeInsets.zero,
                   borderCoplor: AppColors.primaryColor,
                   height: 0.4.sh,
                   width: 1.sw,

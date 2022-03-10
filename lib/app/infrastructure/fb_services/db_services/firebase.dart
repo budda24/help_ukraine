@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
@@ -18,7 +19,8 @@ class DbFirebase {
       await db.collection('user').doc(user.id).set(user.toJson());
     } on FirebaseException catch (e) {
       // Todo what to do in case that the auth user is created but the firestore user not
-      Get.showSnackbar(customSnackbar("Account can't be created because $e"));
+      Get.showSnackbar(
+          customSnackbar("Account can't be created because $e", Icons.error));
     }
   }
 
@@ -32,11 +34,11 @@ class DbFirebase {
   }
 
   Future<void> createNeed(Need need, User? user) async {
-    await need.translateToPL();
     try {
       need.createdAt = DateTime.now();
       //Todo how to get the Id created by firebase
       await createUserNeed(need, user);
+      await need.translateToPL();
       await db
           .collection('needs')
           .doc('pl')
@@ -44,7 +46,8 @@ class DbFirebase {
           .doc()
           .set(need.toJson());
     } on FirebaseException catch (e) {
-      Get.showSnackbar(customSnackbar("Need can't be created because $e"));
+      Get.showSnackbar(
+          customSnackbar("Need can't be created because $e", Icons.error));
     } catch (e) {
       print('on db post $e');
     }
@@ -60,5 +63,23 @@ class DbFirebase {
     });
 
     return needs;
+  }
+
+  Future<List<Need>> feachNeedsInUser(String id) async {
+    List<Need> needs = [];
+    var response =
+        await db.collection('user').doc(id).collection('needs').get();
+    /* var need = Need.fromJson(response.docs.first.data()); */
+    response.docs.forEach((element) {
+      var need = Need.fromJson(element.data());
+      need.id = element.id;
+      print(need);
+      needs.add(need);
+    });
+    return needs;
+  }
+
+  Future<void> deleteNeedUser(String UserId, String docId) {
+   return db.collection('user').doc(UserId).collection('needs').doc(docId).delete();
   }
 }

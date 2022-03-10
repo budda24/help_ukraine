@@ -27,7 +27,8 @@ class Need {
     this.long,
     this.postedBy,
     required this.address,
-     this.city
+    this.city,
+    this.id,
   });
 
   String title;
@@ -40,6 +41,7 @@ class Need {
   String? postedBy;
   String address;
   String? contact;
+  String? id;
 
   factory Need.fromJson(Map<String, dynamic> json) => Need(
         contact: json["contact"],
@@ -56,7 +58,7 @@ class Need {
   Map<String, dynamic> toJson() => {
         "title": title,
         "description": description,
-        "createdAt":  Timestamp.fromDate(createdAt!),
+        "createdAt": Timestamp.fromDate(createdAt!),
         "email": email,
         "contact": contact,
         "lat": lat,

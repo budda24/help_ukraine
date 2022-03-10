@@ -9,16 +9,19 @@ class RoundedContainer extends StatelessWidget {
     required this.borderCoplor,
     this.child = const Text(''),
     this.backgroundColor = Colors.transparent,
+    required this.margin
   }) : super(key: key);
   double width;
   double height;
   Widget child;
   Color backgroundColor;
   Color borderCoplor;
+  EdgeInsetsGeometry margin;
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin:margin ,
         height: height,
         width: width,
         decoration: BoxDecoration(

@@ -11,8 +11,8 @@ import '../theme/text_styles.dart';
 import 'app_colors.dart';
 
 
-GetSnackBar customSnackbar (String message){return GetSnackBar(
-  icon:Icon(Icons.error, color: AppColors.errorRedColor, size: 35,),
+GetSnackBar customSnackbar (String message, IconData icon){return GetSnackBar(
+  icon:Icon(icon, color: AppColors.errorRedColor, size: 35,),
     duration: 4.seconds,
     snackPosition: SnackPosition.TOP,
     titleText: Text(
