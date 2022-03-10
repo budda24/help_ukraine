@@ -48,4 +48,4 @@ app.*.map.json
 
 #project files
 project_files/
-lib/auth/api_keys.dart
+lib/app/auth_keys/api_keys.dart
