@@ -48,3 +48,4 @@ app.*.map.json
 
 #project files
 project_files/
+lib/app/auth_keys/
