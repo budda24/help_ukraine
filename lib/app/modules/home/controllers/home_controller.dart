@@ -8,11 +8,13 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:pomoc_ukrainie/app/data/polish_city.dart';
 import 'package:pomoc_ukrainie/app/infrastructure/fb_services/db_services/db_postgresem.dart';
-import 'package:pomoc_ukrainie/app/modules/home/models/need.dart';
+import 'package:pomoc_ukrainie/app/infrastructure/fb_services/db_services/firebase.dart';
 
 import '../../../../helpers/theme/alert_styles.dart';
 import '../../../globals/global_controler.dart';
-import '../models/city.dart';
+import '../../../infrastructure/fb_services/auth/auth.dart';
+import '../../models/city.dart';
+import '../../models/need.dart';
 
 class HomeController extends GetxController {
   final globalController = Get.put(GlobalController());
@@ -22,8 +24,11 @@ class HomeController extends GetxController {
   TextEditingController contactNumberController = TextEditingController();
   TextEditingController cityController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
-  TextEditingController needTitleController = TextEditingController();
+  TextEditingController titleController = TextEditingController();
+  TextEditingController adressController = TextEditingController();
+
   TextEditingController needAdressController = TextEditingController();
+
 
   final formKey = GlobalKey<FormState>();
 
@@ -70,16 +75,20 @@ class HomeController extends GetxController {
 
   Future<void> postNeed() async {
     if (validateForm()) {
+      var position = await _getGeoLocationPosition();
       var need = Need(
-          address: 'ks. juliana chroscikiego 20',
-          urgency: Urgency.new_request,
-          title: needTitleController.text,
+          address: adressController.text,
+          title: titleController.text,
           description: descriptionController.text,
-          contact: int.parse(contactNumberController.text),
+          contact: contactNumberController.text,
           city: cityController.text,
-          email: 'test@test.com');
+          email: user!.email,
+          lat: position.latitude,
+          long: position.longitude,
+          postedBy: user!.uid);
       try {
         /* await DbPosgress().createAlbum(need).then((value) => print(value.body)); */
+        await DbFirebase().createNeed(need,user);
       } catch (e) {
         Get.showSnackbar(
             customSnackbar('надіслати потребу не вдалося, тому що: $e'));
@@ -125,7 +134,7 @@ class HomeController extends GetxController {
       });
       Placemark place = placemarks[0];
       /* to write in the form field */
-      needAdressController.text = '${place.street!} \n ${place.postalCode!}';
+      adressController.text = '${place.street!} \n ${place.postalCode!}';
     }
     return position;
   }

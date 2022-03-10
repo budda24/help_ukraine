@@ -59,7 +59,6 @@ class AuthView extends GetView<AuthController> {
                           await Auth().signInWithFacebook();
                         },
                         onTapGoogle: () async {
-
                           await Auth().signInWithGoogle();
                         },
                         onTapApple: () {

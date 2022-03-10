@@ -10,6 +10,7 @@ import 'package:pomoc_ukrainie/helpers/theme/text_styles.dart';
 import 'package:pomoc_ukrainie/helpers/theme/ui_helpers.dart';
 
 import '../../../routes/app_pages.dart';
+import '../../needs_to_help/views/needs_to_help_view.dart';
 
 class ChoiceScreen extends GetView<AuthController> {
   const ChoiceScreen({Key? key}) : super(key: key);
@@ -27,7 +28,7 @@ class ChoiceScreen extends GetView<AuthController> {
                   verticalSpaceExtraLarge,
                   InkWell(
                     onTap: () {
-                      Get.to(NeedsView());
+                      Get.toNamed(Routes.NEEDS_TO_HELP);
                     },
                     child: Container(
                       padding: EdgeInsets.all(20),
