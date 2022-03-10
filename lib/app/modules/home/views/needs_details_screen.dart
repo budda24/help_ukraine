@@ -5,9 +5,11 @@ import 'package:pomoc_ukrainie/helpers/theme/ui_helpers.dart';
 import 'package:pomoc_ukrainie/helpers/widgets/online_tribes/rounded_container.dart';
 
 import '../../../../helpers/theme/app_colors.dart';
+import '../../models/need.dart';
 
 class NeedsDetailsScreen extends StatelessWidget {
-  const NeedsDetailsScreen({Key? key}) : super(key: key);
+  Need need;
+  NeedsDetailsScreen({required this.need});
 
   @override
   Widget build(BuildContext context) {
@@ -26,13 +28,13 @@ class NeedsDetailsScreen extends StatelessWidget {
                 verticalSpaceMedium,
                 Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                   Text(
-                    'Tytuł',
+                    need.title,
                     style: headingBlackStyle,
                   ),
                 ]),
                 verticalSpaceSmall,
                 Text(
-                  'adres : ',
+                  'adres : ${need.address}',
                   style: headingBoldStyle,
                 ),
                 Divider(
@@ -40,7 +42,7 @@ class NeedsDetailsScreen extends StatelessWidget {
                   thickness: 2,
                 ),
                 Text(
-                  'nr. tel. : ',
+                  'nr. tel. : ${need.contact} ',
                   style: headingBoldStyle,
                 ),
                 Divider(
@@ -48,7 +50,7 @@ class NeedsDetailsScreen extends StatelessWidget {
                   thickness: 2,
                 ),
                 Text(
-                  'email : ',
+                  'email : ${need.email} ',
                   style: headingBoldStyle,
                 ),
                 Divider(
@@ -61,9 +63,14 @@ class NeedsDetailsScreen extends StatelessWidget {
                   height: 0.4.sh,
                   width: 1.sw,
                   backgroundColor: AppColors.primaryColorShade,
-                  child: ListView(children: [
-                    Text('jaksdnjk asbdjjjjjjjjjj   jjjjjjjjjjjjjjj  jj jjjjjjjjjjjjjj j jjjjjjjjjjj jkkkkkkkkkkk k k  kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk kkkkk kk kkkkkkkkkkkkkkkkkk kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk   k k kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk      kkkk kkkkkkkkkkkkkkkkkkkkkkkkkk kkkkkkkkkkkk kkkkkkkkkkkkkkk kkkkkkkkkkkkkkk kkkkkkkkkkkkkkkkkkkkkkk kkkkkkkkkkkkkkkk kkk k  kkkkkkkkkkkkkkk k kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk kkkk kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk',style: headingBoldStyle,)
-                  ],),
+                  child: ListView(
+                    children: [
+                      Text(
+                       need.description,
+                        style: headingBoldStyle,
+                      )
+                    ],
+                  ),
                 )
               ],
             ),
