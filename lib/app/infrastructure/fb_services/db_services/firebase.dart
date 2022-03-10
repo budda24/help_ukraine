@@ -16,7 +16,6 @@ class DbFirebase {
     try {
       user.createdAt = FieldValue.serverTimestamp();
       await db.collection('user').doc(user.id).set(user.toJson());
-      print('success');
     } on FirebaseException catch (e) {
       // Todo what to do in case that the auth user is created but the firestore user not
       Get.showSnackbar(customSnackbar("Account can't be created because $e"));
@@ -33,7 +32,7 @@ class DbFirebase {
   }
 
   Future<void> createNeed(Need need, User? user) async {
-    /* await need.translateToUkrainian(); */
+    await need.translateToPL();
     try {
       need.createdAt = DateTime.now();
       //Todo how to get the Id created by firebase
@@ -41,11 +40,13 @@ class DbFirebase {
       await db
           .collection('needs')
           .doc('pl')
-          .collection('warszawa')
+          .collection(need.city!.toLowerCase())
           .doc()
           .set(need.toJson());
     } on FirebaseException catch (e) {
       Get.showSnackbar(customSnackbar("Need can't be created because $e"));
+    } catch (e) {
+      print('on db post $e');
     }
   }
 

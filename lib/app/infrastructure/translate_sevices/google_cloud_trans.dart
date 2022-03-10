@@ -12,7 +12,6 @@ class TranslationServices {
 
     var response = await http.post(uri);
     final Map<String, dynamic> decodedData = jsonDecode(response.body);
-    /* print(decodedData); */
 
     return decodedData['data']['translations'][0]['translatedText'];
   }
