@@ -22,7 +22,7 @@ class NeedsTile extends StatelessWidget {
       child: ListTile(
         contentPadding: EdgeInsets.all(10),
         onTap: () {
-          Get.to(NeedsDetailsScreen());
+          Get.to(NeedsDetailsScreen(need: need,));
         },
         selectedTileColor: Colors.grey[300],
         shape:

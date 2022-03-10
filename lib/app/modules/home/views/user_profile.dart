@@ -64,10 +64,10 @@ class UserProfile extends GetView<HomeController> {
               child: Column(
                 children: [
                   Text(
-                    'Instrukcja instrukcja instrukcja po ukraińsku po ukrainsku  sakdkjasd sad,lkasmd sadas',
+                    'Щоб отримати допомогу, натисніть кнопку нижче та заповніть форму заявки. Якщо заявка заповнена або застаріла - видаліть програму зі свого профілю.',
                     style: headingBoldStyle,
                   ),
-
+                  verticalSpaceMedium,
                   Align(
                     alignment: Alignment.bottomRight,
                     child: InkWell(

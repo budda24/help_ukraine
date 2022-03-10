@@ -56,7 +56,7 @@ class DbFirebase {
   Future<List<Need>> feachNeedsInCity(String city) async {
     List<Need> needs = [];
     var response =
-        await db.collection('needs').doc('pl').collection('warszawa').get();
+        await db.collection('needs').doc('pl').collection(city).get();
     /* var need = Need.fromJson(response.docs.first.data()); */
     response.docs.forEach((element) {
       needs.add(Need.fromJson(element.data()));

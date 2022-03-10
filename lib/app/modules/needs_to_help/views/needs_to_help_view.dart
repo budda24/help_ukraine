@@ -74,7 +74,20 @@ class NeedsToHelpView extends GetView<NeedsToHelpController> {
                   height: 0.84.sh,
                   width: 1.sw,
                   child: controller.needs.isEmpty
-                      ? Center(child: const Text('there are no needs'))
+                      ? Center(
+                          child: Column(
+                          children: [
+                            Image.asset(
+                              'assets/search.png',
+                            ),
+                            verticalSpaceMedium,
+                            Text(
+                              'Brak aktywnych zgłoszeń w wybranym mieście',
+                              style: headingBlackStyle,
+                              textAlign: TextAlign.center,
+                            )
+                          ],
+                        ))
                       : ListView.builder(
                           itemCount: controller.needs.length,
                           itemBuilder: (_, index) {
