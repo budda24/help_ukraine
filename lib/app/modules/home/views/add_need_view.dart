@@ -5,6 +5,7 @@ import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_translator/google_translator.dart';
 import 'package:pomoc_ukrainie/app/globals/global_controler.dart';
+import 'package:pomoc_ukrainie/app/infrastructure/fb_services/db_services/firebase.dart';
 import 'package:pomoc_ukrainie/helpers/theme/ui_helpers.dart';
 
 import '../../../../helpers/theme/app_colors.dart';
@@ -13,6 +14,7 @@ import '../../../../helpers/widgets/online_tribes/form_field.dart';
 import '../../../../helpers/widgets/online_tribes/one_line_textField.dart';
 import '../../../infrastructure/translate_sevices/google_cloud_trans.dart';
 import '../../models/city.dart';
+import '../../models/need.dart';
 import '../controllers/home_controller.dart';
 import 'package:pomoc_ukrainie/helpers/theme/text_styles.dart';
 import 'needs_view.dart';
@@ -20,11 +22,12 @@ import 'user_profile.dart';
 
 class HomeView extends GetView<HomeController> {
   var globalController = Get.put(GlobalController());
- /*  Need need = Need(
+  /* Need need = Need(
+    city: 'warszawa',
+      address: 'ks. Juliana Chroscickiego 20/6',
       title: 'piasek',
       description: 'ma swoj kraj pochodzenia',
       contact: 434,
-      city: 'Warszawa',
       email: 'email@wp.pl'); */
 
   @override
@@ -38,9 +41,7 @@ class HomeView extends GetView<HomeController> {
             alignment: Alignment.center,
             icon: Icon(Icons.add_alert),
             onPressed: () async {
- /*               await need.translateToUkrainian();
-              print('${need.email}${need.city} ${need.title} ${need.description}  '); */
-              /* controller.postNeed(); */
+             await controller.postNeed();
               /* Get.to(NeedsView()); */
 
               //add need
@@ -105,7 +106,7 @@ class HomeView extends GetView<HomeController> {
                         minLine: 4,
                         height: 120.h,
                         width: 0.8.sw,
-                        controller: controller.needAdressController,
+                        controller: controller.adressController,
                         color: AppColors.primaryColorShade,
                         lableText: 'adress',
                       ),
@@ -127,7 +128,7 @@ class HomeView extends GetView<HomeController> {
                       },
                       //potrzeba tytuł/
                       lable: "потрібен титул",
-                      controller: controller.needTitleController),
+                      controller: controller.titleController),
                   verticalSpaceSmall,
                   OneLineTextField(
                       keybordhType: TextInputType.number,

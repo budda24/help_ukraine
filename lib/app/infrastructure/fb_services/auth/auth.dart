@@ -6,22 +6,22 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
-
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 import 'package:pomoc_ukrainie/app/globals/global_controler.dart';
 import 'package:pomoc_ukrainie/app/infrastructure/fb_services/db_services/db_postgresem.dart';
+import 'package:pomoc_ukrainie/app/infrastructure/fb_services/db_services/firebase.dart';
 import 'package:pomoc_ukrainie/app/routes/app_pages.dart';
 import 'package:pomoc_ukrainie/helpers/theme/alert_styles.dart';
 
-import '../../../modules/models/user.dart';
+import '../models/user.dart';
 
 final auth = FirebaseAuth.instance;
 User? user;
 
 class Auth {
   final globalController = Get.put(GlobalController());
-
 
   static Future<FirebaseApp> initializeFirebase() async {
     FirebaseApp firebaseApp = await Firebase.initializeApp();
@@ -32,7 +32,7 @@ class Auth {
   }
 
   Future<User?> signInWithGoogle() async {
-    globalController.toogleIsLoading();//switch to true
+    globalController.toogleIsLoading(); //switch to true
     final GoogleSignIn googleSignIn = GoogleSignIn();
 
     final GoogleSignInAccount? googleSignInAccount =
@@ -53,14 +53,22 @@ class Auth {
         user = userCredential.user;
 
         /* globalController.box.write(response from db); */
-        DbPosgress().postUser(user!);
+        /* DbPosgress().postUser(user!); */
+
+        DbFirebase().createUser(
+          UserDb(
+            id: user!.uid,
+            name: user!.displayName ?? 'no name',
+            photoUrl: user!.photoURL ?? 'no name',
+          ),
+        );
 
         // once you signin, you can pass email, userId to the api (Depends upon what parameters API developer is asking)
         // After that, in response you are going to get an API Token (Most probably JWT Token), store that token into GetStorage (Local Storage)
         // When you logout, clear that token
         // If token is null or empty, user is not logged in, and vice versa
 
-        globalController.toogleIsLoading();//switch to false
+        globalController.toogleIsLoading(); //switch to false
         Get.offNamed(Routes.HOME);
       } on FirebaseAuthException catch (e) {
         if (e.code == 'account-exists-with-different-credential') {

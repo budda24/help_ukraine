@@ -1,33 +1,39 @@
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 UserDb UserDbFromJson(String str) => UserDb.fromJson(json.decode(str));
 
 String UserDbToJson(UserDb data) => json.encode(data.toJson());
 
 class UserDb {
   UserDb({
-    required this.userId,
+    required this.id,
     required this.name,
-     this.createdAt,
+    this.createdAt,
     required this.photoUrl,
+    /* required this.number */
   });
 
-  String userId;
+  String id;
   String name;
-  String? createdAt;
+  FieldValue? createdAt;
   String photoUrl;
+  /* String number; */
 
   factory UserDb.fromJson(Map<String, dynamic> json) => UserDb(
-        userId: json["UserDbId"],
+        id: json["UserDbId"],
         name: json["name"],
         createdAt: json["createdAt"],
         photoUrl: json["photoUrl"],
+        /* number: json["number"], */
       );
 
   Map<String, dynamic> toJson() => {
-        "UserDbId": userId,
+        "UserDbId": id,
         "name": name,
         "createdAt": createdAt,
         "photoUrl": photoUrl,
+        /* "number": number, */
       };
 }

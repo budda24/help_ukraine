@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
 
 import '../../../modules/models/need.dart';
-import '../../../modules/models/user.dart';
+import '../models/user.dart';
 
 class DbPosgress {
   Future<http.Response> postNeed(Need need) {
@@ -27,7 +27,7 @@ class DbPosgress {
     String placeHOlderImg =
         'https://dsm01pap004files.storage.live.com/y4mgypsgKFZKRa2J_h8Pr_YhM9cgVuRrnKPDPlcgWHu7bnFpILw4WM2EH5DxUAXq2XYRgco8wragt5TrhY4NRLgWiwLarxTlKcLv39n13XF7_YIhV9-uGZHnrx7FfODM9Oozn5iNCnwZA1PTwM_wMgTrCsiYzfyqkHNJ0vOwtDaR0VXiyptkgbDjSNofQSLVgts?width=128&height=128&cropmode=none';
     var userDb = UserDb(
-            userId: user.uid,
+            id: user.uid,
             name: user.displayName ?? 'No Name',
             photoUrl: user.photoURL ?? placeHOlderImg)
         .toJson();
