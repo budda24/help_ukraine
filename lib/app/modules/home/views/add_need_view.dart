@@ -25,7 +25,7 @@ class AddNeedView extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
-
+    controller.getPosition();
     return SafeArea(
       child: GestureDetector(
         onTap: globalController.unFocuseNode,
@@ -122,7 +122,6 @@ class AddNeedView extends GetView<HomeController> {
 
                   verticalSpaceSmall,
                   OneLineTextField(
-
                       keybordhType: TextInputType.name,
                       validator: (text) {
                         return controller.validateTextField(text ?? '');
@@ -133,7 +132,6 @@ class AddNeedView extends GetView<HomeController> {
                   verticalSpaceSmall,
                   OneLineTextField(
                       maxLenght: 25,
-
                       validator: (text) {
                         return controller.validateTextField(text ?? '');
                       },

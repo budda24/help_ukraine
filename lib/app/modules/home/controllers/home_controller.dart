@@ -13,6 +13,7 @@ import 'package:pomoc_ukrainie/app/infrastructure/fb_services/db_services/fireba
 import '../../../../helpers/theme/alert_styles.dart';
 import '../../../globals/global_controler.dart';
 import '../../../infrastructure/fb_services/auth/auth.dart';
+import '../../../infrastructure/geolocation_services/geolocation.dart';
 import '../../models/city_local_json.dart';
 import '../../models/need.dart';
 
@@ -68,7 +69,7 @@ class HomeController extends GetxController {
 
   Future<void> postNeed() async {
     if (validateForm()) {
-      var position = await _getGeoLocationPosition();
+      var position = await GelocationServices.getGeoLocationPosition();
       var need = Need(
           address: adressController.text,
           title: titleController.text,
@@ -119,57 +120,17 @@ class HomeController extends GetxController {
     }
   }
 
-  Future<Position> _getGeoLocationPosition() async {
-    bool serviceEnabled;
-    LocationPermission permission;
-
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      await Geolocator.openLocationSettings();
-      return Future.error('Location services are disabled.');
-    }
-
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        return Future.error('Location permissions are denied');
-      }
-    }
-
-    if (permission == LocationPermission.deniedForever) {
-      return Future.error(
-          'Location permissions are permanently denied, we cannot request permissions.');
-    }
-
-    return await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.best);
+  void getPosition() async {
+    Placemark position = await GelocationServices.GetAddressFromLatLong();
+    adressController.text = '${position.street!} \n ${position.postalCode!}';
   }
 
-  Future<Position> GetAddressFromLatLong() async {
-    var position = await _getGeoLocationPosition();
-
-    if (position.latitude != null || position.altitude != null) {
-      List<Placemark> placemarks =
-          await placemarkFromCoordinates(position.latitude, position.longitude)
-              .then((value) {
-        return value;
-      });
-      Placemark place = placemarks[0];
-      /* to write in the form field */
-      adressController.text = '${place.street!} \n ${place.postalCode!}';
-    }
-    return position;
-  }
-
-  final count = 0.obs;
   @override
   void onInit() async {
     await getNeedsUser();
     update();
     globalController.getCityToModel();
     adressController.text = 'adress is loading...';
-    await GetAddressFromLatLong();
     super.onInit();
   }
 
@@ -180,5 +141,4 @@ class HomeController extends GetxController {
 
   @override
   void onClose() {}
-  void increment() => count.value++;
 }

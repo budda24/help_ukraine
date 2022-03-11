@@ -31,7 +31,7 @@ class DbFirebase {
 
   Future<void> createUserNeed(Need need, User? user) async {
     var json = need.toJson();
-    /* json.addAll({'doNeedExist': true}); */
+
     await db
         .collection('user')
         .doc(user!.uid)
@@ -44,19 +44,22 @@ class DbFirebase {
     try {
       int quantity = 1;
       Map<String, dynamic> json;
-      List<CityWithNeeds> existingCity = await feachCityWhereNeeds();
-      if (existingCity.any((element) => element.name == city)) {
+
+      List<CityWithNeeds> existingCities = await feachCityWhereNeeds();
+
+      //check if existin cities connteins city wanted to post
+      if (existingCities.any((element) => element.name == city)) {
         CityWithNeeds? foundCity =
-            existingCity.firstWhere((element) => element.name == city);
+            existingCities.firstWhere((element) => element.name == city);
 
         quantity = int.parse(foundCity.quantity);
         quantity++;
-        print('foundcity: $foundCity');
         json = CityWithNeeds(
           quantity: quantity.toString(),
           name: city,
           id: foundCity.id,
         ).toJson();
+
         await db.collection('citiesWithNeed').doc(foundCity.id).set(json);
       } else {
         json =
@@ -64,7 +67,10 @@ class DbFirebase {
         await db.collection('citiesWithNeed').add(json);
       }
     } on FirebaseException catch (error) {
-      print(error);
+      await Get.showSnackbar(customSnackbar(
+          message: "Need can't be created because $error",
+          icon: Icons.error,
+          title: 'Error'));
     } catch (error) {
       print(error);
     }
@@ -73,10 +79,9 @@ class DbFirebase {
   Future<void> createNeed(Need need, User? user) async {
     need.createdAt = DateTime.now();
     need.id = user!.uid;
-    try {
-      //Todo how to get the Id created by firebase
 
-      /* await need.translateToPL(); */
+    try {
+      await need.translateToPL();
 
       var response = await db
           .collection('needs')
@@ -87,13 +92,13 @@ class DbFirebase {
 
       await createCityWithNeeds(need.city ?? '');
       await createUserNeed(need, user);
-    } on FirebaseException catch (e) {
-      Get.showSnackbar(customSnackbar(
-          message: "Need can't be created because $e",
+    } on FirebaseException catch (error) {
+      await Get.showSnackbar(customSnackbar(
+          message: "Need can't be created because $error",
           icon: Icons.error,
           title: 'Error'));
-    } catch (e) {
-      print('on db post $e');
+    } catch (error) {
+      print('on db post $error');
     }
   }
 
@@ -101,7 +106,6 @@ class DbFirebase {
     List<Need> needs = [];
     var response =
         await db.collection('needs').doc('pl').collection(city).get();
-    /* var need = Need.fromJson(response.docs.first.data()); */
     response.docs.forEach((element) {
       needs.add(Need.fromJson(element.data()));
     });
@@ -110,12 +114,9 @@ class DbFirebase {
   }
 
   Future<List<Need>> feachNeedsInUser(String id) async {
-    /* print('feachNeedsInUser'); */
     List<Need> needs = [];
     var response =
         await db.collection('user').doc(id).collection('needs').get();
-    /* var need = Need.fromJson(response.docs.first.data()); */
-
     response.docs.forEach((element) {
       var need = Need.fromJson(element.data());
       need.id = element.id;
@@ -131,6 +132,7 @@ class DbFirebase {
       var response = await db.collection('citiesWithNeed').get();
       response.docs.forEach((element) {
         CityWithNeeds tmpCity = CityWithNeeds.fromJson(element.data());
+
         tmpCity.id = element.reference.id;
         cityWithNeeds.add(tmpCity);
       });
