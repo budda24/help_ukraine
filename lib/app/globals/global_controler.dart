@@ -12,7 +12,6 @@ class GlobalController extends GetxController {
   }
   List<City> _cities = [];
   void getCityToModel() {
-    /* List<City> tmpcities = []; */
     polishCity.forEach((element) {
       _cities.add(City.fromJson(element));
     });

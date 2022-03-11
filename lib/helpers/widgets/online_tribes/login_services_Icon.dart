@@ -6,11 +6,11 @@ import '../../theme/app_colors.dart';
 import 'login_icons.dart';
 
 class LoginServicesIcons extends StatelessWidget {
-  final VoidCallback onTapApple;
+  /* final VoidCallback onTapApple; */
   final VoidCallback onTapFaccebook;
   final VoidCallback onTapGoogle;
   const LoginServicesIcons(
-      {Key? key, required this.onTapFaccebook, required this.onTapGoogle,required this.onTapApple})
+      {Key? key, required this.onTapFaccebook, required this.onTapGoogle,/* required this.onTapApple */})
       : super(key: key);
 
   @override
@@ -33,13 +33,13 @@ class LoginServicesIcons extends StatelessWidget {
                 AppColors.googleColor, FontAwesomeIcons.googlePlusG,
                 iconColor: Colors.white, onTap: onTapGoogle),
           ),
-          verticalSpaceMedium,
+          /* verticalSpaceMedium,
           Container(
             margin: EdgeInsets.only(/*right: screeanwidth * 0.04*/),
             child: LoginIcons.socialButtonCircle(
                 AppColors.greyColor, FontAwesomeIcons.apple,
                 iconColor: Colors.white, onTap: onTapApple),
-          ),
+          ), */
         ],
       ),
     );

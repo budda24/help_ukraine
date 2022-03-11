@@ -18,7 +18,6 @@ import '../../models/city_local_json.dart';
 import '../../models/need.dart';
 import '../controllers/home_controller.dart';
 import 'package:pomoc_ukrainie/helpers/theme/text_styles.dart';
-import 'needs_view.dart';
 import 'user_profile.dart';
 
 class AddNeedView extends GetView<HomeController> {
