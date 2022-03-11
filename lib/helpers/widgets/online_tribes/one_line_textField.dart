@@ -11,6 +11,7 @@ class OneLineTextField extends StatelessWidget {
   final bool isOscure;
   final Function validator;
   TextInputType? keybordhType;
+  int? maxLenght;
   OneLineTextField({
     Key? key,
     required this.lable,
@@ -18,6 +19,7 @@ class OneLineTextField extends StatelessWidget {
     required this.validator,
     this.keybordhType,
     this.isOscure = false,
+    this.maxLenght
   }) : super(key: key);
 
   @override
@@ -27,11 +29,15 @@ class OneLineTextField extends StatelessWidget {
       height: 70.h,
       width: 320.w,
       child: TextFormField(
+
+        textInputAction: TextInputAction.next,
+        maxLength: maxLenght,
         keyboardType:keybordhType?? TextInputType.text,
         validator: (text) => validator(text),
         obscureText: isOscure,
         controller: controller,
         decoration: InputDecoration(
+          counterText: '',
             label: Text(
               lable,
               style: textfieldLableStyle,

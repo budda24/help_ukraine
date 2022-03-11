@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 
 import 'package:get/get.dart';
+import 'package:pomoc_ukrainie/app/globals/global_controler.dart';
 import 'package:pomoc_ukrainie/app/modules/home/controllers/home_controller.dart';
 import 'package:pomoc_ukrainie/app/modules/home/views/needs_details_screen.dart';
 import 'package:pomoc_ukrainie/app/modules/models/need.dart';
@@ -12,12 +13,12 @@ import 'package:pomoc_ukrainie/helpers/theme/ui_helpers.dart';
 import '../../../../helpers/theme/form_field_styles.dart';
 import '../../../../helpers/theme/text_styles.dart';
 import '../../../../helpers/widgets/online_tribes/rounded_container.dart';
-import '../../models/city.dart';
+import '../../../infrastructure/fb_services/models/city_with_needs.dart';
+import '../../models/city_local_json.dart';
 import '../controllers/needs_to_help_controller.dart';
 
 class NeedsToHelpView extends GetView<NeedsToHelpController> {
-  var globalController = Get.put(HomeController());
-  var controller = Get.put(NeedsToHelpController());
+  var globalController = Get.put(GlobalController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,22 +49,23 @@ class NeedsToHelpView extends GetView<NeedsToHelpController> {
                           style: textfieldLableStyle,
                         )),
                       ),
-                      onSuggestionSelected: (City city) {
+                      onSuggestionSelected: (CityWithNeeds city) {
                         controller.cityController.text = city.name;
                         controller.getNeedsCity(city.name.toLowerCase());
                         //featch the needs fo currant city
                       },
-                      itemBuilder: (_, City city) {
+                      itemBuilder: (_, CityWithNeeds city) {
                         return ListTile(
                           leading: Icon(Icons.location_city),
                           title: Text(
                             city.name,
                             style: headingBlackStyle,
                           ),
+                          trailing: Text(city.quantity),
                         );
                       },
                       suggestionsCallback: (pattern) {
-                        return globalController.getSuggestions(pattern);
+                        return controller.getSuggestions(pattern);
                       }),
                 ),
               ]),

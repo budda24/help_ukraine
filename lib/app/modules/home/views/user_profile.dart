@@ -17,8 +17,8 @@ import 'add_need_view.dart';
 class UserProfile extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
-    var controller = Get.put(HomeController());
-    controller.getNeedsUser();
+    print('start build');
+    /* controller.getNeedsUser(); */
     return Scaffold(
       body: SafeArea(
           child: Padding(
@@ -46,19 +46,24 @@ class UserProfile extends GetView<HomeController> {
               thickness: 2,
             ),
             Container(
-              height: 0.3.sh,
+              height: 0.15.sh,
               width: 0.8.sw,
-              child: ListView.builder(
-                itemCount: controller.needs.length,
-                itemBuilder: (_, index) {
-                  return NeedTile(need: controller.needs[index], deleteNeed: controller.deleteNeed);
-                },
+              child: GetBuilder<HomeController>(
+                init: HomeController(),
+                builder: (controller) => ListView.builder(
+                  itemCount: controller.needs.length,
+                  itemBuilder: (_, index) {
+                    return NeedTile(
+                        need: controller.needs[index],
+                        deleteNeed: controller.deleteNeed);
+                  },
+                ),
               ),
             ),
             RoundedContainer(
-              margin: EdgeInsets.zero,
+              margin: EdgeInsets.only(top: 60),
               borderCoplor: AppColors.primaryColor,
-              height: 0.25.sh,
+              height: 0.30.sh,
               width: 1.sw,
               backgroundColor: AppColors.primaryColorShade,
               child: Column(
@@ -67,7 +72,6 @@ class UserProfile extends GetView<HomeController> {
                     'Щоб отримати допомогу, натисніть кнопку нижче та заповніть форму заявки. Якщо заявка заповнена або застаріла - видаліть програму зі свого профілю.',
                     style: headingBoldStyle,
                   ),
-                  verticalSpaceMedium,
                   Align(
                     alignment: Alignment.bottomRight,
                     child: InkWell(

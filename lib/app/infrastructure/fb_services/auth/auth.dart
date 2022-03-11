@@ -74,13 +74,13 @@ class Auth {
         if (e.code == 'account-exists-with-different-credential') {
           await googleSignIn.signOut();
           Get.showSnackbar(customSnackbar(
-              'This account exists with different sign in provider', Icons.error));
+              message:'This account exists with different sign in provider',icon: Icons.error, title: 'Error'));
           globalController.toogleIsLoading(); //switch to false
           Get.offAllNamed(Routes.AUTH);
           /* .then((value) => Get.showSnackbar(customSnackbar('You signing out.'))) */;
         } else if (e.code == 'invalid-credential') {
 
-          Get.showSnackbar(customSnackbar('Unknown error has occured', Icons.error));
+          Get.showSnackbar(customSnackbar(message:'Unknown error has occured',icon: Icons.error, title: 'Error'));
           globalController.toogleIsLoading(); //switch to false
           Get.offAllNamed(Routes.AUTH);
         }
@@ -96,12 +96,12 @@ class Auth {
     try {
       if (!GetPlatform.isWeb) {
         await googleSignIn.signOut().then(
-            (value) => Get.showSnackbar(customSnackbar('You signing out.', Icons.error)));
+            (value) => Get.showSnackbar(customSnackbar(message:'You signing out.',icon: Icons.error, title: 'Error')));
       }
       //for webb
       /* await FirebaseAuth.instance.signOut(); */
     } catch (e) {
-      Get.showSnackbar(customSnackbar('Error signing out. Try again.', Icons.error));
+      Get.showSnackbar(customSnackbar(message:'Error signing out. Try again.',icon: Icons.error, title: 'Error'));
     }
   }
 
@@ -122,13 +122,13 @@ class Auth {
     } on FirebaseAuthException catch (e) {
       if (e.code == 'account-exists-with-different-credential') {
         await FacebookAuth.instance.logOut();
-        Get.showSnackbar(customSnackbar(
-            'This account exists with different sign in provider', Icons.error));
+        Get.showSnackbar(customSnackbar(message:
+            'This account exists with different sign in provider',icon: Icons.error, title: 'Error'));
         await Future.delayed(Duration(seconds: 1));
         globalController.toogleIsLoading();//switch to false
         Get.offAllNamed(Routes.AUTH);
       } else if (e.code == 'invalid-credential') {
-        Get.showSnackbar(customSnackbar('Unknown error has occured ', Icons.error));
+        Get.showSnackbar(customSnackbar(message:'Unknown error has occured ',icon: Icons.error, title: 'Error'));
         globalController.toogleIsLoading();//switch to false
       }
     } catch (e) {

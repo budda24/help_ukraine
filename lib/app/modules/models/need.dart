@@ -44,6 +44,8 @@ class Need {
   String? id;
 
   factory Need.fromJson(Map<String, dynamic> json) => Need(
+        id: json["id"],
+        city: json["city"],
         contact: json["contact"],
         title: json["title"],
         description: json["description"],
@@ -56,6 +58,8 @@ class Need {
       );
 
   Map<String, dynamic> toJson() => {
+        "id":id,
+        "city":city,
         "title": title,
         "description": description,
         "createdAt": Timestamp.fromDate(createdAt!),
