@@ -5,7 +5,7 @@ import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:get/get.dart';
 import 'package:pomoc_ukrainie/app/globals/global_controler.dart';
 import 'package:pomoc_ukrainie/app/modules/home/controllers/home_controller.dart';
-import 'package:pomoc_ukrainie/app/modules/home/views/needs_details_screen.dart';
+import 'package:pomoc_ukrainie/app/modules/needs_to_help/views/needs_details_screen.dart';
 import 'package:pomoc_ukrainie/app/modules/models/need.dart';
 import 'package:pomoc_ukrainie/app/modules/needs_to_help/widgets/needs_tile.dart';
 import 'package:pomoc_ukrainie/helpers/theme/app_colors.dart';
@@ -31,11 +31,11 @@ class NeedsToHelpView extends GetView<NeedsToHelpController> {
                 horizontalSpaceExtraTiny,
                 IconButton(
                     onPressed: () {
-                      controller.getNeedsCity('warszawa');
+                      Get.back();
                     },
                     icon: Icon(
-                      Icons.search_off_rounded,
-                      size: 40,
+                      Icons.arrow_back,
+                      size: 30,
                     )),
                 Container(
                   width: 0.85.sw,
@@ -44,8 +44,9 @@ class NeedsToHelpView extends GetView<NeedsToHelpController> {
                       textFieldConfiguration: TextFieldConfiguration(
                         controller: controller.cityController,
                         decoration: outlineInputTextFormFieldStyle!.copyWith(
+                          //city
                             label: Text(
-                          'Miasto',
+                          'miasto',
                           style: textfieldLableStyle,
                         )),
                       ),

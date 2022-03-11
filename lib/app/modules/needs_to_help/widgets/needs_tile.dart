@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 
 import '../../../../helpers/theme/app_colors.dart';
 import '../../../../helpers/theme/text_styles.dart';
-import '../../home/views/needs_details_screen.dart';
+import '../views/needs_details_screen.dart';
 import '../../models/need.dart';
 
 class NeedsTile extends StatelessWidget {

@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+
+
 import 'package:pomoc_ukrainie/app/modules/auth/controllers/auth_controller.dart';
-import 'package:pomoc_ukrainie/app/modules/home/controllers/home_controller.dart';
-import 'package:pomoc_ukrainie/app/modules/home/views/add_need_view.dart';
-import 'package:pomoc_ukrainie/app/modules/home/views/needs_view.dart';
 import 'package:pomoc_ukrainie/app/modules/home/views/user_profile.dart';
 import 'package:pomoc_ukrainie/helpers/theme/app_colors.dart';
 import 'package:pomoc_ukrainie/helpers/theme/text_styles.dart';
 import 'package:pomoc_ukrainie/helpers/theme/ui_helpers.dart';
-
 import '../../../infrastructure/fb_services/auth/auth.dart';
 import '../../../routes/app_pages.dart';
-import '../../needs_to_help/views/needs_to_help_view.dart';
 
 class ChoiceScreen extends GetView<AuthController> {
   const ChoiceScreen({Key? key}) : super(key: key);

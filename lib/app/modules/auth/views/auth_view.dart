@@ -49,11 +49,6 @@ class AuthView extends GetView<AuthController> {
                         textAlign: TextAlign.center,
                       ),
                       verticalSpaceTiny,
-                      Text(
-                        'Zaloguj się przez',
-                        style: headingBlackStyle,
-                        textAlign: TextAlign.center,
-                      ),
                       LoginServicesIcons(
                         onTapFaccebook: () async {
                           await Auth().signInWithFacebook();
@@ -61,9 +56,7 @@ class AuthView extends GetView<AuthController> {
                         onTapGoogle: () async {
                           await Auth().signInWithGoogle();
                         },
-                        onTapApple: () {
-                          Get.to(UserProfile());
-                        },
+
                       ),
                     ],
                   ),
