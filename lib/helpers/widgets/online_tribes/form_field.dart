@@ -19,7 +19,7 @@ class CustomTextField extends StatelessWidget {
     this.controller,
     this.color,
     this.lableText,
-
+    this.maxLenght,
   }) : super(key: key);
 
   final int minLine;
@@ -32,12 +32,14 @@ class CustomTextField extends StatelessWidget {
   TextEditingController? controller;
   Color? color;
   final Function validate;
+  int? maxLenght;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      maxLength: maxLenght,
       textInputAction: TextInputAction.next,
-      validator:(text) => validate(text),
+      validator: (text) => validate(text),
       controller: controller,
       style: kTextfieldStyle,
       keyboardType: TextInputType.multiline,
