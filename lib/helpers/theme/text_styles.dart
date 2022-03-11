@@ -21,6 +21,13 @@ TextStyle headingBlackStyle = TextStyle(
   fontSize: 25.0.sp,
   fontWeight: FontWeight.bold
 );
+
+TextStyle parafraphBlackStyle = TextStyle(
+
+  fontFamily: 'Comfortaa',
+  fontSize: 25.0.sp,
+  fontWeight: FontWeight.normal
+);
 TextStyle headingWhiteStyle = TextStyle(
   fontFamily: 'Built Relationship',
   color: AppColors.whiteColor,

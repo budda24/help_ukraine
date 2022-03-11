@@ -7,15 +7,18 @@ class BorderCustomContainer extends StatelessWidget {
   double height;
   double width;
   Widget child;
+  EdgeInsetsGeometry? padding;
   BorderCustomContainer({
     required this.height,
     required this.width,
     required this.child,
+    this.padding
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: padding,
       height: height,
       width: width,
       decoration: BoxDecoration(

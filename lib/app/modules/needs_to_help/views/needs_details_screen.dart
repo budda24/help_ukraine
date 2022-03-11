@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:auto_size_text/auto_size_text.dart';
+
 import 'package:pomoc_ukrainie/helpers/theme/text_styles.dart';
 import 'package:pomoc_ukrainie/helpers/theme/ui_helpers.dart';
 import 'package:pomoc_ukrainie/helpers/widgets/online_tribes/rounded_container.dart';
-
 import '../../../../helpers/theme/app_colors.dart';
 import '../../models/need.dart';
 import '../widgets/border_container.dart';
@@ -18,6 +19,7 @@ class NeedsDetailsScreen extends StatelessWidget {
       body: SafeArea(
         child: Center(
           child: BorderCustomContainer(
+            padding: EdgeInsets.symmetric(horizontal: 20),
             height: 0.9.sh,
             width: 0.9.sw,
             child: Column(
@@ -30,29 +32,32 @@ class NeedsDetailsScreen extends StatelessWidget {
                 Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                   Text(
                     need.title,
-                    style: headingBlackStyle,
+                    style: parafraphBlackStyle,
                   ),
                 ]),
                 verticalSpaceSmall,
-                Text(
-                  'adres : ${need.address}',
-                  style: headingBoldStyle,
+                AutoSizeText(
+                  ' ${need.address}',
+                  maxLines: 1,
+                  style: parafraphBlackStyle,
                 ),
                 Divider(
                   color: AppColors.transparentBlackColor,
                   thickness: 2,
                 ),
-                Text(
-                  'nr. tel. : ${need.contact} ',
-                  style: headingBoldStyle,
+                AutoSizeText(
+                  '${need.contact}',
+                  maxLines: 1,
+                  style: parafraphBlackStyle,
                 ),
                 Divider(
                   color: AppColors.transparentBlackColor,
                   thickness: 2,
                 ),
-                Text(
-                  'email : ${need.email} ',
-                  style: headingBoldStyle,
+                AutoSizeText(
+                  '${need.email}',
+                  maxLines: 1,
+                  style: parafraphBlackStyle,
                 ),
                 Divider(
                   color: AppColors.transparentBlackColor,
@@ -69,7 +74,7 @@ class NeedsDetailsScreen extends StatelessWidget {
                     children: [
                       Text(
                        need.description,
-                        style: headingBoldStyle,
+                        style: parafraphBlackStyle,
                       )
                     ],
                   ),

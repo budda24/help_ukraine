@@ -81,17 +81,19 @@ class DbFirebase {
     need.id = user!.uid;
 
     try {
-      await need.translateToPL();
+      await createUserNeed(need, user);
 
+      await need.translateToPL();
       var response = await db
           .collection('needs')
           .doc('pl')
           .collection(need.city!.toLowerCase())
           .doc(user.uid)
           .set(need.toJson());
-
       await createCityWithNeeds(need.city ?? '');
-      await createUserNeed(need, user);
+
+
+
     } on FirebaseException catch (error) {
       await Get.showSnackbar(customSnackbar(
           message: "Need can't be created because $error",

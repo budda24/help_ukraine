@@ -48,9 +48,7 @@ class AddNeedView extends GetView<HomeController> {
             body: GetBuilder<GlobalController>(
               builder: (globalGontroller) => Container(
                 child: globalController.isLoading
-                    ? CircularProgressIndicator(
-
-                      )
+                    ? CircularProgressIndicator()
                     : Form(
                         key: controller.formKey,
                         child: SingleChildScrollView(
@@ -122,27 +120,15 @@ class AddNeedView extends GetView<HomeController> {
                                           .getSuggestions(pattern);
                                     }),
                               ),
-
-                              /* GetBuilder<GlobalController>(
-                      init: GlobalController(),
-                      builder: (GlobalController globalController) {
-                        print('rebuild getbuilder');
-                        return Container(
-                            padding: EdgeInsets.symmetric(horizontal: 40),
-                            child: globalController.isLoading */
-                              /* ? CircularProgressIndicator()
-                                :*/
-
                               verticalSpaceSmall,
                               OneLineTextField(
                                   keybordhType: TextInputType.name,
-
                                   validator: (text) {
                                     return controller
                                         .validateTextField(text ?? '');
                                   },
                                   //imię i nazwisko/"Ім'я та прізвище"
-                                  lable: 'name',
+                                  lable: "ім'я",
                                   maxLenght: 25,
                                   controller: controller.nameController),
                               verticalSpaceSmall,
@@ -154,19 +140,18 @@ class AddNeedView extends GetView<HomeController> {
                                         .validateTextField(text ?? '');
                                   },
                                   //potrzeba tytuł/"потрібен титул"
-                                  lable: 'title',
-
+                                  lable: 'титул',
                                   controller: controller.titleController),
                               verticalSpaceSmall,
                               OneLineTextField(
-                                maxLenght: 15,
+                                  maxLenght: 15,
                                   keybordhType: TextInputType.number,
                                   validator: (text) {
                                     return controller
                                         .validateTextField(text ?? '');
                                   },
                                   //nr.telefonu/ "телефонний номер"
-                                  lable: 'phone number',
+                                  lable: 'телефонний номер',
                                   controller:
                                       controller.contactNumberController),
                               verticalSpaceSmall,
@@ -176,7 +161,6 @@ class AddNeedView extends GetView<HomeController> {
                                   maxLenght: 400,
                                   validate: (text) =>
                                       controller.validateTextField(text),
-
                                   maxline: 10,
                                   minLine: 5,
                                   height: 120.h,
@@ -196,41 +180,3 @@ class AddNeedView extends GetView<HomeController> {
     );
   }
 }
-/* Container(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 40,
-                      vertical: 10,
-                    ),
-                    child: TypeAheadFormField(
-                        validator: (text) {
-                          if (controller.getSuggestions(text ?? '').isEmpty) {
-                            //there is no such available city
-                            return 'такого доступного міста немає';
-                          }
-                          return controller.validateTextField(text ?? '');
-                        },
-                        textFieldConfiguration: TextFieldConfiguration(
-                          controller: controller.cityController,
-                          decoration: outlineInputTextFormFieldStyle!.copyWith(
-                              label: Text(
-                            //city
-                            'місто',
-                            style: textfieldLableStyle,
-                          )),
-                        ),
-                        onSuggestionSelected: (City city) {
-                          controller.cityController.text = city.name;
-                        },
-                        itemBuilder: (_, City city) {
-                          return ListTile(
-                            leading: Icon(Icons.location_city),
-                            title: Text(
-                              city.name,
-                              style: headingBlackStyle,
-                            ),
-                          );
-                        },
-                        suggestionsCallback: (pattern) {
-                          return controller.getSuggestions(pattern);
-                        }),
-                  ), */
