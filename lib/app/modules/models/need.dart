@@ -29,6 +29,7 @@ class Need {
     required this.address,
     this.city,
     this.id,
+    /* this.doNeedExist */
   });
 
   String title;
@@ -42,8 +43,12 @@ class Need {
   String address;
   String? contact;
   String? id;
+  /* bool? doNeedExist; */
 
   factory Need.fromJson(Map<String, dynamic> json) => Need(
+        /* doNeedExist: json["doNeedExist"], */
+        id: json["id"],
+        city: json["city"],
         contact: json["contact"],
         title: json["title"],
         description: json["description"],
@@ -56,6 +61,9 @@ class Need {
       );
 
   Map<String, dynamic> toJson() => {
+        /* "doNeedExist":doNeedExist, */
+        "id": id,
+        "city": city,
         "title": title,
         "description": description,
         "createdAt": Timestamp.fromDate(createdAt!),

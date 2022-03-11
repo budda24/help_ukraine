@@ -13,7 +13,7 @@ import 'package:pomoc_ukrainie/app/infrastructure/fb_services/db_services/fireba
 import '../../../../helpers/theme/alert_styles.dart';
 import '../../../globals/global_controler.dart';
 import '../../../infrastructure/fb_services/auth/auth.dart';
-import '../../models/city.dart';
+import '../../models/city_local_json.dart';
 import '../../models/need.dart';
 
 class HomeController extends GetxController {
@@ -27,24 +27,18 @@ class HomeController extends GetxController {
   TextEditingController titleController = TextEditingController();
   TextEditingController adressController = TextEditingController();
 
+  void cleanController() {
+    nameController.clear();
+    contactNumberController.clear();
+    cityController.clear();
+    descriptionController.clear();
+    titleController.clear();
+    adressController.clear();
+  }
+
   /* TextEditingController needAdressController = TextEditingController(); */
 
   final formKey = GlobalKey<FormState>();
-
-  List<City> _cities = [];
-  void getCityToModel() {
-    /* List<City> tmpcities = []; */
-    polishCity.forEach((element) {
-      _cities.add(City.fromJson(element));
-    });
-  }
-
-  List<City> getSuggestions(String pattern) {
-    var suggestionCities = _cities.where((value) {
-      return value.name.toLowerCase().startsWith(pattern.toLowerCase());
-    }).toList();
-    return suggestionCities;
-  }
 
   String? validateTextField(String text) {
     String errorMessage = '';
@@ -86,11 +80,14 @@ class HomeController extends GetxController {
           long: position.longitude,
           postedBy: user!.uid);
       try {
+        print('need city before post:${need.city}');
         await DbFirebase().createNeed(need, user);
-        await getNeedsUser();
+        cleanController();
       } catch (e) {
         Get.showSnackbar(customSnackbar(
-            'надіслати потребу не вдалося, тому що: $e', Icons.error));
+            message: 'надіслати потребу не вдалося, тому що: $e',
+            icon: Icons.error,
+            title: 'Error'));
       }
     }
   }
@@ -98,17 +95,28 @@ class HomeController extends GetxController {
   RxList<Need> needs = <Need>[].obs;
   Future<void> getNeedsUser() async {
     needs.value = await DbFirebase().feachNeedsInUser(user!.uid);
+    update();
   }
 
-  Future<void> deleteNeed(String id) async {
-    await DbFirebase().deleteNeedUser(user!.uid, id).then((value) {
+  Future<void> deleteNeed(String id, Need need) async {
+    var db = DbFirebase();
+    try {
+      await db.deleteNeedUser(user!.uid, id);
+      await db.deleteNeed(need);
+      await db.deleteCityWhereNeed(need.city ?? '');
+      update();
+      Get.showSnackbar(customSnackbar(
+          message: 'deleted succede',
+          icon: Icons.file_download_done,
+          title: 'Done'));
+    } catch (e) {
+      Get.showSnackbar(customSnackbar(
+          message: 'deleted NOT succede becouse : $e',
+          icon: Icons.error,
+          title: 'Error'));
+    } finally {
       needs.removeWhere((element) => element.id == id);
-      Get.showSnackbar(
-          customSnackbar('deleted succede', Icons.file_download_done));
-    }).catchError((e) {
-      Get.showSnackbar(
-          customSnackbar('deleted NOT succede becouse : $e', Icons.error));
-    });
+    }
   }
 
   Future<Position> _getGeoLocationPosition() async {
@@ -150,7 +158,6 @@ class HomeController extends GetxController {
       Placemark place = placemarks[0];
       /* to write in the form field */
       adressController.text = '${place.street!} \n ${place.postalCode!}';
-      update();
     }
     return position;
   }
@@ -158,20 +165,16 @@ class HomeController extends GetxController {
   final count = 0.obs;
   @override
   void onInit() async {
-    await DbFirebase().feachNeedsInUser(user!.uid);
-    getCityToModel();
+    await getNeedsUser();
+    update();
+    globalController.getCityToModel();
     adressController.text = 'adress is loading...';
     await GetAddressFromLatLong();
-    /* globalController.toogleIsLoading();
-    print('on ${globalController.isLoading}'); */
-
     super.onInit();
   }
 
   @override
   void onReady() async {
-    /*  globalController.toogleIsLoading();
-    print('off ${globalController.isLoading}'); */
     super.onReady();
   }
 

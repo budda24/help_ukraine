@@ -26,7 +26,7 @@ class NeedTile extends StatelessWidget {
         Spacer(),
         IconButton(
           onPressed: () {
-            deleteNeed(need.id);
+            deleteNeed(need.id,need);
           },
           icon: Icon(
             Icons.remove_circle_outline,

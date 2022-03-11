@@ -36,6 +36,7 @@ class CustomTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      textInputAction: TextInputAction.next,
       validator:(text) => validate(text),
       controller: controller,
       style: kTextfieldStyle,

@@ -25,10 +25,26 @@ class Auth {
 
   static Future<FirebaseApp> initializeFirebase() async {
     FirebaseApp firebaseApp = await Firebase.initializeApp();
-
-    // TODO: Add auto login logic
-
     return firebaseApp;
+  }
+
+  Future<void> loginExistingUser(String email, String password) async {
+    try {
+      final List loginMethods = await auth.fetchSignInMethodsForEmail(email);
+      if (loginMethods.isEmpty) {
+        Get.showSnackbar(customSnackbar(
+            message: 'Email alredy exist', title: 'Error', icon: Icons.error));
+      } else {
+        final userData = await auth.signInWithEmailAndPassword(
+            email: email, password: password);
+        print(userData.user!.uid);
+      }
+    } on FirebaseAuthException catch (error) {
+      Get.showSnackbar(customSnackbar(
+          message: 'logowanie nie powiodło z powodu $error',
+          title: 'Error',
+          icon: Icons.error));
+    }
   }
 
   Future<User?> signInWithGoogle() async {
@@ -74,13 +90,17 @@ class Auth {
         if (e.code == 'account-exists-with-different-credential') {
           await googleSignIn.signOut();
           Get.showSnackbar(customSnackbar(
-              'This account exists with different sign in provider', Icons.error));
+              message: 'This account exists with different sign in provider',
+              icon: Icons.error,
+              title: 'Error'));
           globalController.toogleIsLoading(); //switch to false
           Get.offAllNamed(Routes.AUTH);
           /* .then((value) => Get.showSnackbar(customSnackbar('You signing out.'))) */;
         } else if (e.code == 'invalid-credential') {
-
-          Get.showSnackbar(customSnackbar('Unknown error has occured', Icons.error));
+          Get.showSnackbar(customSnackbar(
+              message: 'Unknown error has occured',
+              icon: Icons.error,
+              title: 'Error'));
           globalController.toogleIsLoading(); //switch to false
           Get.offAllNamed(Routes.AUTH);
         }
@@ -95,18 +115,24 @@ class Auth {
 
     try {
       if (!GetPlatform.isWeb) {
-        await googleSignIn.signOut().then(
-            (value) => Get.showSnackbar(customSnackbar('You signing out.', Icons.error)));
+        await googleSignIn.signOut().then((value) => Get.showSnackbar(
+            customSnackbar(
+                message: 'You signing out.',
+                icon: Icons.error,
+                title: 'Error')));
       }
       //for webb
       /* await FirebaseAuth.instance.signOut(); */
     } catch (e) {
-      Get.showSnackbar(customSnackbar('Error signing out. Try again.', Icons.error));
+      Get.showSnackbar(customSnackbar(
+          message: 'Error signing out. Try again.',
+          icon: Icons.error,
+          title: 'Error'));
     }
   }
 
-   Future<void> signInWithFacebook() async {
-    globalController.toogleIsLoading();//switch to true
+  Future<void> signInWithFacebook() async {
+    globalController.toogleIsLoading(); //switch to true
     try {
       final LoginResult result = await FacebookAuth.instance.login();
 
@@ -123,13 +149,18 @@ class Auth {
       if (e.code == 'account-exists-with-different-credential') {
         await FacebookAuth.instance.logOut();
         Get.showSnackbar(customSnackbar(
-            'This account exists with different sign in provider', Icons.error));
+            message: 'This account exists with different sign in provider',
+            icon: Icons.error,
+            title: 'Error'));
         await Future.delayed(Duration(seconds: 1));
-        globalController.toogleIsLoading();//switch to false
+        globalController.toogleIsLoading(); //switch to false
         Get.offAllNamed(Routes.AUTH);
       } else if (e.code == 'invalid-credential') {
-        Get.showSnackbar(customSnackbar('Unknown error has occured ', Icons.error));
-        globalController.toogleIsLoading();//switch to false
+        Get.showSnackbar(customSnackbar(
+            message: 'Unknown error has occured ',
+            icon: Icons.error,
+            title: 'Error'));
+        globalController.toogleIsLoading(); //switch to false
       }
     } catch (e) {
       print(e);
@@ -138,77 +169,3 @@ class Auth {
     } */
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- /*  Future<void> loginExistingUser(String email, String password) async {
-    try {
-      final List loginMethods = await auth.fetchSignInMethodsForEmail(email);
-      if (loginMethods.isEmpty) {
-        Get.showSnackbar(customSnackbar('Email alredy exist'));
-      } else {
-        final userData = await auth.signInWithEmailAndPassword(
-            email: email, password: password);
-        print(userData.user!.uid);
-      }
-    } on FirebaseAuthException catch (error) {
-      Get.showSnackbar(
-          customSnackbar('logowanie nie powiodło z powodu $error'));
-    }
-  }
-
-  Future<void> signInUser(String email, String password) async {
-    try {
-
-      final List loginMethods = await auth.fetchSignInMethodsForEmail(email);
-      if (loginMethods.isEmpty) {
-        Get.showSnackbar(customSnackbar('Email alredy exist'));
-      } else {
-        final userData = await auth.signInWithEmailAndPassword(
-            email: email, password: password);
-        print(userData.user!.uid);
-      }
-    } on FirebaseAuthException catch (error) {
-      Get.showSnackbar(
-          customSnackbar('logowanie nie powiodło z powodu $error'));
-    }
-  } */
-
