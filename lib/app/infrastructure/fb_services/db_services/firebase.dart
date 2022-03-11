@@ -157,18 +157,26 @@ class DbFirebase {
   Future<void> postCityWithNeeds(String city) async {
     try {
       int quantity = 1;
+      Map<String, dynamic> json;
       List<CityWithNeeds> existingCity = await feachCityWhereNeeds();
       if (existingCity.any((element) => element.name == city)) {
         CityWithNeeds? foundCity =
             existingCity.firstWhere((element) => element.name == city);
+
         quantity = int.parse(foundCity.quantity);
         quantity++;
         print('foundcity: $foundCity');
+        json = CityWithNeeds(
+          quantity: quantity.toString(),
+          name: city,
+          id: foundCity.id,
+        ).toJson();
+        await db.collection('citiesWithNeed').doc(foundCity.id).set(json);
+      } else {
+        json =
+            CityWithNeeds(quantity: quantity.toString(), name: city).toJson();
+        await db.collection('citiesWithNeed').add(json);
       }
-
-      var json =
-          CityWithNeeds(quantity: quantity.toString(), name: city).toJson();
-      var response = await db.collection('citiesWithNeed').add(json);
     } on FirebaseException catch (error) {
       print(error);
     } catch (error) {

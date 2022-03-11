@@ -26,6 +26,7 @@ class AddNeedView extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
+    
     return SafeArea(
       child: GestureDetector(
         onTap: globalController.unFocuseNode,
