@@ -45,11 +45,9 @@ class AddNeedView extends GetView<HomeController> {
               },
             ),
             body: GetBuilder<GlobalController>(
-              builder: (globalGontroller) => Container(
+              builder: (globalGontroller) => Center(
                 child: globalController.isLoading
-                    ? CircularProgressIndicator(
-
-                      )
+                    ? CircularProgressIndicator()
                     : Form(
                         key: controller.formKey,
                         child: SingleChildScrollView(
@@ -134,8 +132,12 @@ class AddNeedView extends GetView<HomeController> {
 
                               verticalSpaceSmall,
                               OneLineTextField(
+                                  focusNode: controller.nameFocusNode,
+                                  // onFieldSubmited: (_) {
+                                  //   FocusScope.of(context).requestFocus(
+                                  //       controller.titleFocusNode);
+                                  // },
                                   keybordhType: TextInputType.name,
-
                                   validator: (text) {
                                     return controller
                                         .validateTextField(text ?? '');
@@ -146,6 +148,11 @@ class AddNeedView extends GetView<HomeController> {
                                   controller: controller.nameController),
                               verticalSpaceSmall,
                               OneLineTextField(
+                                // onFieldSubmited: (_) {
+                                //     FocusScope.of(context).requestFocus(
+                                //         controller.phoneFocusNode);
+                                //   },
+                                  focusNode: controller.titleFocusNode,
                                   maxLenght: 25,
                                   keybordhType: TextInputType.name,
                                   validator: (text) {
@@ -154,11 +161,15 @@ class AddNeedView extends GetView<HomeController> {
                                   },
                                   //potrzeba tytuł/"потрібен титул"
                                   lable: 'title',
-
                                   controller: controller.titleController),
                               verticalSpaceSmall,
                               OneLineTextField(
-                                maxLenght: 15,
+                                //  onFieldSubmited: (_) {
+                                //     FocusScope.of(context).requestFocus(
+                                //         controller.phoneFocusNode);
+                                //   },
+                                  focusNode: controller.descripotionFocusNode,
+                                  maxLenght: 15,
                                   keybordhType: TextInputType.number,
                                   validator: (text) {
                                     return controller
@@ -172,10 +183,10 @@ class AddNeedView extends GetView<HomeController> {
                               Container(
                                 padding: EdgeInsets.symmetric(horizontal: 40),
                                 child: CustomTextField(
+                                  focusNode: controller.descripotionFocusNode,
                                   maxLenght: 400,
                                   validate: (text) =>
                                       controller.validateTextField(text),
-
                                   maxline: 10,
                                   minLine: 5,
                                   height: 120.h,

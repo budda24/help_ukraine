@@ -20,6 +20,7 @@ class CustomTextField extends StatelessWidget {
     this.color,
     this.lableText,
     this.maxLenght,
+    this.focusNode,
   }) : super(key: key);
 
   final int minLine;
@@ -33,6 +34,7 @@ class CustomTextField extends StatelessWidget {
   Color? color;
   final Function validate;
   int? maxLenght;
+  FocusNode? focusNode;
 
   @override
   Widget build(BuildContext context) {
