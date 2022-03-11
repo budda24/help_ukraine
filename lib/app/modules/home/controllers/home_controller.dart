@@ -84,6 +84,8 @@ class HomeController extends GetxController {
         print('need city before post:${need.city}');
         await DbFirebase().createNeed(need, user);
         cleanController();
+        globalController.toogleIsLoading();
+        print('wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww${globalController.isLoading}');
       } catch (e) {
         Get.showSnackbar(customSnackbar(
             message: 'надіслати потребу не вдалося, тому що: $e',
