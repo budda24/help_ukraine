@@ -166,6 +166,7 @@ class HomeController extends GetxController {
   @override
   void onInit() async {
     await getNeedsUser();
+    update();
     globalController.getCityToModel();
     adressController.text = 'adress is loading...';
     await GetAddressFromLatLong();

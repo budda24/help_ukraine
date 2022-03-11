@@ -15,10 +15,9 @@ import '../../../../helpers/theme/app_colors.dart';
 import 'add_need_view.dart';
 
 class UserProfile extends GetView<HomeController> {
+  var controller = Get.put(HomeController());
   @override
   Widget build(BuildContext context) {
-    print('start build');
-    /* controller.getNeedsUser(); */
     return Scaffold(
       body: SafeArea(
           child: Padding(
@@ -66,26 +65,33 @@ class UserProfile extends GetView<HomeController> {
               height: 0.30.sh,
               width: 1.sw,
               backgroundColor: AppColors.primaryColorShade,
-              child: Column(
-                children: [
-                  Text(
-                    'Щоб отримати допомогу, натисніть кнопку нижче та заповніть форму заявки. Якщо заявка заповнена або застаріла - видаліть програму зі свого профілю.',
-                    style: headingBoldStyle,
-                  ),
-                  Align(
-                    alignment: Alignment.bottomRight,
-                    child: InkWell(
-                      onTap: () async {
-                        Get.to(AddNeedView());
-                      },
-                      child: (Icon(
-                        Icons.add_box_rounded,
-                        size: 80,
-                        color: AppColors.primaryColor,
-                      )),
-                    ),
-                  ),
-                ],
+              child: GetBuilder<HomeController>(
+                init: HomeController(),
+                builder:(controller) => Column(
+                  children: [
+                    controller.needs.isNotEmpty
+                        ? Text('U can post only one Need')
+                        : Text(
+                            'Щоб отримати допомогу, натисніть кнопку нижче та заповніть форму заявки. Якщо заявка заповнена або застаріла - видаліть програму зі свого профілю.',
+                            style: headingBoldStyle,
+                          ),
+                    controller.needs.isNotEmpty
+                        ? Container()
+                        : Align(
+                            alignment: Alignment.bottomRight,
+                            child: InkWell(
+                              onTap: () async {
+                                Get.to(AddNeedView());
+                              },
+                              child: (Icon(
+                                Icons.add_box_rounded,
+                                size: 80,
+                                color: AppColors.primaryColor,
+                              )),
+                            ),
+                          ),
+                  ],
+                ),
               ),
             )
           ],

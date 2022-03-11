@@ -30,12 +30,44 @@ class DbFirebase {
   }
 
   Future<void> createUserNeed(Need need, User? user) async {
+    var json = need.toJson();
+    /* json.addAll({'doNeedExist': true}); */
     await db
         .collection('user')
         .doc(user!.uid)
         .collection('needs')
         .doc()
-        .set(need.toJson());
+        .set(json);
+  }
+
+  Future<void> createCityWithNeeds(String city) async {
+    try {
+      int quantity = 1;
+      Map<String, dynamic> json;
+      List<CityWithNeeds> existingCity = await feachCityWhereNeeds();
+      if (existingCity.any((element) => element.name == city)) {
+        CityWithNeeds? foundCity =
+            existingCity.firstWhere((element) => element.name == city);
+
+        quantity = int.parse(foundCity.quantity);
+        quantity++;
+        print('foundcity: $foundCity');
+        json = CityWithNeeds(
+          quantity: quantity.toString(),
+          name: city,
+          id: foundCity.id,
+        ).toJson();
+        await db.collection('citiesWithNeed').doc(foundCity.id).set(json);
+      } else {
+        json =
+            CityWithNeeds(quantity: quantity.toString(), name: city).toJson();
+        await db.collection('citiesWithNeed').add(json);
+      }
+    } on FirebaseException catch (error) {
+      print(error);
+    } catch (error) {
+      print(error);
+    }
   }
 
   Future<void> createNeed(Need need, User? user) async {
@@ -53,7 +85,7 @@ class DbFirebase {
           .doc(user.uid)
           .set(need.toJson());
 
-      await postCityWithNeeds(need.city ?? '');
+      await createCityWithNeeds(need.city ?? '');
       await createUserNeed(need, user);
     } on FirebaseException catch (e) {
       Get.showSnackbar(customSnackbar(
@@ -83,11 +115,13 @@ class DbFirebase {
     var response =
         await db.collection('user').doc(id).collection('needs').get();
     /* var need = Need.fromJson(response.docs.first.data()); */
+
     response.docs.forEach((element) {
       var need = Need.fromJson(element.data());
       need.id = element.id;
       needs.add(need);
     });
+
     return needs;
   }
 
@@ -152,35 +186,5 @@ class DbFirebase {
           .set(deletedCity.toJson());
     } else
       await db.collection('citiesWithNeed').doc(deletedCity.id).delete();
-  }
-
-  Future<void> postCityWithNeeds(String city) async {
-    try {
-      int quantity = 1;
-      Map<String, dynamic> json;
-      List<CityWithNeeds> existingCity = await feachCityWhereNeeds();
-      if (existingCity.any((element) => element.name == city)) {
-        CityWithNeeds? foundCity =
-            existingCity.firstWhere((element) => element.name == city);
-
-        quantity = int.parse(foundCity.quantity);
-        quantity++;
-        print('foundcity: $foundCity');
-        json = CityWithNeeds(
-          quantity: quantity.toString(),
-          name: city,
-          id: foundCity.id,
-        ).toJson();
-        await db.collection('citiesWithNeed').doc(foundCity.id).set(json);
-      } else {
-        json =
-            CityWithNeeds(quantity: quantity.toString(), name: city).toJson();
-        await db.collection('citiesWithNeed').add(json);
-      }
-    } on FirebaseException catch (error) {
-      print(error);
-    } catch (error) {
-      print(error);
-    }
   }
 }
