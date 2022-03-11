@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -12,6 +14,8 @@ class OneLineTextField extends StatelessWidget {
   final Function validator;
   TextInputType? keybordhType;
   int? maxLenght;
+  FocusNode? focusNode;
+  Void? onFieldSubmited;
   OneLineTextField({
     Key? key,
     required this.lable,
@@ -19,7 +23,9 @@ class OneLineTextField extends StatelessWidget {
     required this.validator,
     this.keybordhType,
     this.isOscure = false,
-    this.maxLenght
+    this.maxLenght,
+    this.focusNode,
+    this.onFieldSubmited,
   }) : super(key: key);
 
   @override
@@ -29,15 +35,16 @@ class OneLineTextField extends StatelessWidget {
       height: 70.h,
       width: 320.w,
       child: TextFormField(
-
+        // onFieldSubmitted:()=> onFieldSubmited()   ,
+        focusNode: focusNode,
         textInputAction: TextInputAction.next,
         maxLength: maxLenght,
-        keyboardType:keybordhType?? TextInputType.text,
+        keyboardType: keybordhType ?? TextInputType.text,
         validator: (text) => validator(text),
         obscureText: isOscure,
         controller: controller,
         decoration: InputDecoration(
-          counterText: '',
+            counterText: '',
             label: Text(
               lable,
               style: textfieldLableStyle,

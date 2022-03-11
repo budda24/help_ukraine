@@ -20,6 +20,12 @@ import '../../models/need.dart';
 class HomeController extends GetxController {
   final globalController = Get.put(GlobalController());
 
+  final nameFocusNode = FocusNode();
+  final titleFocusNode = FocusNode();
+  final phoneFocusNode = FocusNode();
+  final descripotionFocusNode = FocusNode();
+
+
   //TODO: Implement HomeController
   TextEditingController nameController = TextEditingController();
   TextEditingController contactNumberController = TextEditingController();
@@ -85,7 +91,8 @@ class HomeController extends GetxController {
         await DbFirebase().createNeed(need, user);
         cleanController();
         globalController.toogleIsLoading();
-        print('wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww${globalController.isLoading}');
+        print(
+            'wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww${globalController.isLoading}');
       } catch (e) {
         Get.showSnackbar(customSnackbar(
             message: 'надіслати потребу не вдалося, тому що: $e',
