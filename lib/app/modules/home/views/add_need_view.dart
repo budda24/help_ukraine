@@ -1,4 +1,3 @@
-import 'package:ensure_visible_when_focused/ensure_visible_when_focused.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -35,20 +34,22 @@ class AddNeedView extends GetView<HomeController> {
       child: GestureDetector(
         onTap: globalController.unFocuseNode,
         child: Scaffold(
-            floatingActionButton: IconButton(
-              iconSize: 80,
-              alignment: Alignment.center,
-              icon: Icon(Icons.add_alert),
-              onPressed: () async {
-                await controller.postNeed().then((value) => Get.showSnackbar(
-                      customSnackbar(
-                          message: 'потреба була опублікована',
-                          icon: Icons.file_download_done,
-                          title: "done"),
-                    ));
-                await controller.getNeedsUser();
-                Get.off(UserProfile());
-              },
+            floatingActionButton: GetBuilder<GlobalController>(
+              builder: (_) => IconButton(
+                iconSize: !globalController.isLoading ? 80 : 0,
+                alignment: Alignment.center,
+                icon: Icon(Icons.add_alert),
+                onPressed: () async {
+                  await controller.postNeed().then((value) => Get.showSnackbar(
+                        customSnackbar(
+                            message: 'потреба була опублікована',
+                            icon: Icons.file_download_done,
+                            title: "done"),
+                      ));
+                  await controller.getNeedsUser();
+                  Get.off(UserProfile());
+                },
+              ),
             ),
             body: GetBuilder<GlobalController>(
               builder: (globalGontroller) => Center(
@@ -161,46 +162,39 @@ class AddNeedView extends GetView<HomeController> {
                                   lable: 'титул',
                                   controller: controller.titleController),
                               verticalSpaceSmall,
-                              EnsureVisibleWhenFocused(
-                                focusNode: controller.phoneFocusNode,
-                                child: OneLineTextField(
-                                    focusNode: controller.phoneFocusNode,
-                                    onSubmit: () => controller
-                                        .descripotionFocusNode
-                                        .requestFocus(),
-                                    maxLenght: 15,
-                                    keybordhType: TextInputType.number,
-                                    validator: (text) {
-                                      return controller
-                                          .validateTextField(text ?? '');
-                                    },
-                                    //nr.telefonu/ "телефонний номер"
-                                    lable: 'телефонний номер',
-                                    controller:
-                                        controller.contactNumberController),
-                              ),
+                              OneLineTextField(
+                                  focusNode: controller.phoneFocusNode,
+                                  onSubmit: () => controller
+                                      .descripotionFocusNode
+                                      .requestFocus(),
+                                  maxLenght: 15,
+                                  keybordhType: TextInputType.number,
+                                  validator: (text) {
+                                    return controller
+                                        .validateTextField(text ?? '');
+                                  },
+                                  //nr.telefonu/ "телефонний номер"
+                                  lable: 'телефонний номер',
+                                  controller:
+                                      controller.contactNumberController),
                               verticalSpaceSmall,
                               Container(
                                 padding: EdgeInsets.symmetric(horizontal: 40),
-                                child: EnsureVisibleWhenFocused(
+                                child: CustomTextField(
+                                  onSubmit: () => controller
+                                      .descripotionFocusNode
+                                      .unfocus(),
                                   focusNode: controller.descripotionFocusNode,
-                                  child: CustomTextField(
-                                    onSubmit: () => controller
-                                        .descripotionFocusNode
-                                        .unfocus(),
-                                    focusNode: controller.descripotionFocusNode,
-                                    maxLenght: 400,
-                                    validate: (text) =>
-                                        controller.validateTextField(text),
-                                    maxline: 10,
-                                    minLine: 5,
-                                    height: 120.h,
-                                    width: 0.8.sw,
-                                    controller:
-                                        controller.descriptionController,
-                                    color: AppColors.primaryColorShade,
-                                    lableText: 'опис',
-                                  ),
+                                  maxLenght: 400,
+                                  validate: (text) =>
+                                      controller.validateTextField(text),
+                                  maxline: 10,
+                                  minLine: 5,
+                                  height: 120.h,
+                                  width: 0.8.sw,
+                                  controller: controller.descriptionController,
+                                  color: AppColors.primaryColorShade,
+                                  lableText: 'опис',
                                 ),
                               ),
                             ],
