@@ -1,3 +1,4 @@
+import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -34,7 +35,15 @@ class MyApp extends StatelessWidget {
                   title: "Application",
                   getPages: AppPages.routes,
                   /* initialRoute: Routes.AUTH, */
-                  home: ChoiceScreen(),
+                home: AnimatedSplashScreen(
+        splashIconSize: 300,
+       duration: 4000,
+        splash: 'assets/giphy.gif',
+        nextScreen: const ChoiceScreen(),
+        splashTransition: SplashTransition.fadeTransition,
+        backgroundColor: const Color(0xff000000),
+        /*pageTransitionType: PageTra,*/
+      ),
                   defaultTransition: Transition.fadeIn,
                   debugShowCheckedModeBanner: false,
                 ),
