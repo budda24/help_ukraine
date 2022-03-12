@@ -8,6 +8,7 @@ import '../modules/home/views/add_need_view.dart';
 import '../modules/home/views/user_profile.dart';
 import '../modules/needs_to_help/bindings/needs_to_help_binding.dart';
 import '../modules/needs_to_help/views/needs_to_help_view.dart';
+import '../modules/home/views/add_need_view.dart';
 
 part 'app_routes.dart';
 
@@ -18,8 +19,13 @@ class AppPages {
 
   static final routes = [
     GetPage(
-      name: _Paths.HOME,
+      name: _Paths.PROFIL,
       page: () => UserProfile(),
+      binding: HomeBinding(),
+    ),
+    GetPage(
+      name: _Paths.ADD_NEEDS,
+      page:()=> AddNeedView(),
       binding: HomeBinding(),
     ),
     GetPage(

@@ -24,6 +24,9 @@ class HomeController extends GetxController {
   final titleFocusNode = FocusNode();
   final phoneFocusNode = FocusNode();
   final descripotionFocusNode = FocusNode();
+  final adressFocusNode = FocusNode();
+  final cityFocusNode = FocusNode();
+
 
 
   //TODO: Implement HomeController
@@ -75,6 +78,7 @@ class HomeController extends GetxController {
 
   Future<void> postNeed() async {
     if (validateForm()) {
+      globalController.toogleIsLoading();
       var position = await GelocationServices.getGeoLocationPosition();
       var need = Need(
           address: adressController.text,
@@ -87,12 +91,9 @@ class HomeController extends GetxController {
           long: position.longitude,
           postedBy: user!.uid);
       try {
-        print('need city before post:${need.city}');
         await DbFirebase().createNeed(need, user);
         cleanController();
         globalController.toogleIsLoading();
-        print(
-            'wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww${globalController.isLoading}');
       } catch (e) {
         Get.showSnackbar(customSnackbar(
             message: 'надіслати потребу не вдалося, тому що: $e',
@@ -136,6 +137,7 @@ class HomeController extends GetxController {
 
   @override
   void onInit() async {
+    adressFocusNode.requestFocus();
     await getNeedsUser();
     update();
     globalController.getCityToModel();

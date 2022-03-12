@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -48,18 +49,19 @@ class Auth {
         final UserCredential userCredential =
             await auth.signInWithCredential(credential);
         user = userCredential.user;
-
+        var createdAt = FieldValue.serverTimestamp();
         DbFirebase().createUser(
           UserDb(
             id: user!.uid,
             name: user!.displayName ?? 'no name',
             photoUrl: user!.photoURL ?? 'no photo',
+            createdAt:createdAt
           ),
         );
 
         globalController.toogleIsLoading();
         //switch to false
-        Get.offNamed(Routes.HOME);
+        Get.offNamed(Routes.PROFIL);
       } on FirebaseAuthException catch (e) {
         if (e.code == 'account-exists-with-different-credential') {
           await googleSignIn.signOut();
@@ -74,7 +76,7 @@ class Auth {
 
           Get.offAllNamed(Routes.AUTH);
         } else if (e.code == 'invalid-credential') {
-         await Get.showSnackbar(customSnackbar(
+          await Get.showSnackbar(customSnackbar(
               message: 'Сталася невідома помилка',
               icon: Icons.error,
               title: 'Error'));
@@ -84,7 +86,7 @@ class Auth {
           Get.offAllNamed(Routes.AUTH);
         }
       } catch (e) {
-       await Get.showSnackbar(customSnackbar(
+        await Get.showSnackbar(customSnackbar(
             message: 'Сталася невідома помилка',
             icon: Icons.error,
             title: 'Error'));
@@ -127,7 +129,7 @@ class Auth {
 
       user = userCredential.user;
 
-      Get.offNamed(Routes.HOME);
+      Get.offNamed(Routes.PROFIL);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'account-exists-with-different-credential') {
         await FacebookAuth.instance.logOut();
@@ -141,7 +143,7 @@ class Auth {
         globalController.toogleIsLoading(); //switch to false
         Get.offAllNamed(Routes.AUTH);
       } else if (e.code == 'invalid-credential') {
-       await Get.showSnackbar(customSnackbar(
+        await Get.showSnackbar(customSnackbar(
             message: 'Сталася невідома помилка',
             icon: Icons.error,
             title: 'Error'));
@@ -149,7 +151,7 @@ class Auth {
         globalController.toogleIsLoading(); //switch to false
       }
     } catch (e) {
-     await Get.showSnackbar(customSnackbar(
+      await Get.showSnackbar(customSnackbar(
           message: 'Сталася невідома помилка',
           icon: Icons.error,
           title: 'Error'));

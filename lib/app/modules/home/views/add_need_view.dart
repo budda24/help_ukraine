@@ -1,3 +1,4 @@
+import 'package:ensure_visible_when_focused/ensure_visible_when_focused.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -23,14 +24,13 @@ import 'user_profile.dart';
 class AddNeedView extends GetView<HomeController> {
   var globalController = Get.put(GlobalController());
 
-  Function? focuseNodeNext(BuildContext context, FocusNode node) {
-    FocusScope.of(context).requestFocus(node);
-    return null;
-  }
-
   @override
   Widget build(BuildContext context) {
     controller.getPosition();
+    WidgetsBinding.instance!
+        .addPostFrameCallback((_) => controller.adressFocusNode.requestFocus());
+
+    print('build');
     return SafeArea(
       child: GestureDetector(
         onTap: globalController.unFocuseNode,
@@ -57,6 +57,8 @@ class AddNeedView extends GetView<HomeController> {
                     : Form(
                         key: controller.formKey,
                         child: SingleChildScrollView(
+                          padding: EdgeInsets.only(
+                              bottom: MediaQuery.of(context).viewInsets.bottom),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -67,6 +69,7 @@ class AddNeedView extends GetView<HomeController> {
                               Container(
                                 padding: EdgeInsets.symmetric(horizontal: 40),
                                 child: CustomTextField(
+                                  focusNode: controller.adressFocusNode,
                                   validate: (text) =>
                                       controller.validateTextField(text),
                                   maxline: 4,
@@ -106,10 +109,12 @@ class AddNeedView extends GetView<HomeController> {
                                         'місто',
                                         style: textfieldLableStyle,
                                       )),
+                                      focusNode: controller.cityFocusNode,
                                     ),
                                     onSuggestionSelected: (City city) {
                                       controller.cityController.text =
                                           city.name;
+                                      controller.nameFocusNode.requestFocus();
                                     },
                                     itemBuilder: (_, City city) {
                                       return ListTile(
@@ -127,9 +132,11 @@ class AddNeedView extends GetView<HomeController> {
                               ),
                               verticalSpaceSmall,
                               OneLineTextField(
-
                                   focusNode: controller.nameFocusNode,
-                                onFieldSubmited: focuseNodeNext(context, controller.titleFocusNode),
+                                  onSubmit: () {
+                                    controller.nameFocusNode.unfocus();
+                                    controller.titleFocusNode.requestFocus();
+                                  },
                                   keybordhType: TextInputType.name,
                                   validator: (text) {
                                     return controller
@@ -141,8 +148,8 @@ class AddNeedView extends GetView<HomeController> {
                                   controller: controller.nameController),
                               verticalSpaceSmall,
                               OneLineTextField(
-                                  onFieldSubmited: focuseNodeNext(
-                                      context, controller.phoneFocusNode),
+                                  onSubmit: () =>
+                                      controller.phoneFocusNode.requestFocus(),
                                   focusNode: controller.titleFocusNode,
                                   maxLenght: 25,
                                   keybordhType: TextInputType.name,
@@ -154,38 +161,46 @@ class AddNeedView extends GetView<HomeController> {
                                   lable: 'титул',
                                   controller: controller.titleController),
                               verticalSpaceSmall,
-                              OneLineTextField(
-                                  //  onFieldSubmited: (_) {
-                                  //     FocusScope.of(context).requestFocus(
-                                  //         controller.phoneFocusNode);
-                                  //   },
-                                  focusNode: controller.phoneFocusNode,
-                                    onFieldSubmited: focuseNodeNext(context, controller.descripotionFocusNode),
-                                  maxLenght: 15,
-                                  keybordhType: TextInputType.number,
-                                  validator: (text) {
-                                    return controller
-                                        .validateTextField(text ?? '');
-                                  },
-                                  //nr.telefonu/ "телефонний номер"
-                                  lable: 'телефонний номер',
-                                  controller:
-                                      controller.contactNumberController),
+                              EnsureVisibleWhenFocused(
+                                focusNode: controller.phoneFocusNode,
+                                child: OneLineTextField(
+                                    focusNode: controller.phoneFocusNode,
+                                    onSubmit: () => controller
+                                        .descripotionFocusNode
+                                        .requestFocus(),
+                                    maxLenght: 15,
+                                    keybordhType: TextInputType.number,
+                                    validator: (text) {
+                                      return controller
+                                          .validateTextField(text ?? '');
+                                    },
+                                    //nr.telefonu/ "телефонний номер"
+                                    lable: 'телефонний номер',
+                                    controller:
+                                        controller.contactNumberController),
+                              ),
                               verticalSpaceSmall,
                               Container(
                                 padding: EdgeInsets.symmetric(horizontal: 40),
-                                child: CustomTextField(
+                                child: EnsureVisibleWhenFocused(
                                   focusNode: controller.descripotionFocusNode,
-                                  maxLenght: 400,
-                                  validate: (text) =>
-                                      controller.validateTextField(text),
-                                  maxline: 10,
-                                  minLine: 5,
-                                  height: 120.h,
-                                  width: 0.8.sw,
-                                  controller: controller.descriptionController,
-                                  color: AppColors.primaryColorShade,
-                                  lableText: 'опис',
+                                  child: CustomTextField(
+                                    onSubmit: () => controller
+                                        .descripotionFocusNode
+                                        .unfocus(),
+                                    focusNode: controller.descripotionFocusNode,
+                                    maxLenght: 400,
+                                    validate: (text) =>
+                                        controller.validateTextField(text),
+                                    maxline: 10,
+                                    minLine: 5,
+                                    height: 120.h,
+                                    width: 0.8.sw,
+                                    controller:
+                                        controller.descriptionController,
+                                    color: AppColors.primaryColorShade,
+                                    lableText: 'опис',
+                                  ),
                                 ),
                               ),
                             ],

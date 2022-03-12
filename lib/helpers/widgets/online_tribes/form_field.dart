@@ -15,12 +15,12 @@ class CustomTextField extends StatelessWidget {
     required this.width,
     required this.validate,
     this.hintText,
-    this.onSave,
     this.controller,
     this.color,
     this.lableText,
     this.maxLenght,
     this.focusNode,
+    this.onSubmit
   }) : super(key: key);
 
   final int minLine;
@@ -29,16 +29,18 @@ class CustomTextField extends StatelessWidget {
   final double width;
   String? hintText;
   String? lableText;
-  Function? onSave;
   TextEditingController? controller;
   Color? color;
   final Function validate;
   int? maxLenght;
   FocusNode? focusNode;
+  void onSubmit;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      onSaved:(_) => onSubmit,
+      focusNode: focusNode,
       maxLength: maxLenght,
       textInputAction: TextInputAction.next,
       validator: (text) => validate(text),

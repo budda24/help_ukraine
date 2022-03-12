@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:intl/intl.dart';
 import 'package:pomoc_ukrainie/app/modules/models/city_local_json.dart';
 
@@ -18,7 +19,7 @@ final db = FirebaseFirestore.instance;
 class DbFirebase {
   Future<void> createUser(UserDb user) async {
     try {
-      user.createdAt = FieldValue.serverTimestamp();
+      /* user.createdAt = FieldValue.serverTimestamp(); */
       await db.collection('user').doc(user.id).set(user.toJson());
     } on FirebaseException catch (e) {
       // Todo what to do in case that the auth user is created but the firestore user not
@@ -91,9 +92,6 @@ class DbFirebase {
           .doc(user.uid)
           .set(need.toJson());
       await createCityWithNeeds(need.city ?? '');
-
-
-
     } on FirebaseException catch (error) {
       await Get.showSnackbar(customSnackbar(
           message: "Need can't be created because $error",
