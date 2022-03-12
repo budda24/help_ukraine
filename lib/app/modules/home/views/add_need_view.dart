@@ -138,10 +138,10 @@ class AddNeedView extends GetView<HomeController> {
                                   controller: controller.nameController),
                               verticalSpaceSmall,
                               OneLineTextField(
-                                // onFieldSubmited: (_) {
-                                //     FocusScope.of(context).requestFocus(
-                                //         controller.phoneFocusNode);
-                                //   },
+                                  // onFieldSubmited: (_) {
+                                  //     FocusScope.of(context).requestFocus(
+                                  //         controller.phoneFocusNode);
+                                  //   },
                                   focusNode: controller.titleFocusNode,
                                   maxLenght: 25,
                                   keybordhType: TextInputType.name,
