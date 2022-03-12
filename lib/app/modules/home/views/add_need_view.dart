@@ -30,6 +30,7 @@ class AddNeedView extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
+    controller.getPosition();
     return SafeArea(
       child: GestureDetector(
         onTap: globalController.unFocuseNode,
@@ -124,20 +125,9 @@ class AddNeedView extends GetView<HomeController> {
                                           .getSuggestions(pattern);
                                     }),
                               ),
-
-                              /* GetBuilder<GlobalController>(
-                      init: GlobalController(),
-                      builder: (GlobalController globalController) {
-                        print('rebuild getbuilder');
-                        return Container(
-                            padding: EdgeInsets.symmetric(horizontal: 40),
-                            child: globalController.isLoading */
-                              /* ? CircularProgressIndicator()
-                                :*/
-
                               verticalSpaceSmall,
                               OneLineTextField(
-                                
+
                                   focusNode: controller.nameFocusNode,
                                 onFieldSubmited: focuseNodeNext(context, controller.titleFocusNode),
                                   keybordhType: TextInputType.name,
@@ -146,7 +136,7 @@ class AddNeedView extends GetView<HomeController> {
                                         .validateTextField(text ?? '');
                                   },
                                   //imię i nazwisko/"Ім'я та прізвище"
-                                  lable: 'name',
+                                  lable: "ім'я",
                                   maxLenght: 25,
                                   controller: controller.nameController),
                               verticalSpaceSmall,
@@ -161,7 +151,7 @@ class AddNeedView extends GetView<HomeController> {
                                         .validateTextField(text ?? '');
                                   },
                                   //potrzeba tytuł/"потрібен титул"
-                                  lable: 'title',
+                                  lable: 'титул',
                                   controller: controller.titleController),
                               verticalSpaceSmall,
                               OneLineTextField(
@@ -178,7 +168,7 @@ class AddNeedView extends GetView<HomeController> {
                                         .validateTextField(text ?? '');
                                   },
                                   //nr.telefonu/ "телефонний номер"
-                                  lable: 'phone number',
+                                  lable: 'телефонний номер',
                                   controller:
                                       controller.contactNumberController),
                               verticalSpaceSmall,
@@ -208,41 +198,3 @@ class AddNeedView extends GetView<HomeController> {
     );
   }
 }
-/* Container(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 40,
-                      vertical: 10,
-                    ),
-                    child: TypeAheadFormField(
-                        validator: (text) {
-                          if (controller.getSuggestions(text ?? '').isEmpty) {
-                            //there is no such available city
-                            return 'такого доступного міста немає';
-                          }
-                          return controller.validateTextField(text ?? '');
-                        },
-                        textFieldConfiguration: TextFieldConfiguration(
-                          controller: controller.cityController,
-                          decoration: outlineInputTextFormFieldStyle!.copyWith(
-                              label: Text(
-                            //city
-                            'місто',
-                            style: textfieldLableStyle,
-                          )),
-                        ),
-                        onSuggestionSelected: (City city) {
-                          controller.cityController.text = city.name;
-                        },
-                        itemBuilder: (_, City city) {
-                          return ListTile(
-                            leading: Icon(Icons.location_city),
-                            title: Text(
-                              city.name,
-                              style: headingBlackStyle,
-                            ),
-                          );
-                        },
-                        suggestionsCallback: (pattern) {
-                          return controller.getSuggestions(pattern);
-                        }),
-                  ), */

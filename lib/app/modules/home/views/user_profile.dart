@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -61,9 +62,9 @@ class UserProfile extends GetView<HomeController> {
                 ),
               ),
               RoundedContainer(
-                margin: EdgeInsets.only(top: 60),
+                margin: EdgeInsets.only(top: 40.h),
                 borderCoplor: AppColors.primaryColor,
-                height: 0.32.sh,
+                height: 0.35.sh,
                 width: 1.sw,
                 backgroundColor: AppColors.primaryColorShade,
                 child: GetBuilder<HomeController>(
@@ -72,16 +73,23 @@ class UserProfile extends GetView<HomeController> {
                     children: [
                       controller.needs.isNotEmpty
                           //whet there is alreade need
-                          ? Text(
-                              'Пам’ятайте, що у вас є можливість подавати по одному.')
+                          ? AutoSizeText(
+                              'Пам’ятайте, що у вас є можливість подавати по одному.',
+                              maxLines: 6,
+                              minFontSize: 18,
+                              style: headingBoldStyle,
+                            )
                           //whet there isn't any need
-                          : Text(
-                              'Щоб отримати допомогу, натисніть кнопку нижче та заповніть форму заявки.Якщо заявка заповнена або застаріла - видаліть програму зі свого профілю. Пам’ятайте, що у вас є можливість подавати по одному.',
+                          : AutoSizeText(
+                              'Щоб отримати допомогу, натисніть кнопку нижче та заповніть анкету українською мовою.Якщо потреба задоволена або застаріла - видаліть її зі свого профілю. Пам’ятайте, що ви можете мати лише одну потребу одночасно',
+                              maxLines: 6,
+                              minFontSize: 18,
                               style: headingBoldStyle,
                             ),
                       controller.needs.isNotEmpty
                           ? Container()
-                          : Align(
+                          : Container(
+                              margin: EdgeInsets.only(top: 20),
                               alignment: Alignment.bottomRight,
                               child: InkWell(
                                 onTap: () async {
@@ -89,7 +97,7 @@ class UserProfile extends GetView<HomeController> {
                                 },
                                 child: (Icon(
                                   Icons.add_box_rounded,
-                                  size: 80,
+                                  size: 80.h,
                                   color: AppColors.primaryColor,
                                 )),
                               ),
