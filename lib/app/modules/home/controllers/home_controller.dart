@@ -80,7 +80,7 @@ class HomeController extends GetxController {
     if (validateForm()) {
         globalController.toogleIsLoading();
 
-      var position = await GelocationServices.getGeoLocationPosition();
+      var position = await GelocationServices().getGeoLocationPosition();
       var need = Need(
           address: adressController.text,
           title: titleController.text,
@@ -132,7 +132,7 @@ class HomeController extends GetxController {
   }
 
   void getPosition() async {
-    Placemark position = await GelocationServices.GetAddressFromLatLong();
+    Placemark position = await GelocationServices().GetAddressFromLatLong();
     adressController.text = '${position.street!} \n ${position.postalCode!}';
   }
 

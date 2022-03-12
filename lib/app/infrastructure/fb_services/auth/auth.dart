@@ -24,7 +24,7 @@ User? user;
 class Auth {
   final globalController = Get.put(GlobalController());
 
-  static Future<FirebaseApp> initializeFirebase() async {
+   Future<FirebaseApp> initializeFirebase() async {
     FirebaseApp firebaseApp = await Firebase.initializeApp();
     return firebaseApp;
   }
@@ -49,15 +49,17 @@ class Auth {
         final UserCredential userCredential =
             await auth.signInWithCredential(credential);
         user = userCredential.user;
-        var createdAt = FieldValue.serverTimestamp();
+       if(globalController.box.read(user!.uid) == null){
+         var createdAt = FieldValue.serverTimestamp();
         DbFirebase().createUser(
           UserDb(
-            id: user!.uid,
-            name: user!.displayName ?? 'no name',
-            photoUrl: user!.photoURL ?? 'no photo',
-            createdAt:createdAt
-          ),
+              id: user!.uid,
+              name: user!.displayName ?? 'no name',
+              photoUrl: user!.photoURL ?? 'no photo',
+              createdAt: createdAt),
         );
+        globalController.box.write(user!.uid, true);
+       }
 
         globalController.toogleIsLoading();
         //switch to false

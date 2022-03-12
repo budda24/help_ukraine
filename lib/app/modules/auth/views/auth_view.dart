@@ -20,10 +20,11 @@ import 'choice_screen.dart';
 
 class AuthView extends GetView<AuthController> {
   var globalController = Get.put(GlobalController());
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){},
+      onTap: () {},
       child: Scaffold(
         body: GetBuilder<GlobalController>(
           builder: (controller) => Center(
@@ -56,7 +57,6 @@ class AuthView extends GetView<AuthController> {
                         onTapGoogle: () async {
                           await Auth().signInWithGoogle();
                         },
-
                       ),
                     ],
                   ),

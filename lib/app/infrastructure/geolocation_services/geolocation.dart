@@ -1,13 +1,19 @@
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:get/get.dart';
+import 'package:pomoc_ukrainie/app/globals/global_controler.dart';
+
+import '../fb_services/auth/auth.dart';
 
 class GelocationServices {
- static Future<Position> getGeoLocationPosition() async {
+  var globalController = Get.find<GlobalController>();
+   Future<Position> getGeoLocationPosition() async {
     bool serviceEnabled;
     LocationPermission permission;
 
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
+      /* await globalController.box.writeIfNull(user!.uid, false); */
       await Geolocator.openLocationSettings();
       return Future.error('Location services are disabled.');
     }
@@ -29,9 +35,9 @@ class GelocationServices {
         desiredAccuracy: LocationAccuracy.best);
   }
 
- static Future<Placemark> GetAddressFromLatLong() async {
+   Future<Placemark> GetAddressFromLatLong() async {
     var position = await getGeoLocationPosition();
-   late Placemark place;
+    late Placemark place;
 
     if (position.latitude != null || position.altitude != null) {
       List<Placemark> placemarks =
