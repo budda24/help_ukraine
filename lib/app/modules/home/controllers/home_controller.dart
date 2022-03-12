@@ -75,6 +75,8 @@ class HomeController extends GetxController {
 
   Future<void> postNeed() async {
     if (validateForm()) {
+        globalController.toogleIsLoading();
+
       var position = await GelocationServices.getGeoLocationPosition();
       var need = Need(
           address: adressController.text,
@@ -91,8 +93,7 @@ class HomeController extends GetxController {
         await DbFirebase().createNeed(need, user);
         cleanController();
         globalController.toogleIsLoading();
-        print(
-            'wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww${globalController.isLoading}');
+        
       } catch (e) {
         Get.showSnackbar(customSnackbar(
             message: 'надіслати потребу не вдалося, тому що: $e',
