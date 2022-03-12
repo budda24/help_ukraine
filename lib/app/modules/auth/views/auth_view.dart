@@ -38,7 +38,7 @@ class AuthView extends GetView<AuthController> {
                         width: double.infinity,
                         child: Center(
                           child: Image.asset(
-                            'assets/07-Lighthouse.png',
+                            'assets/graphics/07-Lighthouse.png',
                             fit: BoxFit.fill,
                           ),
                         ),

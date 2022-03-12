@@ -49,6 +49,8 @@ flutter:
 
   assets:
     - assets/
+    - assets/graphics/
+    - assets/flags/
 
 
 
