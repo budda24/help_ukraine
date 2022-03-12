@@ -35,20 +35,22 @@ class AddNeedView extends GetView<HomeController> {
       child: GestureDetector(
         onTap: globalController.unFocuseNode,
         child: Scaffold(
-            floatingActionButton: IconButton(
-              iconSize: 80,
-              alignment: Alignment.center,
-              icon: Icon(Icons.add_alert),
-              onPressed: () async {
-                await controller.postNeed().then((value) => Get.showSnackbar(
-                      customSnackbar(
-                          message: 'потреба була опублікована',
-                          icon: Icons.file_download_done,
-                          title: "done"),
-                    ));
-                await controller.getNeedsUser();
-                Get.off(UserProfile());
-              },
+            floatingActionButton: GetBuilder<GlobalController>(
+              builder: (_) => IconButton(
+                iconSize: !globalController.isLoading ? 80 : 0,
+                alignment: Alignment.center,
+                icon: Icon(Icons.add_alert),
+                onPressed: () async {
+                  await controller.postNeed().then((value) => Get.showSnackbar(
+                        customSnackbar(
+                            message: 'потреба була опублікована',
+                            icon: Icons.file_download_done,
+                            title: "done"),
+                      ));
+                  await controller.getNeedsUser();
+                  Get.off(UserProfile());
+                },
+              ),
             ),
             body: GetBuilder<GlobalController>(
               builder: (globalGontroller) => Center(
@@ -127,9 +129,9 @@ class AddNeedView extends GetView<HomeController> {
                               ),
                               verticalSpaceSmall,
                               OneLineTextField(
-
                                   focusNode: controller.nameFocusNode,
-                                onFieldSubmited: focuseNodeNext(context, controller.titleFocusNode),
+                                  onFieldSubmited: focuseNodeNext(
+                                      context, controller.titleFocusNode),
                                   keybordhType: TextInputType.name,
                                   validator: (text) {
                                     return controller
@@ -160,7 +162,8 @@ class AddNeedView extends GetView<HomeController> {
                                   //         controller.phoneFocusNode);
                                   //   },
                                   focusNode: controller.phoneFocusNode,
-                                    onFieldSubmited: focuseNodeNext(context, controller.descripotionFocusNode),
+                                  onFieldSubmited: focuseNodeNext(context,
+                                      controller.descripotionFocusNode),
                                   maxLenght: 15,
                                   keybordhType: TextInputType.number,
                                   validator: (text) {
