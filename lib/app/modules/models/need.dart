@@ -76,13 +76,9 @@ class Need {
       };
 
   translateToPL() async {
-    this.email =
-        await TranslationServices.translate(text: this.email!, language: 'pl');
     this.description = await TranslationServices.translate(
         text: this.description, language: 'pl');
     this.title =
         await TranslationServices.translate(text: this.title, language: 'pl');
-    this.address =
-        await TranslationServices.translate(text: this.address, language: 'pl');
   }
 }

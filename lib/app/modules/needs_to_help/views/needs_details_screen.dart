@@ -38,7 +38,7 @@ class NeedsDetailsScreen extends StatelessWidget {
                 verticalSpaceSmall,
                 AutoSizeText(
                   ' ${need.address}',
-                  maxLines: 1,
+                  maxLines: 3,
                   style: parafraphBlackStyle,
                 ),
                 Divider(
@@ -73,7 +73,7 @@ class NeedsDetailsScreen extends StatelessWidget {
                   child: ListView(
                     children: [
                       Text(
-                       need.description,
+                        need.description,
                         style: parafraphBlackStyle,
                       )
                     ],
@@ -87,4 +87,3 @@ class NeedsDetailsScreen extends StatelessWidget {
     );
   }
 }
-

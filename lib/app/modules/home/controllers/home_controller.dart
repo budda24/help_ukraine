@@ -133,7 +133,7 @@ class HomeController extends GetxController {
 
   void getPosition() async {
     Placemark position = await GelocationServices().GetAddressFromLatLong();
-    adressController.text = '${position.street!} \n ${position.postalCode!}';
+    adressController.text = '${position.street!} \n${position.locality} ${position.postalCode!}';
   }
 
   @override

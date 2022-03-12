@@ -26,8 +26,8 @@ class AddNeedView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     controller.getPosition();
-    WidgetsBinding.instance!
-        .addPostFrameCallback((_) => controller.adressFocusNode.requestFocus());
+    /* WidgetsBinding.instance!
+        .addPostFrameCallback((_) => controller.adressFocusNode.requestFocus()); */
 
     print('build');
     return SafeArea(
