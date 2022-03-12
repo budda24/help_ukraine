@@ -15,7 +15,7 @@ class OneLineTextField extends StatelessWidget {
   TextInputType? keybordhType;
   int? maxLenght;
   FocusNode? focusNode;
-  Void? onFieldSubmited;
+  Function? onFieldSubmited;
   OneLineTextField({
     Key? key,
     required this.lable,
@@ -35,7 +35,9 @@ class OneLineTextField extends StatelessWidget {
       height: 70.h,
       width: 320.w,
       child: TextFormField(
-        // onFieldSubmitted:()=> onFieldSubmited()   ,
+        onFieldSubmitted: (string) {
+          onFieldSubmited!();
+        },
         focusNode: focusNode,
         textInputAction: TextInputAction.next,
         maxLength: maxLenght,

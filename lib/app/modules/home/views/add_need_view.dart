@@ -23,6 +23,11 @@ import 'user_profile.dart';
 class AddNeedView extends GetView<HomeController> {
   var globalController = Get.put(GlobalController());
 
+  Function? focuseNodeNext(BuildContext context, FocusNode node) {
+    FocusScope.of(context).requestFocus(node);
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -132,11 +137,9 @@ class AddNeedView extends GetView<HomeController> {
 
                               verticalSpaceSmall,
                               OneLineTextField(
+                                
                                   focusNode: controller.nameFocusNode,
-                                  // onFieldSubmited: (_) {
-                                  //   FocusScope.of(context).requestFocus(
-                                  //       controller.titleFocusNode);
-                                  // },
+                                onFieldSubmited: focuseNodeNext(context, controller.titleFocusNode),
                                   keybordhType: TextInputType.name,
                                   validator: (text) {
                                     return controller
@@ -148,10 +151,8 @@ class AddNeedView extends GetView<HomeController> {
                                   controller: controller.nameController),
                               verticalSpaceSmall,
                               OneLineTextField(
-                                // onFieldSubmited: (_) {
-                                //     FocusScope.of(context).requestFocus(
-                                //         controller.phoneFocusNode);
-                                //   },
+                                  onFieldSubmited: focuseNodeNext(
+                                      context, controller.phoneFocusNode),
                                   focusNode: controller.titleFocusNode,
                                   maxLenght: 25,
                                   keybordhType: TextInputType.name,
@@ -164,11 +165,12 @@ class AddNeedView extends GetView<HomeController> {
                                   controller: controller.titleController),
                               verticalSpaceSmall,
                               OneLineTextField(
-                                //  onFieldSubmited: (_) {
-                                //     FocusScope.of(context).requestFocus(
-                                //         controller.phoneFocusNode);
-                                //   },
-                                  focusNode: controller.descripotionFocusNode,
+                                  //  onFieldSubmited: (_) {
+                                  //     FocusScope.of(context).requestFocus(
+                                  //         controller.phoneFocusNode);
+                                  //   },
+                                  focusNode: controller.phoneFocusNode,
+                                    onFieldSubmited: focuseNodeNext(context, controller.descripotionFocusNode),
                                   maxLenght: 15,
                                   keybordhType: TextInputType.number,
                                   validator: (text) {
