@@ -10,8 +10,34 @@ import 'package:pomoc_ukrainie/helpers/widgets/online_tribes/row_progress_dott.d
 import '../../../infrastructure/fb_services/db_services/firebase.dart';
 import '../../models/city_local_json.dart';
 
+enum Language { pl, uk }
+
 class NeedsToHelpController extends GetxController {
   TextEditingController cityController = TextEditingController();
+
+  Language currantLanguage = Language.pl;
+
+  bool isPolish = true;
+  toogleLanguage(Language language) {
+    currantLanguage = language;
+    update();
+  }
+
+  // String? description;
+
+  // void toggleLanguage(Language language, Need need) {
+  //   currantLanguage = language;
+  //   switch (currantLanguage) {
+  //     case Language.pl:
+  //       description
+  //       break;
+  //       case Language.uk:
+
+  //       break;
+  //     default:
+  //   }
+  //   update();
+  // }
 
   RxList<Need> needs = <Need>[].obs;
   Future<void> getNeedsCity(String city) async {
@@ -28,8 +54,8 @@ class NeedsToHelpController extends GetxController {
   }
 
   @override
-  void onInit()async {
-   cityWithNeeds = await DbFirebase().feachCityWhereNeeds();
+  void onInit() async {
+    cityWithNeeds = await DbFirebase().feachCityWhereNeeds();
     print('init');
     super.onInit();
   }

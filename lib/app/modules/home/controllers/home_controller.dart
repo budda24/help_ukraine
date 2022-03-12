@@ -27,8 +27,6 @@ class HomeController extends GetxController {
   final adressFocusNode = FocusNode();
   final cityFocusNode = FocusNode();
 
-
-
   //TODO: Implement HomeController
   TextEditingController nameController = TextEditingController();
   TextEditingController contactNumberController = TextEditingController();
@@ -78,10 +76,12 @@ class HomeController extends GetxController {
 
   Future<void> postNeed() async {
     if (validateForm()) {
-        globalController.toogleIsLoading();
+      globalController.toogleIsLoading();
 
       var position = await GelocationServices().getGeoLocationPosition();
       var need = Need(
+          uaDescription: descriptionController.text,
+          uaTitle: titleController.text,
           address: adressController.text,
           title: titleController.text,
           description: descriptionController.text,
@@ -133,7 +133,8 @@ class HomeController extends GetxController {
 
   void getPosition() async {
     Placemark position = await GelocationServices().GetAddressFromLatLong();
-    adressController.text = '${position.street!} \n${position.locality} ${position.postalCode!}';
+    adressController.text =
+        '${position.street!} \n${position.locality} ${position.postalCode!}';
   }
 
   @override

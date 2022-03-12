@@ -29,6 +29,8 @@ class Need {
     required this.address,
     this.city,
     this.id,
+    required this.uaDescription,
+    required this.uaTitle,
     /* this.doNeedExist */
   });
 
@@ -43,10 +45,15 @@ class Need {
   String address;
   String? contact;
   String? id;
+  String uaDescription;
+  String uaTitle;
+
   /* bool? doNeedExist; */
 
   factory Need.fromJson(Map<String, dynamic> json) => Need(
         /* doNeedExist: json["doNeedExist"], */
+        uaDescription: json["uaDescription"],
+        uaTitle: json["uaTitle"],
         id: json["id"],
         city: json["city"],
         contact: json["contact"],
@@ -62,6 +69,8 @@ class Need {
 
   Map<String, dynamic> toJson() => {
         /* "doNeedExist":doNeedExist, */
+        "uaDescription": uaDescription,
+        "uaTitle": uaTitle,
         "id": id,
         "city": city,
         "title": title,

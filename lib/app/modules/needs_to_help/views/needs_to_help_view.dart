@@ -81,7 +81,7 @@ class NeedsToHelpView extends GetView<NeedsToHelpController> {
                           child: Column(
                           children: [
                             Image.asset(
-                              'assets/search.png',
+                              'assets/graphics/search.png',
                             ),
                             verticalSpaceMedium,
                             Text(

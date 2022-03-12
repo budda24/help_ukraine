@@ -65,7 +65,7 @@ class AddNeedView extends GetView<HomeController> {
                             children: [
                               verticalSpaceMedium,
                               Image.asset(
-                                'assets/data.png',
+                                'assets/graphics/data.png',
                               ),
                               Container(
                                 padding: EdgeInsets.symmetric(horizontal: 40),

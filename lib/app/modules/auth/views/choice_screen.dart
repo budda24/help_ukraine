@@ -53,7 +53,7 @@ class ChoiceScreen extends GetView<AuthController> {
                         borderRadius: BorderRadius.circular(15),
                         child: GridTile(
                           child: Image.asset(
-                            'assets/support.png',
+                            'assets/graphics/support.png',
                             // fit: BoxFit.cover,
 
                             cacheHeight: 200.h.toInt(),
@@ -105,7 +105,7 @@ class ChoiceScreen extends GetView<AuthController> {
                       child: ClipRRect(
                         child: GridTile(
                           child: Image.asset(
-                            'assets/help.png',
+                            'assets/graphics/help.png',
                             cacheHeight: 200.h.toInt(),
                             cacheWidth: 200.h.toInt(),
                           ),
