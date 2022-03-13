@@ -21,6 +21,7 @@ class GlobalController extends GetxController {
   }
 
   List<City> getSuggestions(String pattern) {
+   getCityToModel();
     var suggestionCities = _cities.where((value) {
       return value.name.toLowerCase().startsWith(pattern.toLowerCase());
     }).toList();

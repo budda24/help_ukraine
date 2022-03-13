@@ -69,22 +69,24 @@ class AddNeedView extends GetView<HomeController> {
                               Container(
                                 padding: EdgeInsets.symmetric(horizontal: 40),
                                 child: GetBuilder<HomeController>(
-                                  builder:(builderController) =>
-                                  builderController.isPosition
-                                  ?CustomTextField(
-                                    focusNode: controller.adressFocusNode,
-                                    validate: (text) =>
-                                        controller.validateTextField(text),
-                                    maxline: 4,
-                                    minLine: 2,
-                                    height: 80.h,
-                                    width: 0.8.sw,
-                                    controller: controller.adressController,
-                                    color: AppColors.primaryColorShade,
-                                    lableText: 'adress',
-                                  )
-                                  :CircularProgressIndicator()
-                                ),
+                                    builder: (builderController) =>
+                                        builderController.isPosition
+                                            ? CustomTextField(
+                                                focusNode:
+                                                    controller.adressFocusNode,
+                                                validate: (text) => controller
+                                                    .validateTextField(text),
+                                                maxline: 4,
+                                                minLine: 2,
+                                                height: 80.h,
+                                                width: 0.8.sw,
+                                                controller:
+                                                    controller.adressController,
+                                                color:
+                                                    AppColors.primaryColorShade,
+                                                lableText: 'adress',
+                                              )
+                                            : CircularProgressIndicator()),
                               ),
                               verticalSpaceSmall,
                               Container(
@@ -114,7 +116,6 @@ class AddNeedView extends GetView<HomeController> {
                                         'місто',
                                         style: textfieldLableStyle,
                                       )),
-                                      focusNode: controller.cityFocusNode,
                                     ),
                                     onSuggestionSelected: (City city) {
                                       controller.cityController.text =

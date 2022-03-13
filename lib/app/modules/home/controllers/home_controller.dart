@@ -146,7 +146,7 @@ class HomeController extends GetxController {
     adressFocusNode.requestFocus();
     await getNeedsUser();
     update();
-    globalController.getCityToModel();
+
     adressController.text = 'adress is loading...';
     super.onInit();
   }
