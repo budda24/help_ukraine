@@ -41,9 +41,9 @@ class AddNeedView extends GetView<HomeController> {
                 onPressed: () async {
                   await controller.postNeed().then((value) => Get.showSnackbar(
                         customSnackbar(
-                            message: 'потреба була опублікована',
+                            message: 'опубліковано оголошення',
                             icon: Icons.file_download_done,
-                            title: "done"),
+                            title: "закінчено"),
                       ));
                   await controller.getNeedsUser();
                   Get.off(UserProfile());
@@ -148,7 +148,7 @@ class AddNeedView extends GetView<HomeController> {
                                         .validateTextField(text ?? '');
                                   },
                                   //imię i nazwisko/"Ім'я та прізвище"
-                                  lable: "ім'я",
+                                  lable: "Ім'я та прізвище",
                                   maxLenght: 25,
                                   controller: controller.nameController),
                               verticalSpaceSmall,
@@ -163,7 +163,7 @@ class AddNeedView extends GetView<HomeController> {
                                         .validateTextField(text ?? '');
                                   },
                                   //potrzeba tytuł/"потрібен титул"
-                                  lable: 'титул',
+                                  lable: 'Назва оголошення',
                                   controller: controller.titleController),
                               verticalSpaceSmall,
                               OneLineTextField(
