@@ -28,7 +28,6 @@ class AddNeedView extends GetView<HomeController> {
     controller.getPosition();
     /* WidgetsBinding.instance!
         .addPostFrameCallback((_) => controller.adressFocusNode.requestFocus()); */
-
     print('build');
     return SafeArea(
       child: GestureDetector(
@@ -69,17 +68,22 @@ class AddNeedView extends GetView<HomeController> {
                               ),
                               Container(
                                 padding: EdgeInsets.symmetric(horizontal: 40),
-                                child: CustomTextField(
-                                  focusNode: controller.adressFocusNode,
-                                  validate: (text) =>
-                                      controller.validateTextField(text),
-                                  maxline: 4,
-                                  minLine: 2,
-                                  height: 80.h,
-                                  width: 0.8.sw,
-                                  controller: controller.adressController,
-                                  color: AppColors.primaryColorShade,
-                                  lableText: 'adress',
+                                child: GetBuilder<HomeController>(
+                                  builder:(builderController) =>
+                                  builderController.isPosition
+                                  ?CustomTextField(
+                                    focusNode: controller.adressFocusNode,
+                                    validate: (text) =>
+                                        controller.validateTextField(text),
+                                    maxline: 4,
+                                    minLine: 2,
+                                    height: 80.h,
+                                    width: 0.8.sw,
+                                    controller: controller.adressController,
+                                    color: AppColors.primaryColorShade,
+                                    lableText: 'adress',
+                                  )
+                                  :CircularProgressIndicator()
                                 ),
                               ),
                               verticalSpaceSmall,

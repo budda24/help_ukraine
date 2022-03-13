@@ -3,7 +3,6 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:pomoc_ukrainie/app/globals/global_controler.dart';
 
-import '../fb_services/auth/auth.dart';
 
 class GelocationServices {
   var globalController = Get.find<GlobalController>();
@@ -38,6 +37,7 @@ class GelocationServices {
    Future<Placemark> GetAddressFromLatLong() async {
     var position = await getGeoLocationPosition();
     late Placemark place;
+
 
     if (position.latitude != null || position.altitude != null) {
       List<Placemark> placemarks =
