@@ -4,17 +4,13 @@ import 'package:flutter_typeahead/flutter_typeahead.dart';
 
 import 'package:get/get.dart';
 import 'package:pomoc_ukrainie/app/globals/global_controler.dart';
-import 'package:pomoc_ukrainie/app/modules/home/controllers/home_controller.dart';
-import 'package:pomoc_ukrainie/app/modules/needs_to_help/views/needs_details_screen.dart';
-import 'package:pomoc_ukrainie/app/modules/models/need.dart';
 import 'package:pomoc_ukrainie/app/modules/needs_to_help/widgets/needs_tile.dart';
 import 'package:pomoc_ukrainie/helpers/theme/app_colors.dart';
 import 'package:pomoc_ukrainie/helpers/theme/ui_helpers.dart';
 import '../../../../helpers/theme/form_field_styles.dart';
 import '../../../../helpers/theme/text_styles.dart';
 import '../../../../helpers/widgets/online_tribes/rounded_container.dart';
-import '../../../infrastructure/fb_services/models/city_with_needs.dart';
-import '../../models/city_local_json.dart';
+import '../../../infrastructure/fb_services/models/city_local_json.dart';
 import '../controllers/needs_to_help_controller.dart';
 
 class NeedsToHelpView extends GetView<NeedsToHelpController> {
@@ -50,19 +46,19 @@ class NeedsToHelpView extends GetView<NeedsToHelpController> {
                           style: textfieldLableStyle,
                         )),
                       ),
-                      onSuggestionSelected: (CityWithNeeds city) {
+                      onSuggestionSelected: (City city) {
                         controller.cityController.text = city.name;
                         controller.getNeedsCity(city.name.toLowerCase());
                         //featch the needs fo currant city
                       },
-                      itemBuilder: (_, CityWithNeeds city) {
+                      itemBuilder: (_, City city) {
                         return ListTile(
                           leading: Icon(Icons.location_city),
                           title: Text(
                             city.name,
                             style: headingBlackStyle,
                           ),
-                          trailing: Text(city.quantity),
+                          trailing: Text(city.quantity.toString()),
                         );
                       },
                       suggestionsCallback: (pattern) {

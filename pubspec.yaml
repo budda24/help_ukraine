@@ -6,6 +6,7 @@ environment:
   sdk: '>=2.12.0 <3.0.0'
 
 dependencies:
+  path_provider: 
   animated_splash_screen: ^1.1.0
   cupertino_icons: ^1.0.2
   get: 4.6.1

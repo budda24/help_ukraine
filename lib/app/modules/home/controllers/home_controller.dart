@@ -1,39 +1,67 @@
-import 'dart:convert';
-import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:geocode/geocode.dart';
+
 import 'package:geocoding/geocoding.dart';
-import 'package:geolocator/geolocator.dart';
+
 import 'package:get/get.dart';
-import 'package:pomoc_ukrainie/app/data/polish_city.dart';
-import 'package:pomoc_ukrainie/app/infrastructure/fb_services/db_services/db_postgresem.dart';
+
 import 'package:pomoc_ukrainie/app/infrastructure/fb_services/db_services/firebase.dart';
 
 import '../../../../helpers/theme/alert_styles.dart';
 import '../../../globals/global_controler.dart';
 import '../../../infrastructure/fb_services/auth/auth.dart';
+import '../../../infrastructure/fb_services/models/need.dart';
 import '../../../infrastructure/geolocation_services/geolocation.dart';
-import '../../models/city_local_json.dart';
-import '../../models/need.dart';
 
 class HomeController extends GetxController {
-  final globalController = Get.put(GlobalController());
-
-  final nameFocusNode = FocusNode();
-  final titleFocusNode = FocusNode();
-  final phoneFocusNode = FocusNode();
-  final descripotionFocusNode = FocusNode();
+  TextEditingController adressController = TextEditingController();
   final adressFocusNode = FocusNode();
+  TextEditingController cityController = TextEditingController();
   final cityFocusNode = FocusNode();
-
+  TextEditingController contactNumberController = TextEditingController();
+  final descripotionFocusNode = FocusNode();
+  TextEditingController descriptionController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
+  final globalController = Get.put(GlobalController());
+  bool isPosition = false;
   //TODO: Implement HomeController
   TextEditingController nameController = TextEditingController();
-  TextEditingController contactNumberController = TextEditingController();
-  TextEditingController cityController = TextEditingController();
-  TextEditingController descriptionController = TextEditingController();
+
+  final nameFocusNode = FocusNode();
+  RxList<Need> needs = <Need>[
+    Need(
+        uaDescription: 'uaDescription',
+        uaTitle: 'uaTitle',
+        city: 'city',
+        title: 'title',
+        description: 'description',
+        contact: 'contact',
+        lat: 0.2,
+        long: 0.2,
+        postedBy: 'postedBy',
+        address: 'address'),
+  ].obs;
+
+  final phoneFocusNode = FocusNode();
   TextEditingController titleController = TextEditingController();
-  TextEditingController adressController = TextEditingController();
+  final titleFocusNode = FocusNode();
+
+  @override
+  void onClose() {}
+
+  @override
+  void onInit() async {
+    adressFocusNode.requestFocus();
+    await getNeedsUser();
+    update();
+
+    adressController.text = 'adress is loading...';
+    super.onInit();
+  }
+
+  @override
+  void onReady() async {
+    super.onReady();
+  }
 
   void cleanController() {
     nameController.clear();
@@ -43,10 +71,6 @@ class HomeController extends GetxController {
     titleController.clear();
     adressController.clear();
   }
-
-  /* TextEditingController needAdressController = TextEditingController(); */
-
-  final formKey = GlobalKey<FormState>();
 
   String? validateTextField(String text) {
     String errorMessage = '';
@@ -79,6 +103,7 @@ class HomeController extends GetxController {
       globalController.toogleIsLoading();
 
       var position = await GelocationServices().getGeoLocationPosition();
+
       var need = Need(
           uaDescription: descriptionController.text,
           uaTitle: titleController.text,
@@ -104,7 +129,6 @@ class HomeController extends GetxController {
     }
   }
 
-  RxList<Need> needs = <Need>[].obs;
   Future<void> getNeedsUser() async {
     needs.value = await DbFirebase().feachNeedsInUser(user!.uid);
     update();
@@ -115,8 +139,9 @@ class HomeController extends GetxController {
     try {
       await db.deleteNeedUser(user!.uid, id);
       await db.deleteNeed(need);
-      await db.deleteCityWhereNeed(need.city ?? '');
+      await db.deleteCityWhereNeed(need.city.toLowerCase());
       update();
+
       Get.showSnackbar(customSnackbar(
           message: 'deleted succede',
           icon: Icons.file_download_done,
@@ -131,8 +156,6 @@ class HomeController extends GetxController {
     }
   }
 
-  bool isPosition = false;
-
   void getPosition() async {
     Placemark position = await GelocationServices().GetAddressFromLatLong();
     adressController.text =
@@ -141,21 +164,5 @@ class HomeController extends GetxController {
     update();
   }
 
-  @override
-  void onInit() async {
-    adressFocusNode.requestFocus();
-    await getNeedsUser();
-    update();
-
-    adressController.text = 'adress is loading...';
-    super.onInit();
-  }
-
-  @override
-  void onReady() async {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {}
+  /* TextEditingController needAdressController = TextEditingController(); */
 }

@@ -3,12 +3,12 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:pomoc_ukrainie/app/infrastructure/fb_services/models/city_with_needs.dart';
-import 'package:pomoc_ukrainie/app/modules/models/need.dart';
+
 import 'package:pomoc_ukrainie/helpers/widgets/online_tribes/row_progress_dott.dart';
 
 import '../../../infrastructure/fb_services/db_services/firebase.dart';
-import '../../models/city_local_json.dart';
+import '../../../infrastructure/fb_services/models/city_local_json.dart';
+import '../../../infrastructure/fb_services/models/need.dart';
 
 enum Language { pl, uk }
 
@@ -44,9 +44,9 @@ class NeedsToHelpController extends GetxController {
     needs.value = await DbFirebase().feachNeedsInCity(city);
   }
 
-  List<CityWithNeeds> cityWithNeeds = [];
+  List<City> cityWithNeeds = [];
 
-  List<CityWithNeeds> getSuggestions(String pattern) {
+  List<City> getSuggestions(String pattern) {
     var suggestionCities = cityWithNeeds.where((value) {
       return value.name.toLowerCase().startsWith(pattern.toLowerCase());
     }).toList();
@@ -55,8 +55,7 @@ class NeedsToHelpController extends GetxController {
 
   @override
   void onInit() async {
-    cityWithNeeds = await DbFirebase().feachCityWhereNeeds();
-    print('init');
+    cityWithNeeds = await DbFirebase().getCityWhereNeeds();
     super.onInit();
   }
 

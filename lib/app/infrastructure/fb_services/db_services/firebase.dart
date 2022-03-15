@@ -4,29 +4,63 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:intl/intl.dart';
-import 'package:pomoc_ukrainie/app/modules/models/city_local_json.dart';
+import 'package:pomoc_ukrainie/app/infrastructure/fb_services/models/city_local_json.dart';
+import 'package:pomoc_ukrainie/app/infrastructure/fb_services/models/need.dart';
 
-import 'package:pomoc_ukrainie/app/modules/models/need.dart';
 import '../../../../helpers/theme/alert_styles.dart';
 import '../auth/auth.dart';
 import '../models/user.dart';
-import '../models/city_with_needs.dart';
 
 final db = FirebaseFirestore.instance;
 
 class DbFirebase {
   Future<void> createUser(UserDb user) async {
     try {
-      /* user.createdAt = FieldValue.serverTimestamp(); */
+      user.createdAt = FieldValue.serverTimestamp();
       await db.collection('user').doc(user.id).set(user.toJson());
     } on FirebaseException catch (e) {
-      // Todo what to do in case that the auth user is created but the firestore user not
       Get.showSnackbar(customSnackbar(
           message: "Account can't be created because $e",
           icon: Icons.error,
           title: 'Error'));
+    }
+  }
+
+  void fetchNeedsDocument() {
+    var response = db.collection('needs').doc('postedNeeds');
+  }
+
+  Future<void> createNeed(Need need, User? user) async {
+    need.createdAt = DateTime.now();
+    need.id = user!.uid;
+
+    try {
+      await createUserNeed(need, user);
+
+      await need.translateToPL();
+      var fechedNeedsDocument = await feachNeedsDoc();
+      List<Need> needs = [];
+      String city = need.city.toLowerCase();
+
+      if (fechedNeedsDocument.exists) {
+        Map<String, dynamic> needsDocument =
+            fechedNeedsDocument.data()!['needs'] as Map<String, dynamic>;
+        List<dynamic> needs = needsDocument[city] ?? [];
+
+        needs.add(need.toJson());
+        needsDocument.addAll({city: needs}); //update map with key city
+        needsDocument = {'needs': needsDocument};
+        var response =
+            await db.collection('needs').doc('postedNeeds').set(needsDocument);
+      }
+      await addCityWithNeed(need.city);
+    } on FirebaseException catch (error) {
+      await Get.showSnackbar(customSnackbar(
+          message: "Need can't be created because $error",
+          icon: Icons.error,
+          title: 'Error'));
+    } catch (error) {
+      print('on db post $error');
     }
   }
 
@@ -41,32 +75,16 @@ class DbFirebase {
         .set(json);
   }
 
-  Future<void> createCityWithNeeds(String city) async {
+  Future<void> addCityWithNeed(String city) async {
     try {
-      int quantity = 1;
-      Map<String, dynamic> json;
+      List<City> existingCities = await getCities();
+      int foundCityIndex =
+          existingCities.indexWhere((element) => element.name == city);
 
-      List<CityWithNeeds> existingCities = await feachCityWhereNeeds();
+      existingCities[foundCityIndex].quantity++;
 
-      //check if existin cities connteins city wanted to post
-      if (existingCities.any((element) => element.name == city)) {
-        CityWithNeeds? foundCity =
-            existingCities.firstWhere((element) => element.name == city);
-
-        quantity = int.parse(foundCity.quantity);
-        quantity++;
-        json = CityWithNeeds(
-          quantity: quantity.toString(),
-          name: city,
-          id: foundCity.id,
-        ).toJson();
-
-        await db.collection('citiesWithNeed').doc(foundCity.id).set(json);
-      } else {
-        json =
-            CityWithNeeds(quantity: quantity.toString(), name: city).toJson();
-        await db.collection('citiesWithNeed').add(json);
-      }
+      Map<String, dynamic> jsonCities = City.listToJson(existingCities);
+      await db.collection('polishCities').doc('cities').set(jsonCities);
     } on FirebaseException catch (error) {
       await Get.showSnackbar(customSnackbar(
           message: "Need can't be created because $error",
@@ -77,39 +95,28 @@ class DbFirebase {
     }
   }
 
-  Future<void> createNeed(Need need, User? user) async {
-    need.createdAt = DateTime.now();
-    need.id = user!.uid;
+/*   Future<void> createJsonCity(Map<String, dynamic> map) async {
+    var body = jsonEncode(map);
+    var response = await db.collection('polishCities').doc('cities').set(map);
+  } */
 
-    try {
-      await createUserNeed(need, user);
+  Future<DocumentSnapshot<Map<String, dynamic>>> feachNeedsDoc() async {
+    var response = await db.collection('needs').doc('postedNeeds').get();
 
-      await need.translateToPL();
-      var response = await db
-          .collection('needs')
-          .doc('pl')
-          .collection(need.city!.toLowerCase())
-          .doc(user.uid)
-          .set(need.toJson());
-      await createCityWithNeeds(need.city ?? '');
-    } on FirebaseException catch (error) {
-      await Get.showSnackbar(customSnackbar(
-          message: "Need can't be created because $error",
-          icon: Icons.error,
-          title: 'Error'));
-    } catch (error) {
-      print('on db post $error');
-    }
+    return response;
   }
 
   Future<List<Need>> feachNeedsInCity(String city) async {
-    List<Need> needs = [];
-    var response =
-        await db.collection('needs').doc('pl').collection(city).get();
-    response.docs.forEach((element) {
-      needs.add(Need.fromJson(element.data()));
-    });
+    var fechedNeedsDocument = await feachNeedsDoc();
 
+    List<Need> needs = [];
+
+    if (fechedNeedsDocument.exists) {
+      Map<String, dynamic> needsDocument =
+          fechedNeedsDocument.data()!['needs'] as Map<String, dynamic>;
+      List<dynamic> needsMap = needsDocument[city] ?? [];
+      needs = needsMap.map((e) => Need.fromJson(e)).toList();
+    }
     return needs;
   }
 
@@ -126,31 +133,49 @@ class DbFirebase {
     return needs;
   }
 
-  Future<List<CityWithNeeds>> feachCityWhereNeeds() async {
-    List<CityWithNeeds> cityWithNeeds = [];
-    try {
-      var response = await db.collection('citiesWithNeed').get();
-      response.docs.forEach((element) {
-        CityWithNeeds tmpCity = CityWithNeeds.fromJson(element.data());
+  Future<QuerySnapshot<Map<String, dynamic>>> fechCities() async {
+    var response = await db.collection('polishCities').get();
+    return response;
+  }
 
-        tmpCity.id = element.reference.id;
-        cityWithNeeds.add(tmpCity);
-      });
+  Future<List<City>> getCities() async {
+    List<City> cities = [];
+    try {
+      var response = await fechCities();
+      List<dynamic> citiesJson = response.docs.first['cities'];
+      for (var i = 0; i < 100; i++) {
+        City city = City.fromJson(citiesJson[i]);
+        cities.add(city);
+      }
+    } catch (e) {
+      print(e);
+    }
+    return cities;
+  }
+
+  Future<List<City>> getCityWhereNeeds() async {
+    List<City> cities = await getCities();
+    List<City> citiesWithNeeds = [];
+    try {
+      for (var i = 0; i < 100; i++) {
+        City city = cities[i];
+        citiesWithNeeds.addIf(city.quantity != 0, city);
+      }
     } catch (error) {
       print(error);
     }
-    return cityWithNeeds;
+    return citiesWithNeeds;
   }
 
-/*   Future<List<CityWithNeeds>> feachCitiesWhereNeeds(String id) async {
+/*   Future<List<City>> feachCitiesWhereNeeds(String id) async {
     /* print('feachNeedsInUser'); */
-    List<CityWithNeeds> cities = [];
+    List<City> cities = [];
 
     var response = await db.collection('citiesWithNeed').get();
     print('lenght cities ${response.docs.length}');
 
     cities =
-        response.docs.map((e) => CityWithNeeds.fromJson(e.data())).toList();
+        response.docs.map((e) => City.fromJson(e.data())).toList();
 
     return cities;
     /* var need = Need.fromJson(response.docs.first.data()); */
@@ -166,27 +191,33 @@ class DbFirebase {
   }
 
   Future<void> deleteNeed(Need need) async {
+    var fechedNeedsDocument = await feachNeedsDoc();
+    var cityNeed = need.city.toLowerCase();
+    Map<String, dynamic> needsDocument =
+        fechedNeedsDocument.data()!['needs'] as Map<String, dynamic>;
+    List<dynamic> needs = needsDocument[cityNeed] ?? [];
+
+    needs.removeWhere((value) => value['postedBy'] == need.postedBy);
+    needsDocument.addAll({cityNeed: needs}); //update map with key city
+    needsDocument = {'needs': needsDocument};
+
     await db
         .collection('needs')
-        .doc('pl')
-        .collection(need.city!.toLowerCase())
-        .doc(user!.uid)
-        .delete();
+        .doc('postedNeeds')
+        .set(needsDocument)
+        .catchError((onError) => print(onError));
   }
 
   Future<void> deleteCityWhereNeed(String city) async {
-    List<CityWithNeeds> cities = await feachCityWhereNeeds();
-    CityWithNeeds deletedCity =
-        cities.firstWhere((element) => element.name == city);
+    List<City> existingCities = await getCities();
 
-    int tmpQuantuty = int.parse(deletedCity.quantity) - 1;
-    if (tmpQuantuty > 0) {
-      deletedCity.quantity = tmpQuantuty.toString();
-      await db
-          .collection('citiesWithNeed')
-          .doc(deletedCity.id)
-          .set(deletedCity.toJson());
-    } else
-      await db.collection('citiesWithNeed').doc(deletedCity.id).delete();
+    int indexDeletedCity = existingCities
+        .indexWhere((element) => element.name.toLowerCase() == city);
+
+    existingCities[indexDeletedCity].quantity--;
+
+    Map<String, dynamic> jsonCities = City.listToJson(existingCities);
+
+    await db.collection('polishCities').doc('cities').set(jsonCities);
   }
 }

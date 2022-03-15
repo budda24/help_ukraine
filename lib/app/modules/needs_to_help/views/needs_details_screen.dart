@@ -8,7 +8,7 @@ import 'package:pomoc_ukrainie/helpers/theme/text_styles.dart';
 import 'package:pomoc_ukrainie/helpers/theme/ui_helpers.dart';
 import 'package:pomoc_ukrainie/helpers/widgets/online_tribes/rounded_container.dart';
 import '../../../../helpers/theme/app_colors.dart';
-import '../../models/need.dart';
+import '../../../infrastructure/fb_services/models/need.dart';
 import '../controllers/needs_to_help_controller.dart';
 import '../widgets/border_container.dart';
 

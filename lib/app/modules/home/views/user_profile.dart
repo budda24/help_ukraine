@@ -1,8 +1,12 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'dart:io';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:get/get.dart';
+import 'package:pomoc_ukrainie/app/globals/global_controler.dart';
 import 'package:pomoc_ukrainie/app/infrastructure/fb_services/auth/auth.dart';
+import 'package:pomoc_ukrainie/app/infrastructure/fb_services/db_services/firebase.dart';
 import 'package:pomoc_ukrainie/app/modules/home/controllers/home_controller.dart';
 import 'package:pomoc_ukrainie/app/modules/home/widgets/need_tile.dart';
 import 'package:pomoc_ukrainie/app/routes/app_pages.dart';
@@ -11,6 +15,7 @@ import 'package:pomoc_ukrainie/helpers/theme/ui_helpers.dart';
 import 'package:pomoc_ukrainie/helpers/widgets/online_tribes/rounded_container.dart';
 
 import '../../../../helpers/theme/app_colors.dart';
+import '../../../infrastructure/fb_services/models/need.dart';
 import '../../needs_to_help/widgets/border_container.dart';
 import 'add_need_view.dart';
 
@@ -20,6 +25,19 @@ class UserProfile extends GetView<HomeController> {
       'https://dsm01pap004files.storage.live.com/y4m_WyBC3VOwYN6wDoyWTw8ZaonCA_3fhOfEn3DQbrinoLzMG9gAxftCacktBSEbc04zRdbqhmFanYO0qrEOTLla6_CZe5tYMI4-3x9tp1xd5zsCvzPYnoeDQ3AS5VtZqTRGlRtm56YScvVl0kexFgiKupCTtx2a1mpvBagBTIi6kI29Hl3KqZGxAboOmSGn_QF?width=128&height=128&cropmode=none';
   @override
   Widget build(BuildContext context) {
+    /* var globalController = Get.put(GlobalController());
+
+    var cities = globalController.getCityToModel();
+    Map<String, dynamic> jsonCities = {};
+    List<Map<String, dynamic>> listofjson = [];
+    cities.forEach(
+      (element) {
+        listofjson.add({"name": element.name, "id": element.id, "quantity": 0});
+      },
+    );
+    jsonCities.addAll({'cities': listofjson});
+    print(jsonCities); */
+
     return WillPopScope(
       onWillPop: () async => true,
       child: Scaffold(
@@ -87,22 +105,41 @@ class UserProfile extends GetView<HomeController> {
                               minFontSize: 18,
                               style: headingBoldStyle,
                             ),
-                      controller.needs.isNotEmpty
+                      /* controller.needs.isNotEmpty
                           ? Container()
-                          : Container(
-                              margin: EdgeInsets.only(top: 20),
-                              alignment: Alignment.bottomRight,
-                              child: InkWell(
-                                onTap: () async {
-                                  Get.to(AddNeedView());
-                                },
-                                child: (Icon(
-                                  Icons.add_box_rounded,
-                                  size: 80.h,
-                                  color: AppColors.primaryColor,
-                                )),
-                              ),
-                            ),
+                          : */
+                      Container(
+                        margin: EdgeInsets.only(top: 20),
+                        alignment: Alignment.bottomRight,
+                        child: InkWell(
+                          onTap: () async {
+                            /* DbFirebase().createJsonCity(jsonCities); */
+
+                           /*  var fechedNeedsDocument =
+                                await DbFirebase().feachNeeds();
+
+                            var cityNeed = 'warszawa';
+                            Map<String, dynamic> needsDocument =
+                                fechedNeedsDocument.data()!['needs']
+                                    as Map<String, dynamic>;
+                            List<dynamic> needs = needsDocument[cityNeed] ?? [];
+
+                            needs.removeWhere(
+                                (value) => value['city'] == 'Warszawa');
+                            needsDocument.addAll(
+                                {cityNeed: needs}); //update map with key city
+                            needsDocument = {'needs': needsDocument};
+                            print(needsDocument); */
+
+                            Get.to(AddNeedView());
+                          },
+                          child: (Icon(
+                            Icons.add_box_rounded,
+                            size: 80.h,
+                            color: AppColors.primaryColor,
+                          )),
+                        ),
+                      ),
                     ],
                   ),
                 ),

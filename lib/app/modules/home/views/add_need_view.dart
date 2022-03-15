@@ -14,8 +14,8 @@ import '../../../../helpers/theme/form_field_styles.dart';
 import '../../../../helpers/widgets/online_tribes/form_field.dart';
 import '../../../../helpers/widgets/online_tribes/one_line_textField.dart';
 import '../../../infrastructure/translate_sevices/google_cloud_trans.dart';
-import '../../models/city_local_json.dart';
-import '../../models/need.dart';
+import '../../../infrastructure/fb_services/models/city_local_json.dart';
+
 import '../controllers/home_controller.dart';
 import 'package:pomoc_ukrainie/helpers/theme/text_styles.dart';
 import 'user_profile.dart';
@@ -28,7 +28,6 @@ class AddNeedView extends GetView<HomeController> {
     controller.getPosition();
     /* WidgetsBinding.instance!
         .addPostFrameCallback((_) => controller.adressFocusNode.requestFocus()); */
-    print('build');
     return SafeArea(
       child: GestureDetector(
         onTap: globalController.unFocuseNode,
@@ -95,10 +94,9 @@ class AddNeedView extends GetView<HomeController> {
                                   vertical: 10,
                                 ),
                                 child: TypeAheadFormField<City>(
-                                    validator: (text) {
-                                      if (globalController
-                                          .getSuggestions(text ?? '')
-                                          .isEmpty) {
+                                    validator: (text){
+                                      if (globalController.doesSuggestionExist
+                                          ) {
                                         //there is no such available city
                                         return 'такого доступного міста немає';
                                       }
@@ -131,9 +129,9 @@ class AddNeedView extends GetView<HomeController> {
                                         ),
                                       );
                                     },
-                                    suggestionsCallback: (pattern) {
-                                      return globalController
-                                          .getSuggestions(pattern);
+                                    suggestionsCallback: (pattern)async {
+                                      return await globalController
+                                          .getSuggestions(pattern, '');
                                     }),
                               ),
                               verticalSpaceSmall,
