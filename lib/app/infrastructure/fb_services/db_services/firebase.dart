@@ -84,13 +84,9 @@ class DbFirebase {
     try {
       await createUserNeed(need, user);
 
-      await need.translateToPL();
+      /* await need.translateToPL(); */
       var response = await db
-          .collection('needs')
-          .doc('pl')
-          .collection(need.city!.toLowerCase())
-          .doc(user.uid)
-          .set(need.toJson());
+          .collection('NEEDS').add(need.toJson());
       await createCityWithNeeds(need.city ?? '');
     } on FirebaseException catch (error) {
       await Get.showSnackbar(customSnackbar(
