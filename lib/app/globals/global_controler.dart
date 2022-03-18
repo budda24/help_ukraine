@@ -3,7 +3,7 @@ import 'package:get_storage/get_storage.dart';
 
 import '../data/polish_city.dart';
 import '../modules/home/controllers/home_controller.dart';
-import '../modules/models/city_local_json.dart';
+import '../infrastructure/fb_services/models/city.dart';
 
 class GlobalController extends GetxController {
   GetStorage box = GetStorage();
@@ -13,16 +13,16 @@ class GlobalController extends GetxController {
     Get.focusScope!.unfocus();
   }
 
-  List<City> _cities = [];
+  List<City> cities = [];
   void getCityToModel() {
     polishCity.forEach((element) {
-      _cities.add(City.fromJson(element));
+      cities.add(City.fromJson(element));
     });
   }
 
   List<City> getSuggestions(String pattern) {
    getCityToModel();
-    var suggestionCities = _cities.where((value) {
+    var suggestionCities = cities.where((value) {
       return value.name.toLowerCase().startsWith(pattern.toLowerCase());
     }).toList();
     return suggestionCities;

@@ -14,8 +14,8 @@ import '../../../../helpers/theme/alert_styles.dart';
 import '../../../globals/global_controler.dart';
 import '../../../infrastructure/fb_services/auth/auth.dart';
 import '../../../infrastructure/geolocation_services/geolocation.dart';
-import '../../models/city_local_json.dart';
-import '../../models/need.dart';
+import '../../../infrastructure/fb_services/models/city.dart';
+import '../../../infrastructure/fb_services/models/need.dart';
 
 class HomeController extends GetxController {
   final globalController = Get.put(GlobalController());
@@ -74,12 +74,25 @@ class HomeController extends GetxController {
     return formKey.currentState!.validate();
   }
 
+  String findCityId(String city) {
+    String idCity = '';
+
+    polishCity.forEach((element) {
+      if (city == element['name']) {
+        idCity = element['id'];
+      }
+    });
+    return idCity;
+  }
+
   Future<void> postNeed() async {
     if (validateForm()) {
       globalController.toogleIsLoading();
+      String cityId = findCityId(cityController.text);
 
       var position = await GelocationServices().getGeoLocationPosition();
       var need = Need(
+          cityId: cityId,
           uaDescription: descriptionController.text,
           uaTitle: titleController.text,
           address: adressController.text,
@@ -115,7 +128,7 @@ class HomeController extends GetxController {
     try {
       await db.deleteNeedUser(user!.uid, id);
       await db.deleteNeed(need);
-      await db.deleteCityWhereNeed(need.city ?? '');
+/*       await db.deleteCityWhereNeed(need.city ?? ''); */
       update();
       Get.showSnackbar(customSnackbar(
           message: 'deleted succede',
@@ -143,6 +156,7 @@ class HomeController extends GetxController {
 
   @override
   void onInit() async {
+    print('init controler');
     adressFocusNode.requestFocus();
     await getNeedsUser();
     update();

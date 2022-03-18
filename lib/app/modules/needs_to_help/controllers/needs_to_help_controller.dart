@@ -4,16 +4,18 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:pomoc_ukrainie/app/infrastructure/fb_services/models/city_with_needs.dart';
-import 'package:pomoc_ukrainie/app/modules/models/need.dart';
+import 'package:pomoc_ukrainie/app/infrastructure/fb_services/models/need.dart';
 import 'package:pomoc_ukrainie/helpers/widgets/online_tribes/row_progress_dott.dart';
 
+import '../../../data/polish_city.dart';
 import '../../../infrastructure/fb_services/db_services/firebase.dart';
-import '../../models/city_local_json.dart';
+import '../../../infrastructure/fb_services/models/city.dart';
 
 enum Language { pl, uk }
 
 class NeedsToHelpController extends GetxController {
   TextEditingController cityController = TextEditingController();
+  var db = DbFirebase();
 
   Language currantLanguage = Language.pl;
 
@@ -44,18 +46,33 @@ class NeedsToHelpController extends GetxController {
     needs.value = await DbFirebase().feachNeedsInCity(city);
   }
 
-  List<CityWithNeeds> cityWithNeeds = [];
+  List<CityWithNeeds> allCities = [];
 
   List<CityWithNeeds> getSuggestions(String pattern) {
-    var suggestionCities = cityWithNeeds.where((value) {
+    var suggestionCities = allCities.where((value) {
       return value.name.toLowerCase().startsWith(pattern.toLowerCase());
     }).toList();
     return suggestionCities;
   }
 
+  Future<void> getCities() async {
+    var statsCity = await db.feachCityStats();
+
+
+
+    polishCity.forEach((element) {
+      String cityId = element['id'];
+      if(statsCity[cityId] != 0){
+       var city = CityWithNeeds(
+          quantity: statsCity[cityId].toString(), name: element['name']);
+          allCities.add(city);
+      }
+    });
+  }
+
   @override
   void onInit() async {
-    cityWithNeeds = await DbFirebase().feachCityWhereNeeds();
+    await getCities();
     print('init');
     super.onInit();
   }

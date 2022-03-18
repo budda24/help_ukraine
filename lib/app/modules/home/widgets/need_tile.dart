@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../helpers/theme/text_styles.dart';
 import '../../../../helpers/theme/ui_helpers.dart';
-import '../../models/need.dart';
+import '../../../infrastructure/fb_services/models/need.dart';
 
 class NeedTile extends StatelessWidget {
   final Need need;

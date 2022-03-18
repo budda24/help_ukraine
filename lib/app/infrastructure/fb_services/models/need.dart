@@ -10,7 +10,7 @@ import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../../infrastructure/translate_sevices/google_cloud_trans.dart';
+import '../../translate_sevices/google_cloud_trans.dart';
 
 Need needFromJson(String str) => Need.fromJson(json.decode(str));
 
@@ -31,6 +31,7 @@ class Need {
     this.id,
     required this.uaDescription,
     required this.uaTitle,
+    required this.cityId
     /* this.doNeedExist */
   });
 
@@ -47,11 +48,13 @@ class Need {
   String? id;
   String uaDescription;
   String uaTitle;
+  String cityId;
 
   /* bool? doNeedExist; */
 
   factory Need.fromJson(Map<String, dynamic> json) => Need(
         /* doNeedExist: json["doNeedExist"], */
+        cityId: json['cityId'],
         uaDescription: json["uaDescription"],
         uaTitle: json["uaTitle"],
         id: json["id"],
@@ -69,6 +72,7 @@ class Need {
 
   Map<String, dynamic> toJson() => {
         /* "doNeedExist":doNeedExist, */
+        "cityId": cityId,
         "uaDescription": uaDescription,
         "uaTitle": uaTitle,
         "id": id,

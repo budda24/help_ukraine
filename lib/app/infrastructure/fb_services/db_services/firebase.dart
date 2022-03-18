@@ -6,9 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:intl/intl.dart';
-import 'package:pomoc_ukrainie/app/modules/models/city_local_json.dart';
+import 'package:pomoc_ukrainie/app/infrastructure/fb_services/models/city.dart';
 
-import 'package:pomoc_ukrainie/app/modules/models/need.dart';
+import 'package:pomoc_ukrainie/app/infrastructure/fb_services/models/need.dart';
 import '../../../../helpers/theme/alert_styles.dart';
 import '../auth/auth.dart';
 import '../models/user.dart';
@@ -41,7 +41,7 @@ class DbFirebase {
         .set(json);
   }
 
-  Future<void> createCityWithNeeds(String city) async {
+ /*  Future<void> createCityWithNeeds(String city) async {
     try {
       int quantity = 1;
       Map<String, dynamic> json;
@@ -75,7 +75,7 @@ class DbFirebase {
     } catch (error) {
       print(error);
     }
-  }
+  } */
 
   Future<void> createNeed(Need need, User? user) async {
     need.createdAt = DateTime.now();
@@ -85,9 +85,9 @@ class DbFirebase {
       await createUserNeed(need, user);
 
       /* await need.translateToPL(); */
-      var response = await db
-          .collection('NEEDS').add(need.toJson());
-      await createCityWithNeeds(need.city ?? '');
+      var response = await db.collection('NEEDS').add(need.toJson());
+
+      /* await createCityWithNeeds(need.city ?? ''); */
     } on FirebaseException catch (error) {
       await Get.showSnackbar(customSnackbar(
           message: "Need can't be created because $error",
@@ -122,20 +122,17 @@ class DbFirebase {
     return needs;
   }
 
-  Future<List<CityWithNeeds>> feachCityWhereNeeds() async {
-    List<CityWithNeeds> cityWithNeeds = [];
+  Future<Map<String, dynamic>> feachCityStats() async {
+    Map<String, dynamic> statsCity = {};
     try {
-      var response = await db.collection('citiesWithNeed').get();
-      response.docs.forEach((element) {
-        CityWithNeeds tmpCity = CityWithNeeds.fromJson(element.data());
-
-        tmpCity.id = element.reference.id;
-        cityWithNeeds.add(tmpCity);
-      });
+      var response = await db.collection('STATS').doc('CITY').get();
+      if (response.exists) {
+        statsCity = response.data()!;
+      }
     } catch (error) {
       print(error);
     }
-    return cityWithNeeds;
+    return statsCity;
   }
 
 /*   Future<List<CityWithNeeds>> feachCitiesWhereNeeds(String id) async {
@@ -170,7 +167,7 @@ class DbFirebase {
         .delete();
   }
 
-  Future<void> deleteCityWhereNeed(String city) async {
+ /*  Future<void> deleteCityWhereNeed(String city) async {
     List<CityWithNeeds> cities = await feachCityWhereNeeds();
     CityWithNeeds deletedCity =
         cities.firstWhere((element) => element.name == city);
@@ -184,5 +181,15 @@ class DbFirebase {
           .set(deletedCity.toJson());
     } else
       await db.collection('citiesWithNeed').doc(deletedCity.id).delete();
+  } */
+
+/*   Future<void> createJsonCity(Map<String, dynamic> map) async {
+    var body = jsonEncode(map);
+    var response = await db.collection('POLISHCITIES').doc().set(map);
   }
+
+  Future<void> createJsonStats(Map<String, dynamic> map) async {
+    var body = jsonEncode(map);
+    var response = await db.collection('STATS').doc('CITY').set(map);
+  } */
 }
