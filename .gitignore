@@ -49,3 +49,6 @@ app.*.map.json
 #project files
 project_files/
 lib/app/auth_keys/
+
+# firebase
+firebase/functions/node_modules
