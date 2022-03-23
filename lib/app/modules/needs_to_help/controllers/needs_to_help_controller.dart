@@ -42,9 +42,9 @@ class NeedsToHelpController extends GetxController {
   // }
 
   RxList<Need> needs = <Need>[].obs;
-  Future<void> getNeedsCity(String city) async {
+  /* Future<void> getNeedsCity(String city) async {
     needs.value = await DbFirebase().feachNeedsInCity(city);
-  }
+  } */
 
   List<CityWithNeeds> allCities = [];
 

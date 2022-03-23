@@ -52,7 +52,8 @@ class NeedsToHelpView extends GetView<NeedsToHelpController> {
                       ),
                       onSuggestionSelected: (CityWithNeeds city) {
                         controller.cityController.text = city.name;
-                        controller.getNeedsCity(city.name.toLowerCase());
+                        //Todo feach needs in city
+                        /* controller.getNeedsCity(city.name.toLowerCase()); */
                         //featch the needs fo currant city
                       },
                       itemBuilder: (_, CityWithNeeds city) {

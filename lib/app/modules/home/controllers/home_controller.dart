@@ -74,7 +74,7 @@ class HomeController extends GetxController {
     return formKey.currentState!.validate();
   }
 
-  String findCityId(String city) {
+  /*  String findCityId(String city) {
     String idCity = '';
 
     polishCity.forEach((element) {
@@ -83,14 +83,16 @@ class HomeController extends GetxController {
       }
     });
     return idCity;
-  }
+  } */
 
   Future<void> postNeed() async {
     if (validateForm()) {
       globalController.toogleIsLoading();
-      String cityId = findCityId(cityController.text);
+      String cityId = globalController.finCityId(cityController.text);
+      print('city Id : $cityId');
 
       var position = await GelocationServices().getGeoLocationPosition();
+
       var need = Need(
           cityId: cityId,
           uaDescription: descriptionController.text,

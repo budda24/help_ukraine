@@ -8,7 +8,6 @@ import '../infrastructure/fb_services/models/city.dart';
 class GlobalController extends GetxController {
   GetStorage box = GetStorage();
 
-
   void unFocuseNode() {
     Get.focusScope!.unfocus();
   }
@@ -21,11 +20,17 @@ class GlobalController extends GetxController {
   }
 
   List<City> getSuggestions(String pattern) {
-   getCityToModel();
+    getCityToModel();
     var suggestionCities = cities.where((value) {
       return value.name.toLowerCase().startsWith(pattern.toLowerCase());
     }).toList();
     return suggestionCities;
+  }
+
+  String finCityId(String city) {
+    var foundCity = polishCity.firstWhere((element) =>
+        element['name'].toString().toLowerCase() == city.toLowerCase());
+    return foundCity['id'];
   }
 
   bool isLoading = false;
@@ -36,7 +41,6 @@ class GlobalController extends GetxController {
 
   @override
   void onInit() {
-
     super.onInit();
   }
 }
