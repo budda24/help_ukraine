@@ -19,32 +19,18 @@ class NeedsToHelpController extends GetxController {
 
   Language currantLanguage = Language.pl;
 
-  bool isPolish = true;
   toogleLanguage(Language language) {
     currantLanguage = language;
     update();
   }
 
-  // String? description;
-
-  // void toggleLanguage(Language language, Need need) {
-  //   currantLanguage = language;
-  //   switch (currantLanguage) {
-  //     case Language.pl:
-  //       description
-  //       break;
-  //       case Language.uk:
-
-  //       break;
-  //     default:
-  //   }
-  //   update();
-  // }
-
   RxList<Need> needs = <Need>[].obs;
-  /* Future<void> getNeedsCity(String city) async {
-    needs.value = await DbFirebase().feachNeedsInCity(city);
-  } */
+  void getNeedsInCity(String city) async {
+    var needsSnapshot = await DbFirebase().feachNeedsInCity(city);
+    needsSnapshot.docs.forEach((element) {
+    needs.add(Need.fromJson(element.data()));
+    });
+  }
 
   List<CityWithNeeds> allCities = [];
 
@@ -55,25 +41,42 @@ class NeedsToHelpController extends GetxController {
     return suggestionCities;
   }
 
-  Future<void> getCities() async {
+  Future<void> getCitiesWithNeeds() async {
     var statsCity = await db.feachCityStats();
-
-
-
     polishCity.forEach((element) {
       String cityId = element['id'];
-      if(statsCity[cityId] != 0){
-       var city = CityWithNeeds(
-          quantity: statsCity[cityId].toString(), name: element['name']);
-          allCities.add(city);
+      if (statsCity[cityId] != 0) {
+        var city = CityWithNeeds(
+            quantity: statsCity[cityId].toString(), name: element['name']);
+        allCities.add(city);
       }
     });
   }
 
+  final ScrollController scrollController = ScrollController();
+  RxInt itemLimit = 10.obs;
+  RxInt currentItemLength = 0.obs;
+  RxInt previousItemLength = 0.obs;
+
+  void scrollListener() {
+    if (scrollController.offset >=
+            scrollController.position.maxScrollExtent - 100 &&
+        !scrollController.position.outOfRange) {
+      if (previousItemLength != currentItemLength) {
+        previousItemLength = currentItemLength;
+        itemLimit = itemLimit + 10;
+        update();
+      }
+    }
+  }
+
   @override
   void onInit() async {
-    await getCities();
-    print('init');
+    scrollController.addListener(scrollListener);
+    print('needs to help controller init');
+    await getCitiesWithNeeds();
+    var cityStats = db.feachCityStats;
+
     super.onInit();
   }
 
@@ -83,5 +86,7 @@ class NeedsToHelpController extends GetxController {
   }
 
   @override
-  void onClose() {}
+  void onClose() {
+     scrollController.dispose();
+  }
 }

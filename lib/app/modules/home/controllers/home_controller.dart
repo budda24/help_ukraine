@@ -27,7 +27,7 @@ class HomeController extends GetxController {
   final adressFocusNode = FocusNode();
   final cityFocusNode = FocusNode();
 
-  //TODO: Implement HomeController
+  
   TextEditingController nameController = TextEditingController();
   TextEditingController contactNumberController = TextEditingController();
   TextEditingController cityController = TextEditingController();
@@ -158,7 +158,6 @@ class HomeController extends GetxController {
 
   @override
   void onInit() async {
-    print('init controler');
     adressFocusNode.requestFocus();
     await getNeedsUser();
     update();

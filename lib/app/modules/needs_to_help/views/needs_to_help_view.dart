@@ -44,7 +44,7 @@ class NeedsToHelpView extends GetView<NeedsToHelpController> {
                       textFieldConfiguration: TextFieldConfiguration(
                         controller: controller.cityController,
                         decoration: outlineInputTextFormFieldStyle!.copyWith(
-                          //city
+                            //city
                             label: Text(
                           'miasto',
                           style: textfieldLableStyle,
@@ -52,9 +52,9 @@ class NeedsToHelpView extends GetView<NeedsToHelpController> {
                       ),
                       onSuggestionSelected: (CityWithNeeds city) {
                         controller.cityController.text = city.name;
-                        //Todo feach needs in city
-                        /* controller.getNeedsCity(city.name.toLowerCase()); */
-                        //featch the needs fo currant city
+                        //TODO feach needs in city
+                        /*print('city name :${city.name}'); */
+                        controller.getNeedsInCity(city.name);
                       },
                       itemBuilder: (_, CityWithNeeds city) {
                         return ListTile(
@@ -92,12 +92,19 @@ class NeedsToHelpView extends GetView<NeedsToHelpController> {
                             )
                           ],
                         ))
-                      : ListView.builder(
-                          itemCount: controller.needs.length,
-                          itemBuilder: (_, index) {
-                            return NeedsTile(need: controller.needs[index]);
-                          },
-                        ),
+                      : GetBuilder<HomeController>(
+                        initState: (state){
+
+                        },
+                        builder:(_)=> ListView.builder(
+                          controller: controller.scrollController,
+                          physics: ScrollPhysics(),
+                            itemCount: controller.needs.length,
+                            itemBuilder: (_, index) {
+                              return NeedsTile(need: controller.needs[index]);
+                            },
+                          ),
+                      ),
                 ),
               ),
             ],

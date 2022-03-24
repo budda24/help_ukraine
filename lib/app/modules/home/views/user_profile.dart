@@ -19,7 +19,7 @@ import 'add_need_view.dart';
 import '../../../data/polish_city.dart';
 
 class UserProfile extends GetView<HomeController> {
-  var controller = Get.put(HomeController());
+ /*  var controller = Get.put(HomeController()); */
   String placeHolderPhoto =
       'https://dsm01pap004files.storage.live.com/y4m_WyBC3VOwYN6wDoyWTw8ZaonCA_3fhOfEn3DQbrinoLzMG9gAxftCacktBSEbc04zRdbqhmFanYO0qrEOTLla6_CZe5tYMI4-3x9tp1xd5zsCvzPYnoeDQ3AS5VtZqTRGlRtm56YScvVl0kexFgiKupCTtx2a1mpvBagBTIi6kI29Hl3KqZGxAboOmSGn_QF?width=128&height=128&cropmode=none';
   var globalController = Get.put(GlobalController());

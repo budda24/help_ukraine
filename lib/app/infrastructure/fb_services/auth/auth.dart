@@ -24,7 +24,7 @@ User? user;
 class Auth {
   final globalController = Get.put(GlobalController());
 
-   Future<FirebaseApp> initializeFirebase() async {
+  Future<FirebaseApp> initializeFirebase() async {
     FirebaseApp firebaseApp = await Firebase.initializeApp();
     return firebaseApp;
   }
@@ -49,21 +49,30 @@ class Auth {
         final UserCredential userCredential =
             await auth.signInWithCredential(credential);
         user = userCredential.user;
-       if(globalController.box.read(user!.uid) == null){
-         var createdAt = FieldValue.serverTimestamp();
-        DbFirebase().createUser(
-          UserDb(
-              id: user!.uid,
-              name: user!.displayName ?? 'no name',
-              photoUrl: user!.photoURL ?? 'no photo',
-              createdAt: createdAt),
-        );
-        globalController.box.write(user!.uid, true);
-       }
+
+          var createdAt = FieldValue.serverTimestamp();
+          await FirebaseFirestore.instance
+              .collection('USERS')
+              .where('UserDbId', isEqualTo: user!.uid)
+              .get()
+              .then((snapshot) async {
+            if (snapshot.docs.isEmpty) {
+              DbFirebase().createUser(
+                UserDb(
+                    id: user!.uid,
+                    name: user!.displayName ?? 'no name',
+                    photoUrl: user!.photoURL ?? 'no photo',
+                    createdAt: createdAt),
+              );
+            }
+          });
+
+          globalController.box.remove(user!.uid );
+
 
         globalController.toogleIsLoading();
         //switch to false
-        Get.offNamed(Routes.PROFIL);
+        Get.offAndToNamed(Routes.PROFIL);
       } on FirebaseAuthException catch (e) {
         if (e.code == 'account-exists-with-different-credential') {
           await googleSignIn.signOut();
