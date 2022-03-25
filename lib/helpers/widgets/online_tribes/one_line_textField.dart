@@ -32,10 +32,11 @@ class OneLineTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       /* margin: EdgeInsets.only(top: 30.h), */
+
       height: 70.h,
       width: 320.w,
       child: TextFormField(
-        onFieldSubmitted: (string) async => await onSubmit,
+        onFieldSubmitted: (string) async =>await onSubmit,
         focusNode: focusNode,
         textInputAction: TextInputAction.next,
         maxLength: maxLenght,

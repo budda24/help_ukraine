@@ -27,13 +27,14 @@ class HomeController extends GetxController {
   final adressFocusNode = FocusNode();
   final cityFocusNode = FocusNode();
 
-  
   TextEditingController nameController = TextEditingController();
   TextEditingController contactNumberController = TextEditingController();
   TextEditingController cityController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   TextEditingController titleController = TextEditingController();
   TextEditingController adressController = TextEditingController();
+
+  ScrollController addNeedScrollController = ScrollController();
 
   void cleanController() {
     nameController.clear();
@@ -89,7 +90,6 @@ class HomeController extends GetxController {
     if (validateForm()) {
       globalController.toogleIsLoading();
       String cityId = globalController.finCityId(cityController.text);
-      print('city Id : $cityId');
 
       var position = await GelocationServices().getGeoLocationPosition();
 
@@ -158,6 +158,25 @@ class HomeController extends GetxController {
 
   @override
   void onInit() async {
+    var need = Need(
+      cityId: 'LZQGWcyWw2jPvcTNpt',
+      uaDescription: 'descriptionController.text',
+      uaTitle: 'titleController.text',
+      address: 'adressController.text',
+      title: 'titleController.text',
+      description: 'descriptionController.text',
+      contact: 'contactNumberController.tex',
+      city: 'Warszawa',
+      email: user!.email,
+      lat: 100,
+      long: 199,
+      postedBy: user!.uid,
+      createdAt: DateTime.now(),
+    );
+    /* for (var i = 0; i < 20; i++) {
+      Future.delayed(Duration(seconds: 1)).then((value) => DbFirebase().createNeed(need, user));
+
+    } */
     adressFocusNode.requestFocus();
     await getNeedsUser();
     update();

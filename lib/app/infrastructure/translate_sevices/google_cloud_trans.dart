@@ -1,11 +1,9 @@
 import 'dart:convert';
-import 'package:get/get.dart';
-import 'package:pomoc_ukrainie/helpers/theme/alert_styles.dart';
+import 'package:http/http.dart' as http;
 
 import '../../auth_keys/api_keys.dart';
-import '../translate_sevices/../translate_sevices/google_cloud_trans.dart';
 
-import 'package:http/http.dart' as http;
+
 
 class TranslationServices {
   static Future<String> translate(

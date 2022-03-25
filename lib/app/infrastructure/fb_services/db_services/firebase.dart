@@ -1,20 +1,13 @@
-import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:http/http.dart';
-import 'package:intl/intl.dart';
 import 'package:pomoc_ukrainie/app/globals/global_controler.dart';
-import 'package:pomoc_ukrainie/app/infrastructure/fb_services/models/city.dart';
 
 import 'package:pomoc_ukrainie/app/infrastructure/fb_services/models/need.dart';
 import '../../../../helpers/theme/alert_styles.dart';
 import '../auth/auth.dart';
 import '../models/user.dart';
-import '../models/city_with_needs.dart';
 
 final db = FirebaseFirestore.instance;
 
@@ -22,7 +15,6 @@ class DbFirebase {
   var globalController = Get.put(GlobalController());
   Future<void> createUser(UserDb user) async {
     try {
-      //TODO what to do that the user will e created only onec in data base
       user.createdAt = FieldValue.serverTimestamp();
       await db.collection('USERS').doc(user.id).set(user.toJson());
     } on FirebaseException catch (e) {
@@ -50,10 +42,8 @@ class DbFirebase {
 
     try {
       await createUserNeed(need, user);
-      //TODO translation before posting
-      /* await need.translateToPL(); */
+      await need.translateToPL();
       var response = await db.collection('NEEDS').add(need.toJson());
-
     } on FirebaseException catch (error) {
       await Get.showSnackbar(customSnackbar(
           message: "Need can't be created because $error",
@@ -64,15 +54,18 @@ class DbFirebase {
     }
   }
 
-  //TODO feach only visible needs
-  Future<QuerySnapshot<Map<String, dynamic>>> feachNeedsInCity(
-      String city) async {
-    var response =
-        await db.collection('NEEDS').where('city', isEqualTo: city).get();
+  Future<Query<Map<String, dynamic>>> feachNeedsInCity(
+      String city, int limit) async {
+    var response = await db
+        .collection('NEEDS')
+        .where('city', isEqualTo: city)
+        .limit(limit);
+    /* print(response); */
     return response;
   }
 
   Future<List<Need>> feachNeedsInUser(String id) async {
+    print(id);
     List<Need> needs = [];
     var response =
         await db.collection('USERS').doc(id).collection('needs').get();
@@ -110,7 +103,6 @@ class DbFirebase {
   Future<void> deleteNeed(Need need) async {
     var userNeeds = db.collection("NEEDS").where('id', isEqualTo: user!.uid);
     userNeeds.get().then((value) => value.docs.forEach((element) {
-          print('element : $element');
           element.reference.delete();
         }));
   }

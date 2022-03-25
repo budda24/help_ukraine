@@ -22,6 +22,43 @@
           }
         },
         {
+          "client_id": "983912924402-tu2tpplgbrcrkch3u8laurbeodhkcegk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.pomoc_ukrainie",
+            "certificate_hash": "029c99d79c7ebb67aaf5cf67bb767a3a0de6b88d"
+          }
+        },
+        {
+          "client_id": "983912924402-jhdlpb39679pdllarfgvkkr6a7msr7jr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBO8mTeCM5imRZvf8AZHY6JqhtsYIyoIrA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "983912924402-jhdlpb39679pdllarfgvkkr6a7msr7jr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:983912924402:android:cbdad0d701e9e606a6fc6b",
+        "android_client_info": {
+          "package_name": "com.pomoc.ukrainie"
+        }
+      },
+      "oauth_client": [
+        {
           "client_id": "983912924402-jhdlpb39679pdllarfgvkkr6a7msr7jr.apps.googleusercontent.com",
           "client_type": 3
         }

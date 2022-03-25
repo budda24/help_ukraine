@@ -2,7 +2,6 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
 import '../data/polish_city.dart';
-import '../modules/home/controllers/home_controller.dart';
 import '../infrastructure/fb_services/models/city.dart';
 
 class GlobalController extends GetxController {

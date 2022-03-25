@@ -1,15 +1,11 @@
-import 'dart:convert';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:pomoc_ukrainie/app/infrastructure/fb_services/models/city_with_needs.dart';
 import 'package:pomoc_ukrainie/app/infrastructure/fb_services/models/need.dart';
-import 'package:pomoc_ukrainie/helpers/widgets/online_tribes/row_progress_dott.dart';
 
 import '../../../data/polish_city.dart';
 import '../../../infrastructure/fb_services/db_services/firebase.dart';
-import '../../../infrastructure/fb_services/models/city.dart';
 
 enum Language { pl, uk }
 
@@ -25,11 +21,16 @@ class NeedsToHelpController extends GetxController {
   }
 
   RxList<Need> needs = <Need>[].obs;
-  void getNeedsInCity(String city) async {
-    var needsSnapshot = await DbFirebase().feachNeedsInCity(city);
+  void getNeedsInCity() async {
+    var needsQuery =
+        await DbFirebase().feachNeedsInCity(cityName!, itemLimit.value);
+
+    var needsSnapshot = await needsQuery.get();
     needsSnapshot.docs.forEach((element) {
-    needs.add(Need.fromJson(element.data()));
+      needs.add(Need.fromJson(element.data()));
     });
+
+    currentItemLength.value = needsSnapshot.docs.length;
   }
 
   List<CityWithNeeds> allCities = [];
@@ -57,6 +58,7 @@ class NeedsToHelpController extends GetxController {
   RxInt itemLimit = 10.obs;
   RxInt currentItemLength = 0.obs;
   RxInt previousItemLength = 0.obs;
+  String? cityName;
 
   void scrollListener() {
     if (scrollController.offset >=
@@ -65,7 +67,7 @@ class NeedsToHelpController extends GetxController {
       if (previousItemLength != currentItemLength) {
         previousItemLength = currentItemLength;
         itemLimit = itemLimit + 10;
-        update();
+        getNeedsInCity();
       }
     }
   }
@@ -87,6 +89,6 @@ class NeedsToHelpController extends GetxController {
 
   @override
   void onClose() {
-     scrollController.dispose();
+    scrollController.dispose();
   }
 }

@@ -52,3 +52,5 @@ lib/app/auth_keys/
 
 # firebase
 firebase/functions/node_modules
+key.properties
+app/upload-keystore.jks

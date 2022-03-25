@@ -52,9 +52,9 @@ class NeedsToHelpView extends GetView<NeedsToHelpController> {
                       ),
                       onSuggestionSelected: (CityWithNeeds city) {
                         controller.cityController.text = city.name;
-                        //TODO feach needs in city
-                        /*print('city name :${city.name}'); */
-                        controller.getNeedsInCity(city.name);
+                        controller.cityName = city.name;
+                        controller.getNeedsInCity();
+
                       },
                       itemBuilder: (_, CityWithNeeds city) {
                         return ListTile(
@@ -92,19 +92,16 @@ class NeedsToHelpView extends GetView<NeedsToHelpController> {
                             )
                           ],
                         ))
-                      : GetBuilder<HomeController>(
-                        initState: (state){
-
-                        },
-                        builder:(_)=> ListView.builder(
-                          controller: controller.scrollController,
-                          physics: ScrollPhysics(),
-                            itemCount: controller.needs.length,
+                      : GetBuilder<NeedsToHelpController>(
+                          builder: (controller) => ListView.builder(
+                            controller: controller.scrollController,
+                            physics: ScrollPhysics(),
+                            itemCount: controller.currentItemLength.value,
                             itemBuilder: (_, index) {
                               return NeedsTile(need: controller.needs[index]);
                             },
                           ),
-                      ),
+                        ),
                 ),
               ),
             ],

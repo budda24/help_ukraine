@@ -14,22 +14,13 @@ exports.onNeedCreate = functions.firestore
     .onCreate(async (snapshot) => {
       const cityData = snapshot.data();
       const cityId = cityData["cityId"];
-      const cityStatsDoc = await db.collection("STATS").doc("CITY").get();
-      const cityStatsData = cityStatsDoc.data();
-      const newStatsCity = {
+      await db.collection("STATS").doc("CITY").update( {
         [cityId]: fieldValue.increment(1),
-      };
+      });
 
-      await db.collection("STATS").doc("CITY").update(newStatsCity);
-      console.log(cityStatsData[cityId]);
-
-      const adminStatsDoc = await db.collection("STATS").doc("ADMIN").get();
-      const adminStatsData = adminStatsDoc.data();
-      const newStatsAdmin = {
+      await db.collection("STATS").doc("ADMIN").update({
         "countNeeds": fieldValue.increment(1),
-      };
-      await db.collection("STATS").doc("ADMIN").update(newStatsAdmin);
-      console.log(adminStatsData["countNeeds"]);
+      });
     });
 
 exports.onNeedDelete = functions.firestore
@@ -37,43 +28,30 @@ exports.onNeedDelete = functions.firestore
     .onDelete(async (snapshot) => {
       const needData = snapshot.data();
       const cityId = needData["cityId"];
-      const docStats = await db.collection("STATS").doc("CITY").get();
-      const dataStats = docStats.data();
-      console.log("Got Data");
-      console.log(cityId);
-      const newStats = {
-        [cityId]: fieldValue.increment(-1),
-      };
-      await db.collection("STATS").doc("CITY").update(newStats);
-      console.log("Updated Data");
-      console.log(dataStats[cityId]);
 
-      const adminStatsDoc = await db.collection("STATS").doc("ADMIN").get();
-      const adminStatsData = adminStatsDoc.data();
-      const newStatsAdmin = {
+      await db.collection("STATS").doc("CITY").update({
+        [cityId]: fieldValue.increment(-1),
+      });
+
+      await db.collection("STATS").doc("ADMIN").update({
         "countNeeds": fieldValue.increment(-1),
-      };
-      await db.collection("STATS").doc("ADMIN").update(newStatsAdmin);
-      console.log(adminStatsData["countNeeds"]);
+      });
     });
 
 exports.onUserCreate = functions.firestore
     .document("USERS/{uid}")
     .onCreate(async () => {
-      const newStatsAdmin = {
+      await db.collection("STATS").doc("ADMIN").update({
         "countUsers": fieldValue.increment(1),
-      };
-      await db.collection("STATS").doc("ADMIN").update(newStatsAdmin);
-      console.log("Updated Data");
+      });
     });
 
 exports.onUserDelete = functions.firestore
     .document("USERS/{uid}")
     .onDelete(async () => {
-      const newStatsAdmin = {
+      await db.collection("STATS").doc("ADMIN").update({
         "countUsers": fieldValue.increment(-1),
-      };
-      await db.collection("STATS").doc("ADMIN").update(newStatsAdmin);
+      });
     });
 
 
