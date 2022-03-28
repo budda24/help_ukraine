@@ -128,8 +128,8 @@ class HomeController extends GetxController {
   Future<void> deleteNeed(String id, Need need) async {
     var db = DbFirebase();
     try {
-      await db.deleteNeedUser(user!.uid, id);
-      await db.deleteNeed(need);
+      /* await db.deleteNeedUser(user!.uid, id); */
+      await db.deleteNeed();
 /*       await db.deleteCityWhereNeed(need.city ?? ''); */
       update();
       Get.showSnackbar(customSnackbar(
@@ -181,7 +181,7 @@ class HomeController extends GetxController {
     await getNeedsUser();
     update();
 
-    adressController.text = 'adress is loading...';
+    /* adressController.text = 'adress is loading...'; */
     super.onInit();
   }
 

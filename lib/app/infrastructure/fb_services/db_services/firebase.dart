@@ -25,7 +25,7 @@ class DbFirebase {
     }
   }
 
-  Future<void> createUserNeed(Need need, User? user) async {
+  /* Future<void> createUserNeed(Need need, User? user) async {
     var json = need.toJson();
 
     await db
@@ -34,14 +34,14 @@ class DbFirebase {
         .collection('needs')
         .doc()
         .set(json);
-  }
+  } */
 
   Future<void> createNeed(Need need, User? user) async {
     need.createdAt = DateTime.now();
     need.id = user!.uid;
 
     try {
-      await createUserNeed(need, user);
+      /* await createUserNeed(need, user); */
       await need.translateToPL();
       var response = await db.collection('NEEDS').add(need.toJson());
     } on FirebaseException catch (error) {
@@ -68,7 +68,7 @@ class DbFirebase {
     print(id);
     List<Need> needs = [];
     var response =
-        await db.collection('USERS').doc(id).collection('needs').get();
+        await db.collection('NEEDS').where('postedBy', isEqualTo: id).get();
     response.docs.forEach((element) {
       var need = Need.fromJson(element.data());
       need.id = element.id;
@@ -91,18 +91,19 @@ class DbFirebase {
     return statsCity;
   }
 
-  Future<void> deleteNeedUser(String userId, String docId) {
+/*   Future<void> deleteNeedUser(String userId, String docId) {
     return db
         .collection('USERS')
         .doc(userId)
         .collection('needs')
         .doc(docId)
         .delete();
-  }
+  } */
 
-  Future<void> deleteNeed(Need need) async {
+  Future<void> deleteNeed() async {
     var userNeeds = db.collection("NEEDS").where('id', isEqualTo: user!.uid);
     userNeeds.get().then((value) => value.docs.forEach((element) {
+          print('delete need');
           element.reference.delete();
         }));
   }

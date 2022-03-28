@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-
 import 'package:pomoc_ukrainie/app/modules/auth/controllers/auth_controller.dart';
 import 'package:pomoc_ukrainie/app/modules/home/views/user_profile.dart';
 import 'package:pomoc_ukrainie/helpers/theme/app_colors.dart';
@@ -78,8 +77,8 @@ class ChoiceScreen extends GetView<AuthController> {
                     onTap: () {
                       if (user != null) {
                         Get.to(UserProfile());
-                      }else
-                      Get.toNamed(Routes.AUTH);
+                      } else
+                        Get.toNamed(Routes.AUTH);
                     },
                     child: Container(
                       padding: EdgeInsets.all(20),
