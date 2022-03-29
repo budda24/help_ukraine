@@ -77,7 +77,7 @@ class AddNeedView extends GetView<HomeController> {
                                 width: 0.8.sw,
                                 controller: controller.adressController,
                                 color: AppColors.primaryColorShade,
-                                lableText: 'adress',
+                                lableText: 'місце проживання',
                               ),
                             ),
                             verticalSpaceSmall,
