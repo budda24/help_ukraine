@@ -50,7 +50,7 @@ class AddNeedView extends GetView<HomeController> {
           body: GetBuilder<GlobalController>(
             builder: (globalGontroller) => Center(
               child: globalController.isLoading
-                  ? CircularProgressIndicator()
+                  ?  CircularProgressIndicator()
                   : Form(
                       key: controller.formKey,
                       child: SingleChildScrollView(

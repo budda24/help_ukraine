@@ -80,7 +80,7 @@ class Auth {
               //This account exists with different sign in provider
               message: 'Цей обліковий запис існує з іншим постачальником входу',
               icon: Icons.error,
-              title: 'Error'));
+              title: 'Помилка'));
 
           globalController.toogleIsLoading(); //switch to false
 
@@ -89,7 +89,7 @@ class Auth {
           await Get.showSnackbar(customSnackbar(
               message: 'Сталася невідома помилка',
               icon: Icons.error,
-              title: 'Error'));
+              title: 'Помилка'));
 
           globalController.toogleIsLoading();
           //switch to false
@@ -99,7 +99,7 @@ class Auth {
         await Get.showSnackbar(customSnackbar(
             message: 'Сталася невідома помилка',
             icon: Icons.error,
-            title: 'Error'));
+            title: 'Помилка'));
       }
     }
   }
@@ -148,7 +148,7 @@ class Auth {
             //This account exists with different sign in provider
             message: 'Цей обліковий запис існує з іншим постачальником входу',
             icon: Icons.error,
-            title: 'Error'));
+            title: 'Помилка'));
 
         globalController.toogleIsLoading(); //switch to false
         Get.offAllNamed(Routes.AUTH);
@@ -156,7 +156,7 @@ class Auth {
         await Get.showSnackbar(customSnackbar(
             message: 'Сталася невідома помилка',
             icon: Icons.error,
-            title: 'Error'));
+            title: 'Помилка'));
 
         globalController.toogleIsLoading(); //switch to false
       }
@@ -164,7 +164,7 @@ class Auth {
       await Get.showSnackbar(customSnackbar(
           message: 'Сталася невідома помилка',
           icon: Icons.error,
-          title: 'Error'));
+          title: 'Помилка'));
     }
   }
 }
