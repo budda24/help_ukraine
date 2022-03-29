@@ -54,6 +54,7 @@ class AddNeedView extends GetView<HomeController> {
                   : Form(
                       key: controller.formKey,
                       child: SingleChildScrollView(
+                        reverse: true,
                         controller: controller.addNeedScrollController,
                         padding: EdgeInsets.only(
                             bottom: MediaQuery.of(context).viewInsets.bottom),
