@@ -36,13 +36,13 @@ class UserProfile extends GetView<HomeController> {
                 height: 100.h,
                 width: 100.w,
                 child: Image.network(
-                  user!.photoURL ?? placeHolderPhoto,
+                  auth.currentUser!.photoURL ?? placeHolderPhoto,
                   fit: BoxFit.cover,
                 ),
               ),
               verticalSpaceLarge,
               Text(
-                user!.displayName ?? 'не має назви',
+                 auth.currentUser!.displayName ?? 'не має назви',
                 style: headingBlackStyle,
               ),
               verticalSpaceLarge,

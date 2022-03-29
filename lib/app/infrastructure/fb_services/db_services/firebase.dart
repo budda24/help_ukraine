@@ -91,14 +91,7 @@ class DbFirebase {
     return statsCity;
   }
 
-/*   Future<void> deleteNeedUser(String userId, String docId) {
-    return db
-        .collection('USERS')
-        .doc(userId)
-        .collection('needs')
-        .doc(docId)
-        .delete();
-  } */
+
 
   Future<void> deleteNeed() async {
     var userNeeds = db.collection("NEEDS").where('id', isEqualTo: user!.uid);

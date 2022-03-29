@@ -75,7 +75,8 @@ class ChoiceScreen extends GetView<AuthController> {
                   verticalSpaceExtraLarge,
                   InkWell(
                     onTap: () {
-                      if (user != null) {
+                      if (auth.currentUser != null) {
+                        user = auth.currentUser;
                         Get.to(UserProfile());
                       } else
                         Get.toNamed(Routes.AUTH);

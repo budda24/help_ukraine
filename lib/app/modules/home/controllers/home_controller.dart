@@ -102,12 +102,12 @@ class HomeController extends GetxController {
           description: descriptionController.text,
           contact: contactNumberController.text,
           city: cityController.text,
-          email: user!.email,
+          email: auth.currentUser!.email,
           lat: position.latitude,
           long: position.longitude,
-          postedBy: user!.uid);
+          postedBy: auth.currentUser!.uid);
       try {
-        await DbFirebase().createNeed(need, user);
+        await DbFirebase().createNeed(need, auth.currentUser);
         cleanController();
         globalController.toogleIsLoading();
       } catch (e) {
@@ -121,7 +121,7 @@ class HomeController extends GetxController {
 
   RxList<Need> needs = <Need>[].obs;
   Future<void> getNeedsUser() async {
-    needs.value = await DbFirebase().feachNeedsInUser(user!.uid);
+    needs.value = await DbFirebase().feachNeedsInUser(auth.currentUser!.uid);
     update();
   }
 
