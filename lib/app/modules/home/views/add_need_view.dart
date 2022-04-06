@@ -49,7 +49,7 @@ class AddNeedView extends GetView<HomeController> {
           body: GetBuilder<GlobalController>(
             builder: (globalGontroller) => Center(
               child: globalController.isLoading
-                  ? CircularProgressIndicator()
+                  ?  CircularProgressIndicator()
                   : Form(
                       key: controller.formKey,
                       child: SingleChildScrollView(
@@ -75,7 +75,7 @@ class AddNeedView extends GetView<HomeController> {
                                 width: 0.8.sw,
                                 controller: controller.adressController,
                                 color: AppColors.primaryColorShade,
-                                lableText: 'adress',
+                                lableText: 'місце проживання',
                               ),
                             ),
                             verticalSpaceSmall,

@@ -19,9 +19,9 @@ class DbFirebase {
       await db.collection('USERS').doc(user.id).set(user.toJson());
     } on FirebaseException catch (e) {
       Get.showSnackbar(customSnackbar(
-          message: "Account can't be created because $e",
+          message: "Сталася помилка, спробуйте пізніше",
           icon: Icons.error,
-          title: 'Error'));
+          title: 'Помилка'));
     }
   }
 
@@ -34,13 +34,13 @@ class DbFirebase {
     try {
       await need.translateToPL();
       var response = await db.collection('NEEDS').add(need.toJson());
-    } on FirebaseException catch (error) {
-      await Get.showSnackbar(customSnackbar(
-          message: "Need can't be created because $error",
+    } on FirebaseException catch (_) {
+       Get.showSnackbar(customSnackbar(
+          message: 'Сталася помилка, спробуйте пізніше',
           icon: Icons.error,
-          title: 'Error'));
+          title: 'Помилка'));
     } catch (error) {
-      print('on db post $error');
+      print(error);
     }
   }
 
@@ -80,12 +80,10 @@ class DbFirebase {
     return statsCity;
   }
 
-
-
   Future<void> deleteNeed() async {
     var userNeeds = db.collection("NEEDS").where('id', isEqualTo: user!.uid);
     userNeeds.get().then((value) => value.docs.forEach((element) {
-          print('delete need');
+         
           element.reference.delete();
         }));
   }

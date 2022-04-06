@@ -114,7 +114,7 @@ class HomeController extends GetxController {
         Get.showSnackbar(customSnackbar(
             message: 'надіслати потребу не вдалося, тому що: $e',
             icon: Icons.error,
-            title: 'Error'));
+            title: 'Помилка'));
       }
     }
   }
@@ -133,14 +133,14 @@ class HomeController extends GetxController {
 /*       await db.deleteCityWhereNeed(need.city ?? ''); */
       update();
       Get.showSnackbar(customSnackbar(
-          message: 'deleted succede',
+          message: 'видалено успішно',
           icon: Icons.file_download_done,
-          title: 'Done'));
+          title: 'зроблено'));
     } catch (e) {
       Get.showSnackbar(customSnackbar(
-          message: 'deleted NOT succede becouse : $e',
+          message: 'видалено НЕ досягає успіх',
           icon: Icons.error,
-          title: 'Error'));
+          title: 'Помилка'));
     } finally {
       needs.removeWhere((element) => element.id == id);
     }
