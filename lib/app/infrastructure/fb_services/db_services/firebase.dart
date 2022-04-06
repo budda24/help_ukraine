@@ -25,23 +25,13 @@ class DbFirebase {
     }
   }
 
-  /* Future<void> createUserNeed(Need need, User? user) async {
-    var json = need.toJson();
 
-    await db
-        .collection('USERS')
-        .doc(user!.uid)
-        .collection('needs')
-        .doc()
-        .set(json);
-  } */
 
   Future<void> createNeed(Need need, User? user) async {
     need.createdAt = DateTime.now();
     need.id = user!.uid;
 
     try {
-      /* await createUserNeed(need, user); */
       await need.translateToPL();
       var response = await db.collection('NEEDS').add(need.toJson());
     } on FirebaseException catch (error) {
@@ -60,7 +50,6 @@ class DbFirebase {
         .collection('NEEDS')
         .where('city', isEqualTo: city)
         .limit(limit);
-    /* print(response); */
     return response;
   }
 
@@ -100,6 +89,17 @@ class DbFirebase {
           element.reference.delete();
         }));
   }
+
+    /* Future<void> createUserNeed(Need need, User? user) async {
+    var json = need.toJson();
+
+    await db
+        .collection('USERS')
+        .doc(user!.uid)
+        .collection('needs')
+        .doc()
+        .set(json);
+  } */
 
   /*   Future<List<CityWithNeeds>> feachCitiesWhereNeeds(String id) async {
     /* print('feachNeedsInUser'); */

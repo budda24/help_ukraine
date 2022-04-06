@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pomoc_ukrainie/app/globals/global_controler.dart';
+import 'package:pomoc_ukrainie/app/routes/app_pages.dart';
 import 'package:pomoc_ukrainie/helpers/theme/alert_styles.dart';
 import 'package:pomoc_ukrainie/helpers/theme/ui_helpers.dart';
 
@@ -24,8 +25,6 @@ class AddNeedView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     controller.getPosition();
-    /* WidgetsBinding.instance!
-        .addPostFrameCallback((_) => controller.adressFocusNode.requestFocus()); */
     return SafeArea(
       child: GestureDetector(
         onTap: globalController.unFocuseNode,
@@ -43,7 +42,7 @@ class AddNeedView extends GetView<HomeController> {
                           title: "закінчено"),
                     ));
                 await controller.getNeedsUser();
-                Get.off(UserProfile());
+                Get.offAndToNamed(Routes.PROFIL);
               },
             ),
           ),
@@ -54,7 +53,6 @@ class AddNeedView extends GetView<HomeController> {
                   : Form(
                       key: controller.formKey,
                       child: SingleChildScrollView(
-                        reverse: true,
                         controller: controller.addNeedScrollController,
                         padding: EdgeInsets.only(
                             bottom: MediaQuery.of(context).viewInsets.bottom),
@@ -145,13 +143,6 @@ class AddNeedView extends GetView<HomeController> {
                             verticalSpaceSmall,
                             OneLineTextField(
                                 onSubmit: () async {
-                                  /* controller.titleFocusNode.unfocus();
-
-                                  await Future.delayed(Duration(seconds: 1))
-                                        .then((value) => print('waited'));
-                                  controller.addNeedScrollController
-                                        .jumpTo(781);
-                                  print('requestfocuse'); */
                                   controller.phoneFocusNode.requestFocus();
                                 },
                                 focusNode: controller.titleFocusNode,

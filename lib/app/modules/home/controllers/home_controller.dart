@@ -173,10 +173,6 @@ class HomeController extends GetxController {
       postedBy: user!.uid,
       createdAt: DateTime.now(),
     );
-    /* for (var i = 0; i < 20; i++) {
-      Future.delayed(Duration(seconds: 1)).then((value) => DbFirebase().createNeed(need, user));
-
-    } */
     adressFocusNode.requestFocus();
     await getNeedsUser();
     update();
