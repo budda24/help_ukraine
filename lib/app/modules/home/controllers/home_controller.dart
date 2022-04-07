@@ -1,21 +1,17 @@
-import 'dart:convert';
-import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:geocode/geocode.dart';
 import 'package:geocoding/geocoding.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
-import 'package:pomoc_ukrainie/app/data/polish_city.dart';
-import 'package:pomoc_ukrainie/app/infrastructure/fb_services/db_services/db_postgresem.dart';
 import 'package:pomoc_ukrainie/app/infrastructure/fb_services/db_services/firebase.dart';
+
+
 
 import '../../../../helpers/theme/alert_styles.dart';
 import '../../../globals/global_controler.dart';
 import '../../../infrastructure/fb_services/auth/auth.dart';
 import '../../../infrastructure/geolocation_services/geolocation.dart';
-import '../../../infrastructure/fb_services/models/city.dart';
 import '../../../infrastructure/fb_services/models/need.dart';
+
 
 class HomeController extends GetxController {
   final globalController = Get.put(GlobalController());
@@ -45,7 +41,7 @@ class HomeController extends GetxController {
     adressController.clear();
   }
 
-  /* TextEditingController needAdressController = TextEditingController(); */
+
 
   final formKey = GlobalKey<FormState>();
 
@@ -75,17 +71,7 @@ class HomeController extends GetxController {
     return formKey.currentState!.validate();
   }
 
-  /*  String findCityId(String city) {
-    String idCity = '';
-
-    polishCity.forEach((element) {
-      if (city == element['name']) {
-        idCity = element['id'];
-      }
-    });
-    return idCity;
-  } */
-
+  
   Future<void> postNeed() async {
     if (validateForm()) {
       globalController.toogleIsLoading();

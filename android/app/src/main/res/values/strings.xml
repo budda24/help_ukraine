@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
-<string name="app_name">Razem Przetrwamy</string>
-<string name="facebook_app_id">311654527725686</string>
-<string name="fb_login_protocol_scheme">fb311654527725686</string>
+<string name="app_name">Pomozemy</string>
+<string name="facebook_app_id">522815079358401</string>
+<string name="fb_login_protocol_scheme">fb522815079358401</string>
 <string name="facebook_client_token">3778706dcd26ed96caa3b744b54796c1</string>
 </resources>

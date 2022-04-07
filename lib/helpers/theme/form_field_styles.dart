@@ -7,10 +7,7 @@ import 'app_colors.dart';
 import 'text_styles.dart';
 
 InputDecoration? outlineInputTextFormFieldStyle = InputDecoration(
-    /*  label: Text(
-                          'Miasto',
-                          style: textfieldLableStyle,
-                        ), */
+   
     enabledBorder: OutlineInputBorder(
       borderSide: BorderSide(width: 1, color: AppColors.primaryColor),
       borderRadius: BorderRadius.circular(40.r),

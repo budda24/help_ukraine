@@ -26,34 +26,3 @@ GetSnackBar customSnackbar ({required String message, required IconData icon, re
     backgroundColor: AppColors.primaryColorWithOpacity40,
   );}
 
-/* final AlertStyle defaultAlertStyle = AlertStyle(
-  isCloseButton: false,
-  titleStyle: headlineTwoDarkStyle,
-  isButtonVisible: false,
-  alertPadding: EdgeInsets.zero,
-  alertBorder: RoundedRectangleBorder(
-    borderRadius: BorderRadius.only(
-      topLeft: Radius.circular(10.r),
-      topRight: Radius.circular(10.r),
-      bottomLeft: Radius.circular(ScreenUtil().uiSize.isMobile ? 0 : 10.r),
-      bottomRight: Radius.circular(ScreenUtil().uiSize.isMobile ? 0 : 10.r),
-    ),
-  ),
-  alertAlignment: ScreenUtil().uiSize.isMobileAndTablet
-      ? Alignment.bottomCenter
-      : Alignment.center,
-  buttonAreaPadding: EdgeInsets.only(bottom: 18.h),
-  overlayColor: Colors.black45,
-);
-
-final AlertStyle centeredAlertStyle = AlertStyle(
-  isCloseButton: false,
-  titleStyle: headlineTwoDarkStyle,
-  isButtonVisible: false,
-  alertPadding: EdgeInsets.zero,
-  alertBorder: RoundedRectangleBorder(
-    borderRadius: BorderRadius.circular(10.r),
-  ),
-  buttonAreaPadding: EdgeInsets.only(bottom: 18.h),
-  overlayColor: Colors.black45,
-); */

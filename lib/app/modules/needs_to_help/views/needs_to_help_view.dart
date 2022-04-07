@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 
+
 import 'package:get/get.dart';
 import 'package:pomoc_ukrainie/app/globals/global_controler.dart';
-import 'package:pomoc_ukrainie/app/modules/home/controllers/home_controller.dart';
-import 'package:pomoc_ukrainie/app/modules/needs_to_help/views/needs_details_screen.dart';
-import 'package:pomoc_ukrainie/app/infrastructure/fb_services/models/need.dart';
 import 'package:pomoc_ukrainie/app/modules/needs_to_help/widgets/needs_tile.dart';
 import 'package:pomoc_ukrainie/helpers/theme/app_colors.dart';
 import 'package:pomoc_ukrainie/helpers/theme/ui_helpers.dart';
@@ -14,8 +12,8 @@ import '../../../../helpers/theme/form_field_styles.dart';
 import '../../../../helpers/theme/text_styles.dart';
 import '../../../../helpers/widgets/online_tribes/rounded_container.dart';
 import '../../../infrastructure/fb_services/models/city_with_needs.dart';
-import '../../../infrastructure/fb_services/models/city.dart';
 import '../controllers/needs_to_help_controller.dart';
+
 
 class NeedsToHelpView extends GetView<NeedsToHelpController> {
   var globalController = Get.put(GlobalController());

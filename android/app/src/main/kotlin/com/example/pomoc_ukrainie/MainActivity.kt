@@ -1,4 +1,4 @@
-package com.example.pomoc_ukrainie
+package com.pomoc.ukrainie
 
 import io.flutter.embedding.android.FlutterActivity
 

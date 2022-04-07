@@ -18,11 +18,3 @@ class AppBarBackArrow extends AppBar {
           elevation: 0,
         );
 }
-/* AppBar(
-        backgroundColor: AppColors.primaryColor,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () => Get.back(),
-        ),
-        elevation: 0,
-      ), */

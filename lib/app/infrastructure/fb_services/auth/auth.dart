@@ -104,27 +104,7 @@ class Auth {
     }
   }
 
-/*   static Future<void> signOut() async {
-    final GoogleSignIn googleSignIn = GoogleSignIn();
 
-    try {
-      if (!GetPlatform.isWeb) {
-        await googleSignIn.signOut().then((value) => Get.showSnackbar(
-            customSnackbar(
-              //You signing out.
-                message: 'Ви виходите.',
-                icon: Icons.error,
-                title: 'Error')));
-      }
-      //for webb
-      /* await FirebaseAuth.instance.signOut(); */
-    } catch (e) {
-      Get.showSnackbar(customSnackbar(
-          message: 'Error signing out. Try again.',
-          icon: Icons.error,
-          title: 'Error'));
-    }
-  } */
 
   Future<void> signInWithFacebook() async {
     globalController.toogleIsLoading(); //switch to true

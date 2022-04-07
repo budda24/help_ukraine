@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:983912924402:android:db1c31abdd47afbaa6fc6b",
         "android_client_info": {
-          "package_name": "com.example.pomoc_ukrainie"
+          "package_name": "com.pomoc.ukrainie"
         }
       },
       "oauth_client": [
@@ -17,7 +17,7 @@
           "client_id": "983912924402-sjsljvoniv7vha510uc0abp493t5ldbu.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.pomoc_ukrainie",
+            "package_name": "com.pomoc.ukrainie",
             "certificate_hash": "bd94261c4139e8fbf296949b63f1a98086d8b60b"
           }
         },
@@ -25,7 +25,7 @@
           "client_id": "983912924402-tu2tpplgbrcrkch3u8laurbeodhkcegk.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.pomoc_ukrainie",
+            "package_name": "com.pomoc.ukrainie",
             "certificate_hash": "029c99d79c7ebb67aaf5cf67bb767a3a0de6b88d"
           }
         },

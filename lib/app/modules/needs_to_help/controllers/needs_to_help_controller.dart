@@ -75,7 +75,7 @@ class NeedsToHelpController extends GetxController {
   @override
   void onInit() async {
     scrollController.addListener(scrollListener);
-    print('needs to help controller init');
+  
     await getCitiesWithNeeds();
     var cityStats = db.feachCityStats;
 

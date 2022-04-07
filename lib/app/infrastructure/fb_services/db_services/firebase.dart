@@ -25,8 +25,6 @@ class DbFirebase {
     }
   }
 
-
-
   Future<void> createNeed(Need need, User? user) async {
     need.createdAt = DateTime.now();
     need.id = user!.uid;
@@ -35,7 +33,7 @@ class DbFirebase {
       await need.translateToPL();
       var response = await db.collection('NEEDS').add(need.toJson());
     } on FirebaseException catch (_) {
-       Get.showSnackbar(customSnackbar(
+      Get.showSnackbar(customSnackbar(
           message: 'Сталася помилка, спробуйте пізніше',
           icon: Icons.error,
           title: 'Помилка'));
@@ -54,7 +52,7 @@ class DbFirebase {
   }
 
   Future<List<Need>> feachNeedsInUser(String id) async {
-    print(id);
+
     List<Need> needs = [];
     var response =
         await db.collection('NEEDS').where('postedBy', isEqualTo: id).get();
@@ -83,95 +81,9 @@ class DbFirebase {
   Future<void> deleteNeed() async {
     var userNeeds = db.collection("NEEDS").where('id', isEqualTo: user!.uid);
     userNeeds.get().then((value) => value.docs.forEach((element) {
-         
           element.reference.delete();
         }));
   }
 
-    /* Future<void> createUserNeed(Need need, User? user) async {
-    var json = need.toJson();
-
-    await db
-        .collection('USERS')
-        .doc(user!.uid)
-        .collection('needs')
-        .doc()
-        .set(json);
-  } */
-
-  /*   Future<List<CityWithNeeds>> feachCitiesWhereNeeds(String id) async {
-    /* print('feachNeedsInUser'); */
-    List<CityWithNeeds> cities = [];
-
-    var response = await db.collection('citiesWithNeed').get();
-    print('lenght cities ${response.docs.length}');
-
-    cities =
-        response.docs.map((e) => CityWithNeeds.fromJson(e.data())).toList();
-
-    return cities;
-    /* var need = Need.fromJson(response.docs.first.data()); */
-  } */
-
-  /*  Future<void> deleteCityWhereNeed(String city) async {
-    List<CityWithNeeds> cities = await feachCityWhereNeeds();
-    CityWithNeeds deletedCity =
-        cities.firstWhere((element) => element.name == city);
-
-    int tmpQuantuty = int.parse(deletedCity.quantity) - 1;
-    if (tmpQuantuty > 0) {
-      deletedCity.quantity = tmpQuantuty.toString();
-      await db
-          .collection('citiesWithNeed')
-          .doc(deletedCity.id)
-          .set(deletedCity.toJson());
-    } else
-      await db.collection('citiesWithNeed').doc(deletedCity.id).delete();
-  } */
-
-/*   Future<void> createJsonCity(Map<String, dynamic> map) async {
-    var body = jsonEncode(map);
-    var response = await db.collection('POLISHCITIES').doc().set(map);
-  }
-
-  Future<void> createJsonStats(Map<String, dynamic> map) async {
-    var body = jsonEncode(map);
-    var response = await db.collection('STATS').doc('CITY').set(map);
-  } */
-
-  /*  Future<void> createCityWithNeeds(String city) async {
-    try {
-      int quantity = 1;
-      Map<String, dynamic> json;
-
-      List<CityWithNeeds> existingCities = await feachCityWhereNeeds();
-
-      //check if existin cities connteins city wanted to post
-      if (existingCities.any((element) => element.name == city)) {
-        CityWithNeeds? foundCity =
-            existingCities.firstWhere((element) => element.name == city);
-
-        quantity = int.parse(foundCity.quantity);
-        quantity++;
-        json = CityWithNeeds(
-          quantity: quantity.toString(),
-          name: city,
-          id: foundCity.id,
-        ).toJson();
-
-        await db.collection('citiesWithNeed').doc(foundCity.id).set(json);
-      } else {
-        json =
-            CityWithNeeds(quantity: quantity.toString(), name: city).toJson();
-        await db.collection('citiesWithNeed').add(json);
-      }
-    } on FirebaseException catch (error) {
-      await Get.showSnackbar(customSnackbar(
-          message: "Need can't be created because $error",
-          icon: Icons.error,
-          title: 'Error'));
-    } catch (error) {
-      print(error);
-    }
-  } */
+  
 }

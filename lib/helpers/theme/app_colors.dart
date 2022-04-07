@@ -35,37 +35,5 @@ class AppColors {
   static Color errorRedColor = Color(0xffCD5D7D);
   static Color transparentBlackColor = Colors.black54;
 
-  /*  static Color? accentColor = const Color(0xFF312951);
-  static Color? buttonColor = const Color(0xFF592AAE);
-  static Color? bodyColorTwo = const Color(0xFFCABCFF);
-  static Color lightGreyColor = const Color(0xFFE9EEF2);
-  static Color? navyTextColor = const Color(0xFF001D3B);
-  static Color? lightNavyTextColor = const Color(0xFF34587E);
-  static Color? greyTwoColor = const Color(0xFF7592A8);
-  static Color? darkGreyColor = const Color(0xFFE9EEF2);
-  static Color? circularProgressIndicatorColor = const Color(0xFF2C2C2C);
-  static Color? circularProgressIndicatorInButtonColor =
-      const Color(0xFF2C2C2C);
-
-  static Color? lightBlackColor = const Color(0xff1E1E1E);
-
-
-  static Color? redColor = const Color(0xFFFF5964);
-  static Color? lightRedColor = const Color(0xFFFFDEE0);
-  static Color? redTextColor = const Color(0xFF60040A);
-
-  static Color? yellowColor = const Color(0xFFFFC000);
-  static Color? lightYellowColor = const Color(0xFFFFF2CC);
-  static Color? yellowTextColor = const Color(0xFF745C12);
-
-  static Color? greenColor = const Color(0xFF00D4AA);
-  static Color? lightGreenColor = const Color(0xFFCCF6EE);
-  static Color? darkGreenColor = const Color(0xFF01604D);
-
-  /* static Color? blueColor = const Color(0xFF00CDF8); */
-  static Color? lightBlueColor = const Color(0xFFCCF5FE);
-
-  static String redHexColor = '#E11C1C';
-  static String blueHexColor = '#40C2F3';
-  static String greenHexColor = '#22C316';*/
+  
 }

@@ -35,8 +35,7 @@ class BorderCustomContainer extends StatelessWidget {
             offset: Offset(2.w, 6.h), // Shadow position
           ),
         ],
-        // gradient:
-        //     LinearGradient(colors: [Colors.indigo, Colors.blueAccent]),
+      
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(15),

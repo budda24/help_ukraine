@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:google_translator/google_translator.dart';
+
 import 'package:pomoc_ukrainie/app/globals/global_controler.dart';
 
 
@@ -47,7 +47,7 @@ class MyApp extends StatelessWidget {
         nextScreen: const ChoiceScreen(),
         splashTransition: SplashTransition.fadeTransition,
         backgroundColor: const Color(0xff000000),
-        /*pageTransitionType: PageTra,*/
+
       ),
                   defaultTransition: Transition.fadeIn,
                   debugShowCheckedModeBanner: false,
@@ -57,4 +57,4 @@ class MyApp extends StatelessWidget {
   }
 }
 
-// Flutter imports:
+
