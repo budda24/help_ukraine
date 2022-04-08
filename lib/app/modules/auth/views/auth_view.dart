@@ -23,8 +23,11 @@ class AuthView extends GetView<AuthController> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {},
+    return WillPopScope(
+      onWillPop: () async {
+        globalController.toogleIsLoading();
+        return await Get.offAll(ChoiceScreen());
+      },
       child: Scaffold(
         body: GetBuilder<GlobalController>(
           builder: (controller) => Center(
