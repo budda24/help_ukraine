@@ -1,10 +1,10 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:flutter/material.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+
 import 'package:get/get.dart';
 
 import 'package:pomoc_ukrainie/app/globals/global_controler.dart';
@@ -12,7 +12,6 @@ import 'package:pomoc_ukrainie/app/infrastructure/fb_services/db_services/fireba
 import 'package:pomoc_ukrainie/app/routes/app_pages.dart';
 import 'package:pomoc_ukrainie/helpers/theme/alert_styles.dart';
 
-import '../models/user.dart';
 
 final auth = FirebaseAuth.instance;
 User? user;
@@ -103,8 +102,8 @@ class Auth {
       if (e.code == 'email-already-in-use') {
         globalController.toogleIsLoading(); //switch to false
         Get.showSnackbar(customSnackbar(
-          message: 'The account already exists for that email.',
-          title: 'Error',
+          message: 'Обліковий запис для цієї електронної пошти вже існує.',
+          title: 'Помилка',
           icon: Icons.error,
         ));
       }
@@ -113,13 +112,7 @@ class Auth {
     }
   }
 
-/*   Future<void> signInEmailPassword(String email, String password) async {
-    try {
-      /* print('auth sign up email $email passs: $password'); */
-      UserCredential userCredential = await auth.signInWithEmailAndPassword(
-          email: email, password: password);
-    } on FirebaseAuthException catch (e) {}
-  } */
+
 
   Future<void> signInExistingUser(String email, String password) async {
     try {
@@ -128,8 +121,8 @@ class Auth {
       if (userEmails.isEmpty) {
         globalController.toogleIsLoading(); //switch to false
         Get.showSnackbar(customSnackbar(
-          message: "we couldn't find currant email",
-          title: 'Error',
+          message: "ми не змогли знайти смородиновий електронний лист",
+          title: 'Помилка',
           icon: Icons.error,
         ));
       } else {
@@ -139,15 +132,15 @@ class Auth {
             Get.offAndToNamed(Routes.PROFIL);
 
         globalController.toogleIsLoading(); //switch to false
-        
+
         print(userData.user!.uid);
 
       }
     } on FirebaseAuthException catch (error) {
       globalController.toogleIsLoading(); //switch to false
       Get.showSnackbar(customSnackbar(
-        message: "Sign in failed because ${error.message ?? ''}",
-        title: 'Error',
+        message: "Не вдалося ввійти, тому що ${error.message ?? ''}",
+        title: 'Помилка',
         icon: Icons.error,
       ));
     }
@@ -163,8 +156,8 @@ class Auth {
       await auth.sendPasswordResetEmail(email: email);
     } on FirebaseAuthException catch (error) {
       Get.showSnackbar(customSnackbar(
-        message: 'Reseting password failed because ${error.message}',
-        title: 'Error',
+        message: 'Не вдалося скинути пароль, тому що ${error.message}',
+        title: 'Помилка',
         icon: Icons.error,
       ));
     }
@@ -175,44 +168,3 @@ class Auth {
 
 
 
-/* Future<void> signInWithFacebook() async {
-    globalController.toogleIsLoading(); //switch to true
-    try {
-      final LoginResult result = await FacebookAuth.instance.login();
-
-      final AuthCredential facebookCredential =
-          FacebookAuthProvider.credential(result.accessToken!.token);
-
-      final userCredential =
-          await auth.signInWithCredential(facebookCredential);
-
-      user = userCredential.user;
-
-      Get.offNamed(Routes.PROFIL);
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'account-exists-with-different-credential') {
-        await FacebookAuth.instance.logOut();
-
-        await Get.showSnackbar(customSnackbar(
-            //This account exists with different sign in provider
-            message: 'Цей обліковий запис існує з іншим постачальником входу',
-            icon: Icons.error,
-            title: 'Помилка'));
-
-        globalController.toogleIsLoading(); //switch to false
-        Get.offAllNamed(Routes.AUTH);
-      } else if (e.code == 'invalid-credential') {
-        await Get.showSnackbar(customSnackbar(
-            message: 'Сталася невідома помилка',
-            icon: Icons.error,
-            title: 'Помилка'));
-
-        globalController.toogleIsLoading(); //switch to false
-      }
-    } catch (e) {
-      await Get.showSnackbar(customSnackbar(
-          message: 'Сталася невідома помилка',
-          icon: Icons.error,
-          title: 'Помилка'));
-    }
-  } */
