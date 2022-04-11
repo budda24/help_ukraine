@@ -16,7 +16,7 @@ import '../../../../helpers/widgets/online_tribes/main_button.dart';
 
 class RestPasswordView extends GetView<AuthController> {
   @override
-  /* final controller = Get.put(ResetPasswordController());*/
+
   final globalController = Get.put(GlobalController());
 
   Widget build(BuildContext context) {
@@ -69,7 +69,7 @@ class RestPasswordView extends GetView<AuthController> {
                     controller.authMode = AuthMode.Signup;
                     Get.offAndToNamed(Routes.AUTH);
                   },
-                  child: Text('SIGN UP'),
+                  child: const Text('SIGN UP'),
                 ),
               ]),
             ],

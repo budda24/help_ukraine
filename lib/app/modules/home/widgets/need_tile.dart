@@ -14,7 +14,7 @@ class NeedTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(
+        const Icon(
           Icons.notification_add_outlined,
           size: 40,
         ),
@@ -23,12 +23,12 @@ class NeedTile extends StatelessWidget {
           need.title,
           style: headingBoldStyle,
         ),
-        Spacer(),
+      const  Spacer(),
         IconButton(
           onPressed: () {
             deleteNeed(need.id,need);
           },
-          icon: Icon(
+          icon: const Icon(
             Icons.remove_circle_outline,
             size: 40,
           ),

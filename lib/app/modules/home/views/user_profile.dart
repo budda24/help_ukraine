@@ -59,7 +59,7 @@ class UserProfile extends GetView<HomeController> {
                   color: AppColors.primaryColor,
                   thickness: 2,
                 ),
-                Container(
+                SizedBox(
                   height: 0.10.sh,
                   width: 0.8.sw,
                   child: GetBuilder<HomeController>(
@@ -102,13 +102,13 @@ class UserProfile extends GetView<HomeController> {
                         controller.needs.isNotEmpty
                             ? Container()
                             : Container(
-                                margin: EdgeInsets.only(top: 20),
+                                margin: const EdgeInsets.only(top: 20),
                                 alignment: Alignment.bottomRight,
                                 child: InkWell(
                                   onTap: () async {
                                     Get.to(AddNeedView());
                                   },
-                                  child: (Icon(
+                                  child: (  Icon(
                                     Icons.add_box_rounded,
                                     size: 80.h,
                                     color: AppColors.primaryColor,

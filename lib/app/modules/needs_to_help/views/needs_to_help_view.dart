@@ -31,13 +31,13 @@ class NeedsToHelpView extends GetView<NeedsToHelpController> {
                     onPressed: () {
                       Get.back();
                     },
-                    icon: Icon(
+                    icon:const Icon(
                       Icons.arrow_back,
                       size: 30,
                     )),
                 Container(
                   width: 0.85.sw,
-                  padding: EdgeInsets.symmetric(horizontal: 40, vertical: 20),
+                  padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
                   child: TypeAheadFormField(
                       textFieldConfiguration: TextFieldConfiguration(
                         controller: controller.cityController,
@@ -56,7 +56,7 @@ class NeedsToHelpView extends GetView<NeedsToHelpController> {
                       },
                       itemBuilder: (_, CityWithNeeds city) {
                         return ListTile(
-                          leading: Icon(Icons.location_city),
+                          leading: const Icon(Icons.location_city),
                           title: Text(
                             city.name,
                             style: headingBlackStyle,
@@ -93,7 +93,7 @@ class NeedsToHelpView extends GetView<NeedsToHelpController> {
                       : GetBuilder<NeedsToHelpController>(
                           builder: (controller) => ListView.builder(
                             controller: controller.scrollController,
-                            physics: ScrollPhysics(),
+                            physics: const ScrollPhysics(),
                             itemCount: controller.currentItemLength.value,
                             itemBuilder: (_, index) {
                               return NeedsTile(need: controller.needs[index]);

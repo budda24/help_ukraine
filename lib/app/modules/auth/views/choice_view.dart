@@ -30,7 +30,7 @@ class ChoiceScreen extends GetView<AuthController> {
                       Get.toNamed(Routes.NEEDS_TO_HELP);
                     },
                     child: Container(
-                      padding: EdgeInsets.all(20),
+                      padding: const EdgeInsets.all(20),
                       height: 300.h,
                       width: 300.w,
                       decoration: BoxDecoration(
@@ -92,11 +92,11 @@ class ChoiceScreen extends GetView<AuthController> {
                           width: 3.0.w,
                         ),
                         borderRadius: BorderRadius.circular(15.0),
-                        boxShadow: [
+                        boxShadow: const [
                           BoxShadow(
                             color: Colors.black54,
                             blurRadius: 4,
-                            offset: Offset(2, 6), // Shadow position
+                            offset:  Offset(2, 6), // Shadow position
                           ),
                         ],
                         // gradient:

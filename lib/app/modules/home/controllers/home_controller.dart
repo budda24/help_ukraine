@@ -1,17 +1,14 @@
-
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
 import 'package:pomoc_ukrainie/app/infrastructure/fb_services/db_services/firebase.dart';
-
-
 
 import '../../../../helpers/theme/alert_styles.dart';
 import '../../../globals/global_controler.dart';
 import '../../../infrastructure/fb_services/auth/auth.dart';
 import '../../../infrastructure/geolocation_services/geolocation.dart';
 import '../../../infrastructure/fb_services/models/need.dart';
-
+import '../../../routes/app_pages.dart';
 
 class HomeController extends GetxController {
   final globalController = Get.put(GlobalController());
@@ -41,8 +38,6 @@ class HomeController extends GetxController {
     adressController.clear();
   }
 
-
-
   final formKey = GlobalKey<FormState>();
 
   String? validateTextField(String text) {
@@ -71,7 +66,6 @@ class HomeController extends GetxController {
     return formKey.currentState!.validate();
   }
 
-
   Future<void> postNeed() async {
     if (validateForm()) {
       globalController.toogleIsLoading();
@@ -96,6 +90,15 @@ class HomeController extends GetxController {
         await DbFirebase().createNeed(need, auth.currentUser);
         cleanController();
         globalController.toogleIsLoading();
+
+        Get.showSnackbar(
+          customSnackbar(
+              message: 'опубліковано оголошення',
+              icon: Icons.file_download_done,
+              title: "закінчено"),
+        );
+
+        Get.offAndToNamed(Routes.PROFIL);
       } catch (e) {
         Get.showSnackbar(customSnackbar(
             message: 'надіслати потребу не вдалося, тому що: $e',

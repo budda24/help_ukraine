@@ -33,23 +33,19 @@ class AddNeedView extends GetView<HomeController> {
             builder: (_) => IconButton(
               iconSize: !globalController.isLoading ? 80 : 0,
               alignment: Alignment.center,
-              icon: Icon(Icons.add_alert),
+              icon: const Icon(Icons.add_alert),
               onPressed: () async {
-                await controller.postNeed().then((value) => Get.showSnackbar(
-                      customSnackbar(
-                          message: 'опубліковано оголошення',
-                          icon: Icons.file_download_done,
-                          title: "закінчено"),
-                    ));
+                await controller.postNeed();
+
                 await controller.getNeedsUser();
-                Get.offAndToNamed(Routes.PROFIL);
+
               },
             ),
           ),
           body: GetBuilder<GlobalController>(
             builder: (globalGontroller) => Center(
               child: globalController.isLoading
-                  ?  CircularProgressIndicator()
+                  ? const CircularProgressIndicator()
                   : Form(
                       key: controller.formKey,
                       child: SingleChildScrollView(
@@ -64,7 +60,7 @@ class AddNeedView extends GetView<HomeController> {
                               'assets/graphics/data.png',
                             ),
                             Container(
-                              padding: EdgeInsets.symmetric(horizontal: 40),
+                              padding: const EdgeInsets.symmetric(horizontal: 40),
                               child: CustomTextField(
                                 focusNode: controller.adressFocusNode,
                                 validate: (text) =>
@@ -80,7 +76,7 @@ class AddNeedView extends GetView<HomeController> {
                             ),
                             verticalSpaceSmall,
                             Container(
-                              padding: EdgeInsets.symmetric(
+                              padding: const EdgeInsets.symmetric(
                                 horizontal: 40,
                                 vertical: 10,
                               ),
@@ -112,7 +108,7 @@ class AddNeedView extends GetView<HomeController> {
                                   },
                                   itemBuilder: (_, City city) {
                                     return ListTile(
-                                      leading: Icon(Icons.location_city),
+                                      leading: const Icon(Icons.location_city),
                                       title: Text(
                                         city.name,
                                         style: headingBlackStyle,
@@ -173,8 +169,8 @@ class AddNeedView extends GetView<HomeController> {
                                 controller: controller.contactNumberController),
                             verticalSpaceSmall,
                             Container(
-                              padding: EdgeInsets.symmetric(horizontal: 40),
-                              child: CustomTextField(
+                              padding: const EdgeInsets.symmetric(horizontal: 40),
+                              child:  CustomTextField(
                                 onSubmit: () =>
                                     controller.descripotionFocusNode.unfocus(),
                                 focusNode: controller.descripotionFocusNode,

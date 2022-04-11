@@ -23,7 +23,6 @@ class AuthView extends GetView<AuthController> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        globalController.toogleIsLoading();
         return await Get.offAll(ChoiceScreen());
       },
       child: GestureDetector(
@@ -32,12 +31,12 @@ class AuthView extends GetView<AuthController> {
           body: GetBuilder<GlobalController>(
             builder: (globalController) => Center(
               child: globalController.isLoading
-                  ? LinearProgressIndicator()
+                  ? const LinearProgressIndicator()
                   : SingleChildScrollView(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          Container(
+                          SizedBox(
                             height: 380.h,
                             width: double.infinity,
                             child: Center(
@@ -63,12 +62,12 @@ class AuthView extends GetView<AuthController> {
                                   children: <Widget>[
                                     TextFormField(
                                       decoration:
-                                          InputDecoration(labelText: 'E-Mail'),
+                                        const  InputDecoration(labelText: 'E-Mail'),
                                       keyboardType: TextInputType.emailAddress,
                                       controller: controller.emailController,
                                     ),
                                     TextFormField(
-                                      decoration: InputDecoration(
+                                      decoration: const InputDecoration(
                                           labelText: 'Password'),
                                       obscureText: true,
                                       controller: controller.passwordController,
@@ -79,16 +78,14 @@ class AuthView extends GetView<AuthController> {
                                             .confirmPasswordController,
                                         enabled: controller.authMode ==
                                             AuthMode.Signup,
-                                        decoration: InputDecoration(
+                                        decoration: const InputDecoration(
                                             labelText: 'Confirm Password'),
                                         obscureText: true,
                                       ),
-                                    SizedBox(
+                                   const SizedBox(
                                       height: 20,
                                     ),
-                                    /* globalController.isLoading
-                                        ? CircularProgressIndicator()
-                                        : */
+
                                     Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.end,

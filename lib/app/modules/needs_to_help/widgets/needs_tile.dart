@@ -20,14 +20,14 @@ class NeedsTile extends StatelessWidget {
         borderRadius: BorderRadius.circular(15.0.r),
       ),
       child: ListTile(
-        contentPadding: EdgeInsets.all(10),
+        contentPadding: const EdgeInsets.all(10),
         onTap: () {
           Get.to(NeedsDetailsScreen(need: need,));
         },
         selectedTileColor: Colors.grey[300],
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-        leading: Icon(
+        leading: const Icon(
           Icons.add_alert_sharp,
           size: 26,
         ),
