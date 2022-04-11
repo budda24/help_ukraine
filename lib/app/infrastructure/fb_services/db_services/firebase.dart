@@ -13,10 +13,24 @@ final db = FirebaseFirestore.instance;
 
 class DbFirebase {
   var globalController = Get.put(GlobalController());
-  Future<void> createUser(UserDb user) async {
+  Future<void> createUser(User user) async {
     try {
-      user.createdAt = FieldValue.serverTimestamp();
-      await db.collection('USERS').doc(user.id).set(user.toJson());
+      await db
+          .collection('USERS')
+          .where('UserDbId', isEqualTo: user.uid)
+          .get()
+          .then((snapshot) async {
+        if (snapshot.docs.isEmpty) {
+          var createdAt = FieldValue.serverTimestamp();
+          UserDb dbUser = UserDb(
+              id: user.uid,
+              name: user.displayName ?? 'no name',
+              photoUrl: user.photoURL ?? 'no photo',
+              createdAt: createdAt);
+
+          await db.collection('USERS').doc(dbUser.id).set(dbUser.toJson());
+        }
+      });
     } on FirebaseException catch (e) {
       Get.showSnackbar(customSnackbar(
           message: "Сталася помилка, спробуйте пізніше",
@@ -52,7 +66,6 @@ class DbFirebase {
   }
 
   Future<List<Need>> feachNeedsInUser(String id) async {
-
     List<Need> needs = [];
     var response =
         await db.collection('NEEDS').where('postedBy', isEqualTo: id).get();
@@ -84,6 +97,4 @@ class DbFirebase {
           element.reference.delete();
         }));
   }
-
-  
 }

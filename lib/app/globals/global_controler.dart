@@ -32,6 +32,7 @@ class GlobalController extends GetxController {
     return foundCity['id'];
   }
 
+
   bool isLoading = false;
   void toogleIsLoading() {
     isLoading = !isLoading;

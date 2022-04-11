@@ -71,7 +71,7 @@ class HomeController extends GetxController {
     return formKey.currentState!.validate();
   }
 
-  
+
   Future<void> postNeed() async {
     if (validateForm()) {
       globalController.toogleIsLoading();
@@ -144,21 +144,6 @@ class HomeController extends GetxController {
 
   @override
   void onInit() async {
-    var need = Need(
-      cityId: 'LZQGWcyWw2jPvcTNpt',
-      uaDescription: 'descriptionController.text',
-      uaTitle: 'titleController.text',
-      address: 'adressController.text',
-      title: 'titleController.text',
-      description: 'descriptionController.text',
-      contact: 'contactNumberController.tex',
-      city: 'Warszawa',
-      email: user!.email,
-      lat: 100,
-      long: 199,
-      postedBy: user!.uid,
-      createdAt: DateTime.now(),
-    );
     adressFocusNode.requestFocus();
     await getNeedsUser();
     update();

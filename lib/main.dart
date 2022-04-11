@@ -9,7 +9,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:pomoc_ukrainie/app/globals/global_controler.dart';
 
 
-import 'app/modules/auth/views/choice_screen.dart';
+import 'app/modules/auth/views/choice_view.dart';
 import 'app/routes/app_pages.dart';
 import 'package:pomoc_ukrainie/helpers/theme/screen_sizes.dart';
 

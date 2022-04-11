@@ -1,5 +1,3 @@
-
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -8,7 +6,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get/get.dart';
-
 
 import 'package:pomoc_ukrainie/app/globals/global_controler.dart';
 import 'package:pomoc_ukrainie/app/infrastructure/fb_services/db_services/firebase.dart';
@@ -22,6 +19,7 @@ User? user;
 
 class Auth {
   final globalController = Get.put(GlobalController());
+  final db = DbFirebase();
 
   Future<FirebaseApp> initializeFirebase() async {
     FirebaseApp firebaseApp = await Firebase.initializeApp();
@@ -48,29 +46,11 @@ class Auth {
         final UserCredential userCredential =
             await auth.signInWithCredential(credential);
         user = userCredential.user;
+        /* globalController.box.remove(user!.uid); */
+        await db.createUser(user!);
 
-          var createdAt = FieldValue.serverTimestamp();
-          await FirebaseFirestore.instance
-              .collection('USERS')
-              .where('UserDbId', isEqualTo: user!.uid)
-              .get()
-              .then((snapshot) async {
-            if (snapshot.docs.isEmpty) {
-              DbFirebase().createUser(
-                UserDb(
-                    id: user!.uid,
-                    name: user!.displayName ?? 'no name',
-                    photoUrl: user!.photoURL ?? 'no photo',
-                    createdAt: createdAt),
-              );
-            }
-          });
+        globalController.toogleIsLoading(); //switch to false
 
-          globalController.box.remove(user!.uid );
-
-
-        globalController.toogleIsLoading();
-        //switch to false
         Get.offAndToNamed(Routes.PROFIL);
       } on FirebaseAuthException catch (e) {
         if (e.code == 'account-exists-with-different-credential') {
@@ -104,9 +84,98 @@ class Auth {
     }
   }
 
+  Future<void> signUpEmailPassword(String email, String password) async {
+    try {
+      globalController.toogleIsLoading(); //switch to true
+
+      /* print('auth sign up email $email passs: $password'); */
+      UserCredential userCredential = await auth.createUserWithEmailAndPassword(
+          email: email, password: password);
+
+      if (userCredential.user != null) {
+        user = userCredential.user;
+
+        await db.createUser(user!);
+      }
+      globalController.toogleIsLoading(); //switch to false
+      Get.offAndToNamed(Routes.PROFIL);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'email-already-in-use') {
+        globalController.toogleIsLoading(); //switch to false
+        Get.showSnackbar(customSnackbar(
+          message: 'The account already exists for that email.',
+          title: 'Error',
+          icon: Icons.error,
+        ));
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+/*   Future<void> signInEmailPassword(String email, String password) async {
+    try {
+      /* print('auth sign up email $email passs: $password'); */
+      UserCredential userCredential = await auth.signInWithEmailAndPassword(
+          email: email, password: password);
+    } on FirebaseAuthException catch (e) {}
+  } */
+
+  Future<void> signInExistingUser(String email, String password) async {
+    try {
+      globalController.toogleIsLoading(); //switch to true
+      final List userEmails = await auth.fetchSignInMethodsForEmail(email);
+      if (userEmails.isEmpty) {
+        globalController.toogleIsLoading(); //switch to false
+        Get.showSnackbar(customSnackbar(
+          message: "we couldn't find currant email",
+          title: 'Error',
+          icon: Icons.error,
+        ));
+      } else {
+        final userData = await auth.signInWithEmailAndPassword(
+            email: email, password: password);
+
+            Get.offAndToNamed(Routes.PROFIL);
+
+        globalController.toogleIsLoading(); //switch to false
+        
+        print(userData.user!.uid);
+
+      }
+    } on FirebaseAuthException catch (error) {
+      globalController.toogleIsLoading(); //switch to false
+      Get.showSnackbar(customSnackbar(
+        message: "Sign in failed because ${error.message ?? ''}",
+        title: 'Error',
+        icon: Icons.error,
+      ));
+    }
+  }
+
+  Future<void> logOut() async {
+   await auth.signOut();
+   Get.offAndToNamed(Routes.AUTH);
+  }
+
+  Future<void> resetPasswordEmail(String email) async {
+    try {
+      await auth.sendPasswordResetEmail(email: email);
+    } on FirebaseAuthException catch (error) {
+      Get.showSnackbar(customSnackbar(
+        message: 'Reseting password failed because ${error.message}',
+        title: 'Error',
+        icon: Icons.error,
+      ));
+    }
+  }
+}
 
 
-  Future<void> signInWithFacebook() async {
+
+
+
+/* Future<void> signInWithFacebook() async {
     globalController.toogleIsLoading(); //switch to true
     try {
       final LoginResult result = await FacebookAuth.instance.login();
@@ -146,5 +215,4 @@ class Auth {
           icon: Icons.error,
           title: 'Помилка'));
     }
-  }
-}
+  } */

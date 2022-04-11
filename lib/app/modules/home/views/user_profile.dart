@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:pomoc_ukrainie/app/infrastructure/fb_services/auth/auth.dart';
+import 'package:pomoc_ukrainie/app/modules/auth/controllers/auth_controller.dart';
 import 'package:pomoc_ukrainie/app/modules/home/controllers/home_controller.dart';
 import 'package:pomoc_ukrainie/app/modules/home/widgets/need_tile.dart';
 import 'package:pomoc_ukrainie/helpers/theme/text_styles.dart';
@@ -15,10 +16,11 @@ import '../../needs_to_help/widgets/border_container.dart';
 import 'add_need_view.dart';
 
 class UserProfile extends GetView<HomeController> {
- /*  var controller = Get.put(HomeController()); */
+
   String placeHolderPhoto =
       'https://dsm01pap004files.storage.live.com/y4m_WyBC3VOwYN6wDoyWTw8ZaonCA_3fhOfEn3DQbrinoLzMG9gAxftCacktBSEbc04zRdbqhmFanYO0qrEOTLla6_CZe5tYMI4-3x9tp1xd5zsCvzPYnoeDQ3AS5VtZqTRGlRtm56YScvVl0kexFgiKupCTtx2a1mpvBagBTIi6kI29Hl3KqZGxAboOmSGn_QF?width=128&height=128&cropmode=none';
   var globalController = Get.put(GlobalController());
+
 
 
   @override
@@ -31,6 +33,13 @@ class UserProfile extends GetView<HomeController> {
           padding: const EdgeInsets.all(20.0),
           child: Column(
             children: [
+              InkWell(
+                onTap: () async => await Auth().logOut(),
+                child: Container(
+                  alignment: Alignment.centerRight,
+                  child: Text('Log Out', style: headingBlackStyle,),
+                ),
+              ),
               verticalSpaceExtraLarge,
               BorderCustomContainer(
                 height: 100.h,
@@ -42,7 +51,7 @@ class UserProfile extends GetView<HomeController> {
               ),
               verticalSpaceLarge,
               Text(
-                 auth.currentUser!.displayName ?? 'не має назви',
+                 auth.currentUser!.email ?? 'не має назви',
                 style: headingBlackStyle,
               ),
               verticalSpaceLarge,
