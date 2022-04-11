@@ -121,7 +121,7 @@ class Auth {
       if (userEmails.isEmpty) {
         globalController.toogleIsLoading(); //switch to false
         Get.showSnackbar(customSnackbar(
-          message: "ми не змогли знайти смородиновий електронний лист",
+          message: "ми не змогли знайти електронний лист",
           title: 'Помилка',
           icon: Icons.error,
         ));
