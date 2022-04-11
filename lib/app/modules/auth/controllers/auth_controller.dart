@@ -25,7 +25,7 @@ class AuthController extends GetxController {
     required TextEditingController passwordContr,
   }) {
     if (!GetUtils.isEmail(emailContr.text)) {
-      /* print('email : ${email.text}'); */
+     
       emailContr.clear();
       Get.showSnackbar(
         customSnackbar(
@@ -37,8 +37,8 @@ class AuthController extends GetxController {
     if (!GetUtils.isLengthGreaterThan(passwordContr.text, 8)) {
       Get.showSnackbar(
         customSnackbar(
-            message: 'Password should contain from 8 to 16 characters',
-            title: 'Error',
+            message: 'Пароль повинен містити від 8 до 16 символів',
+            title: 'помилка',
             icon: Icons.error),
       );
       passwordContr.clear();
@@ -52,8 +52,8 @@ class AuthController extends GetxController {
     );
     if (!regExpPassword.hasMatch(passwordContr.text)) {
       Get.showSnackbar(customSnackbar(
-        message: 'Password should contain at least one letter and one number',
-        title: 'Error',
+        message: 'Пароль повинен містити принаймні одну букву та одну цифру',
+        title: 'помилка',
         icon: Icons.error,
       ));
 
@@ -73,7 +73,7 @@ class AuthController extends GetxController {
   Future<void> signUp() async {
     if (validateSigninForm(
         emailContr: emailController, passwordContr: passwordController)) {
-      print('signup');
+
       await auth
           .signUpEmailPassword(emailController.text, passwordController.text)
           .catchError((onError) {
@@ -87,16 +87,12 @@ class AuthController extends GetxController {
         emailContr: emailController, passwordContr: passwordController)) {
       await auth.signInExistingUser(
           emailController.text, passwordController.text);
-      /* emailController.clear();
-      passwordController.clear(); */
-      
+
+
     }
   }
 
-/*
-  Future<bool> checkLogIn() async {
 
-    } */
 
   final count = 0.obs;
   @override

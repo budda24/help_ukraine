@@ -87,7 +87,7 @@ class Auth {
     try {
       globalController.toogleIsLoading(); //switch to true
 
-      /* print('auth sign up email $email passs: $password'); */
+
       UserCredential userCredential = await auth.createUserWithEmailAndPassword(
           email: email, password: password);
 
@@ -133,7 +133,6 @@ class Auth {
 
         globalController.toogleIsLoading(); //switch to false
 
-        print(userData.user!.uid);
 
       }
     } on FirebaseAuthException catch (error) {

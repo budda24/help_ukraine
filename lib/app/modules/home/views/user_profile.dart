@@ -16,12 +16,9 @@ import '../../needs_to_help/widgets/border_container.dart';
 import 'add_need_view.dart';
 
 class UserProfile extends GetView<HomeController> {
-
   String placeHolderPhoto =
       'https://dsm01pap004files.storage.live.com/y4m_WyBC3VOwYN6wDoyWTw8ZaonCA_3fhOfEn3DQbrinoLzMG9gAxftCacktBSEbc04zRdbqhmFanYO0qrEOTLla6_CZe5tYMI4-3x9tp1xd5zsCvzPYnoeDQ3AS5VtZqTRGlRtm56YScvVl0kexFgiKupCTtx2a1mpvBagBTIi6kI29Hl3KqZGxAboOmSGn_QF?width=128&height=128&cropmode=none';
   var globalController = Get.put(GlobalController());
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -29,100 +26,103 @@ class UserProfile extends GetView<HomeController> {
       onWillPop: () async => true,
       child: Scaffold(
         body: SafeArea(
-            child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            children: [
-              InkWell(
-                onTap: () async => await Auth().logOut(),
-                child: Container(
-                  alignment: Alignment.centerRight,
-                  child: Text('Log Out', style: headingBlackStyle,),
-                ),
-              ),
-              verticalSpaceExtraLarge,
-              BorderCustomContainer(
-                height: 100.h,
-                width: 100.w,
-                child: Image.network(
-                  auth.currentUser!.photoURL ?? placeHolderPhoto,
-                  fit: BoxFit.cover,
-                ),
-              ),
-              verticalSpaceLarge,
-              Text(
-                 auth.currentUser!.email ?? 'не має назви',
-                style: headingBlackStyle,
-              ),
-              verticalSpaceLarge,
-              Divider(
-                color: AppColors.primaryColor,
-                thickness: 2,
-              ),
-              Container(
-                height: 0.15.sh,
-                width: 0.8.sw,
-                child: GetBuilder<HomeController>(
-                  init: HomeController(),
-                  builder: (controller) => ListView.builder(
-                    itemCount: controller.needs.length,
-                    itemBuilder: (_, index) {
-                      return NeedTile(
-                          need: controller.needs[index],
-                          deleteNeed: controller.deleteNeed);
-                    },
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              children: [
+                InkWell(
+                  onTap: () async => await Auth().logOut(),
+                  child: Container(
+                    alignment: Alignment.centerRight,
+                    child: Text(
+                      'Log Out',
+                      style: headingBlackStyle,
+                    ),
                   ),
                 ),
-              ),
-              RoundedContainer(
-                margin: EdgeInsets.only(top: 40.h),
-                borderCoplor: AppColors.primaryColor,
-                height: 0.35.sh,
-                width: 1.sw,
-                backgroundColor: AppColors.primaryColorShade,
-                child: GetBuilder<HomeController>(
-                  init: HomeController(),
-                  builder: (controller) => Column(
-                    children: [
-                      controller.needs.isNotEmpty
-                          //whet there is alreade need
-                          ? AutoSizeText(
-                              'Пам’ятайте, що ви можете додати лише одне оголошення.Якщо будь-яке з Ваших оголошень вже недійсне, видаліть його зі свого профілю',
-                              maxLines: 6,
-                              minFontSize: 18,
-                              style: headingBoldStyle,
-                            )
-                          //whet there isn't any need
-                          : AutoSizeText(
-                              'Щоб отримати допомогу, натисніть кнопку нижче та заповніть анкету українською мовою.Якщо будь-яке з Ваших оголошень вже недійсне, видаліть його зі свого профілю. Пам’ятайте, що ви можете додати лише одне оголошення',
-                              maxLines: 6,
-                              minFontSize: 18,
-                              style: headingBoldStyle,
-                            ),
-                      controller.needs.isNotEmpty
-                          ? Container()
-                          :
-                      Container(
-                        margin: EdgeInsets.only(top: 20),
-                        alignment: Alignment.bottomRight,
-                        child: InkWell(
-                          onTap: () async {
-                            Get.to(AddNeedView());
-                          },
-                          child: (Icon(
-                            Icons.add_box_rounded,
-                            size: 80.h,
-                            color: AppColors.primaryColor,
-                          )),
-                        ),
-                      ),
-                    ],
+                verticalSpaceExtraLarge,
+                BorderCustomContainer(
+                  height: 100.h,
+                  width: 100.w,
+                  child: Image.network(
+                    auth.currentUser!.photoURL ?? placeHolderPhoto,
+                    fit: BoxFit.cover,
                   ),
                 ),
-              )
-            ],
+                verticalSpaceLarge,
+                Text(
+                  auth.currentUser!.email ?? 'не має назви',
+                  style: headingBlackStyle,
+                ),
+               verticalSpaceSmall,
+                Divider(
+                  color: AppColors.primaryColor,
+                  thickness: 2,
+                ),
+                Container(
+                  height: 0.10.sh,
+                  width: 0.8.sw,
+                  child: GetBuilder<HomeController>(
+                    init: HomeController(),
+                    builder: (controller) => ListView.builder(
+                      itemCount: controller.needs.length,
+                      itemBuilder: (_, index) {
+                        return NeedTile(
+                            need: controller.needs[index],
+                            deleteNeed: controller.deleteNeed);
+                      },
+                    ),
+                  ),
+                ),
+                RoundedContainer(
+                  margin: EdgeInsets.only(top: 40.h),
+                  borderCoplor: AppColors.primaryColor,
+                  height: 0.35.sh,
+                  width: 1.sw,
+                  backgroundColor: AppColors.primaryColorShade,
+                  child: GetBuilder<HomeController>(
+                    init: HomeController(),
+                    builder: (controller) => Column(
+                      children: [
+                        controller.needs.isNotEmpty
+                            //whet there is alreade need
+                            ? AutoSizeText(
+                                'Пам’ятайте, що ви можете додати лише одне оголошення.Якщо будь-яке з Ваших оголошень вже недійсне, видаліть його зі свого профілю',
+                                maxLines: 6,
+                                minFontSize: 18,
+                                style: headingBoldStyle,
+                              )
+                            //whet there isn't any need
+                            : AutoSizeText(
+                                'Щоб отримати допомогу, натисніть кнопку нижче та заповніть анкету українською мовою.Якщо будь-яке з Ваших оголошень вже недійсне, видаліть його зі свого профілю. Пам’ятайте, що ви можете додати лише одне оголошення',
+                                maxLines: 6,
+                                minFontSize: 18,
+                                style: headingBoldStyle,
+                              ),
+                        controller.needs.isNotEmpty
+                            ? Container()
+                            : Container(
+                                margin: EdgeInsets.only(top: 20),
+                                alignment: Alignment.bottomRight,
+                                child: InkWell(
+                                  onTap: () async {
+                                    Get.to(AddNeedView());
+                                  },
+                                  child: (Icon(
+                                    Icons.add_box_rounded,
+                                    size: 80.h,
+                                    color: AppColors.primaryColor,
+                                  )),
+                                ),
+                              ),
+                      ],
+                    ),
+                  ),
+                )
+              ],
+            ),
           ),
-        )),
+        ),
       ),
     );
   }
