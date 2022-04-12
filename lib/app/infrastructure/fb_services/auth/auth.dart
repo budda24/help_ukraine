@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -11,7 +10,6 @@ import 'package:pomoc_ukrainie/app/globals/global_controler.dart';
 import 'package:pomoc_ukrainie/app/infrastructure/fb_services/db_services/firebase.dart';
 import 'package:pomoc_ukrainie/app/routes/app_pages.dart';
 import 'package:pomoc_ukrainie/helpers/theme/alert_styles.dart';
-
 
 final auth = FirebaseAuth.instance;
 User? user;
@@ -42,6 +40,7 @@ class Auth {
       );
 
       try {
+
         final UserCredential userCredential =
             await auth.signInWithCredential(credential);
         user = userCredential.user;
@@ -55,7 +54,7 @@ class Auth {
         if (e.code == 'account-exists-with-different-credential') {
           await googleSignIn.signOut();
 
-          await Get.showSnackbar(customSnackbar(
+           Get.showSnackbar(customSnackbar(
               //This account exists with different sign in provider
               message: 'Цей обліковий запис існує з іншим постачальником входу',
               icon: Icons.error,
@@ -65,7 +64,7 @@ class Auth {
 
           Get.offAllNamed(Routes.AUTH);
         } else if (e.code == 'invalid-credential') {
-          await Get.showSnackbar(customSnackbar(
+           Get.showSnackbar(customSnackbar(
               message: 'Сталася невідома помилка',
               icon: Icons.error,
               title: 'Помилка'));
@@ -75,7 +74,7 @@ class Auth {
           Get.offAllNamed(Routes.AUTH);
         }
       } catch (e) {
-        await Get.showSnackbar(customSnackbar(
+         Get.showSnackbar(customSnackbar(
             message: 'Сталася невідома помилка',
             icon: Icons.error,
             title: 'Помилка'));
@@ -86,7 +85,6 @@ class Auth {
   Future<void> signUpEmailPassword(String email, String password) async {
     try {
       globalController.toogleIsLoading(); //switch to true
-
 
       UserCredential userCredential = await auth.createUserWithEmailAndPassword(
           email: email, password: password);
@@ -112,8 +110,6 @@ class Auth {
     }
   }
 
-
-
   Future<void> signInExistingUser(String email, String password) async {
     try {
       globalController.toogleIsLoading(); //switch to true
@@ -129,10 +125,9 @@ class Auth {
         final userData = await auth.signInWithEmailAndPassword(
             email: email, password: password);
 
-            Get.offAndToNamed(Routes.PROFIL);
+        Get.offAndToNamed(Routes.PROFIL);
 
         globalController.toogleIsLoading(); //switch to false
-
 
       }
     } on FirebaseAuthException catch (error) {
@@ -146,8 +141,8 @@ class Auth {
   }
 
   Future<void> logOut() async {
-   await auth.signOut();
-   Get.offAndToNamed(Routes.AUTH);
+    await auth.signOut();
+    Get.offAndToNamed(Routes.AUTH);
   }
 
   Future<void> resetPasswordEmail(String email) async {
@@ -162,8 +157,3 @@ class Auth {
     }
   }
 }
-
-
-
-
-

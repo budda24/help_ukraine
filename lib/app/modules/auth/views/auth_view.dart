@@ -23,7 +23,8 @@ class AuthView extends GetView<AuthController> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        return await Get.offAll(ChoiceScreen());
+        globalController.isLoading = false;
+        return await Get.offAll(const ChoiceScreen());
       },
       child: GestureDetector(
         onTap: () => globalController.unFocuseNode(),
@@ -48,7 +49,7 @@ class AuthView extends GetView<AuthController> {
                           ),
                           verticalSpaceTiny,
                           Text(
-                            'Увійти за допомогою',
+                            'Увійти за допомогою', //Login with
                             style: headingBlackStyle,
                             textAlign: TextAlign.center,
                           ),
@@ -61,14 +62,15 @@ class AuthView extends GetView<AuthController> {
                                 builder: (controller) => Column(
                                   children: <Widget>[
                                     TextFormField(
-                                      decoration:
-                                        const  InputDecoration(labelText: 'E-Mail'),
+                                      decoration: const InputDecoration(
+                                          labelText:
+                                              'Електронна пошта'), //Email
                                       keyboardType: TextInputType.emailAddress,
                                       controller: controller.emailController,
                                     ),
                                     TextFormField(
                                       decoration: const InputDecoration(
-                                          labelText: 'Password'),
+                                          labelText: 'Пароль'), //password
                                       obscureText: true,
                                       controller: controller.passwordController,
                                     ),
@@ -79,13 +81,13 @@ class AuthView extends GetView<AuthController> {
                                         enabled: controller.authMode ==
                                             AuthMode.Signup,
                                         decoration: const InputDecoration(
-                                            labelText: 'Confirm Password'),
+                                            labelText:
+                                                'Підтвердьте пароль'), //confirm password
                                         obscureText: true,
                                       ),
-                                   const SizedBox(
+                                    const SizedBox(
                                       height: 20,
                                     ),
-
                                     Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.end,
@@ -101,8 +103,8 @@ class AuthView extends GetView<AuthController> {
                                             ),
                                             child: Text(controller.authMode ==
                                                     AuthMode.Login
-                                                ? 'LOGIN'
-                                                : 'SIGN UP'),
+                                                ? 'УВІЙТИ' //login
+                                                : 'ЗАПИСАТИСЯ'), //signin
                                             onPressed: () async =>
                                                 controller.authMode ==
                                                         AuthMode.Login
@@ -117,7 +119,7 @@ class AuthView extends GetView<AuthController> {
                                                 Get.to(RestPasswordView());
                                               },
                                               child: Text(
-                                                'forgot password',
+                                                'Забули пароль', //forgot password
                                                 style: smallTextStyle,
                                               ))
                                         ]),
@@ -130,7 +132,8 @@ class AuthView extends GetView<AuthController> {
                                             headingWhiteStyle),
                                       ),
                                       child: Text(
-                                        '${controller.authMode == AuthMode.Login ? 'I DON\'T HAVE ACCOUNT' : 'I ALREADY HAVE ACCOUNT'}',
+                                        controller.authMode == AuthMode.Login
+                                            ? 'Я НЕ МАЮ ОБЛІКУ' /* I DON\'T HAVE ACCOUNT  */ : 'Я ВЖЕ МАЮ РАХУНК',
                                         style: headingWhiteStyle,
                                       ),
                                       onPressed: controller.switchAuthMode,

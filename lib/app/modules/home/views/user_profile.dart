@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:pomoc_ukrainie/app/infrastructure/fb_services/auth/auth.dart';
 import 'package:pomoc_ukrainie/app/modules/auth/controllers/auth_controller.dart';
+import 'package:pomoc_ukrainie/app/modules/auth/views/choice_view.dart';
 import 'package:pomoc_ukrainie/app/modules/home/controllers/home_controller.dart';
 import 'package:pomoc_ukrainie/app/modules/home/widgets/need_tile.dart';
 import 'package:pomoc_ukrainie/helpers/theme/text_styles.dart';
@@ -23,7 +24,7 @@ class UserProfile extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () async => true,
+      onWillPop: () async => await Get.to(const ChoiceScreen()),
       child: Scaffold(
         body: SafeArea(
           child: Padding(
@@ -35,7 +36,7 @@ class UserProfile extends GetView<HomeController> {
                   child: Container(
                     alignment: Alignment.centerRight,
                     child: Text(
-                      'Log Out',
+                      'виходу',//sign out
                       style: headingBlackStyle,
                     ),
                   ),
@@ -51,10 +52,10 @@ class UserProfile extends GetView<HomeController> {
                 ),
                 verticalSpaceLarge,
                 Text(
-                  auth.currentUser!.email ?? 'не має назви',
+                  auth.currentUser!.email ?? 'не має назви',//has no name
                   style: headingBlackStyle,
                 ),
-               verticalSpaceSmall,
+                verticalSpaceSmall,
                 Divider(
                   color: AppColors.primaryColor,
                   thickness: 2,
@@ -85,7 +86,7 @@ class UserProfile extends GetView<HomeController> {
                     builder: (controller) => Column(
                       children: [
                         controller.needs.isNotEmpty
-                            //whet there is alreade need
+                            //when there is alreade need
                             ? AutoSizeText(
                                 'Пам’ятайте, що ви можете додати лише одне оголошення.Якщо будь-яке з Ваших оголошень вже недійсне, видаліть його зі свого профілю',
                                 maxLines: 6,
@@ -108,7 +109,7 @@ class UserProfile extends GetView<HomeController> {
                                   onTap: () async {
                                     Get.to(AddNeedView());
                                   },
-                                  child: (  Icon(
+                                  child: (Icon(
                                     Icons.add_box_rounded,
                                     size: 80.h,
                                     color: AppColors.primaryColor,

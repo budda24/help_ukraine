@@ -58,7 +58,7 @@ class DbFirebase {
 
   Future<Query<Map<String, dynamic>>> feachNeedsInCity(
       String city, int limit) async {
-    var response = await db
+    var response =  db
         .collection('NEEDS')
         .where('city', isEqualTo: city)
         .limit(limit);

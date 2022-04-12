@@ -20,7 +20,7 @@ class NeedTile extends StatelessWidget {
         ),
         horizontalSpaceSmall,
         Text(
-          need.title,
+          need.uaTitle,
           style: headingBoldStyle,
         ),
       const  Spacer(),
